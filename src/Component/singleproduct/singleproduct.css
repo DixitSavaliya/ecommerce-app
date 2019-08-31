@@ -1,0 +1,8 @@
+ul.ratings{
+    list-style: none !important;
+    display: inline-flex !important;
+    padding: 0;
+}
+ul.ratings i {
+    color:gold;
+}
