@@ -41,7 +41,10 @@ ReactDOM.render(
     <Route exact path="/searchproduct" component={SearchProduct} />
     <Route exact path="/checkout" component={Checkout} />
     <Route exact path="/forgotpassword" component={ForgotPassword} />
-    <Route exact path="/updatepassword" component={UpdatePassword} />
+    <Route exact path="/updatepassword" render={() => (
+      localStorage.getItem('token') ? (<Route component={UpdatePassword} />)
+        : (<Route component={Login} />)
+    )} />
     <Route exact path="/address" component={Address} />
     <Route exact path="/addnewaddress" component={AddNewAddress} />
     <Route exact path="/editaddress/:id" component={EditAddress} />

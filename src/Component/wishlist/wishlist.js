@@ -40,6 +40,21 @@ class WishList extends React.Component {
             );
     }
 
+    /** 
+    * @param {string} productId
+    * Add Cart function
+    */
+   addInCart(productId) {
+    console.log("productId==", productId);
+    this.value = localStorage.getItem('productId');
+    const data = []
+    data.push(this.value);
+    data.push(productId);
+    localStorage.setItem('productId', data.toString());
+    Swal.fire("Successfully Added!", "", "success");
+    console.log("data==", data);
+}
+
     render() {
         let displayData;
 
@@ -59,6 +74,7 @@ class WishList extends React.Component {
                     <MDBCol md="2"><i class="fas fa-rupee-sign"></i> {data.product.price}</MDBCol>
                     <MDBCol md="2">{data.product.dateAvailable}</MDBCol>
                     <MDBCol md="2">
+                        <i className="fa fa-shopping-cart" aria-hidden="true" onClick={() => this.addInCart(data.productId)}></i>
                         <i class="fas fa-trash" onClick={() => this.deleteWishList(data._id)}></i>
                     </MDBCol>
                     <MDBCol md="1"></MDBCol>

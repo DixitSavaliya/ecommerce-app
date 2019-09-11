@@ -384,6 +384,22 @@ export default {
                 console.log("response===", response);
                 return response;
             }).catch({ status: 500, message: 'Internal Server Error' });
+    },
+
+    /** 
+* @param {string} productId
+* relatedProduct details
+*/
+    relatedProduct: (productId) => {
+        return axios.get(config.baseApiUrl + "api/list/related-product-list", {
+            params: {
+                productId:productId
+            }
+        })
+            .then(response => {
+                console.log("response===", response);
+                return response;
+            }).catch({ status: 500, message: 'Internal Server Error' });
     }
 
 }

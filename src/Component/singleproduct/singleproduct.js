@@ -6,21 +6,23 @@ import { Carousel } from 'react-responsive-carousel';
 import { MDBContainer, MDBRow, MDBCol } from "mdbreact";
 import './singleproduct.css';
 import renderHTML from 'react-render-html';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Swal from 'sweetalert2';
-
 
 class SingleProduct extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             productDetailList: [],
+            relatedProductList: [],
             images: [],
-            isFetching: true
+            isFetching: true,
+            productId: ''
         }
+        this.relatedProduct = this.relatedProduct.bind(this);
     }
 
     componentDidMount() {
-        console.log("query=", this.props.location.pathname.split('/')[2]);
         const query = this.props.location.pathname.split('/')[2];
         API.productDetail(query).
             then((findresponse) => {
@@ -36,13 +38,14 @@ class SingleProduct extends React.Component {
                             })) : (this.setState({
                                 images: [...this.state.images, config.baseMediaUrl + list.image]
                             }))
-
                         )
                     ) : (null)
                 )
             }).catch(
                 { status: 500, message: 'Internal Server Error' }
             );
+
+        this.relatedProduct(query);
     }
 
     /** 
@@ -81,10 +84,26 @@ class SingleProduct extends React.Component {
         }
     }
 
+    /** 
+   * @param {string} productId
+   * relatedProduct functionality
+   */
+    relatedProduct(productId) {
+        console.log("productId======", productId);
+        API.relatedProduct(productId).
+            then((findresponse) => {
+                console.log("relatedProduct response===", findresponse);
+                this.setState({ relatedProductList: findresponse.data.data });
+                console.log("related product==", this.state.relatedProductList);
+            }).catch(
+                { status: 500, message: 'Internal Server Error' }
+            );
+    }
+
     render() {
         let displayData;
         let displayDisc;
-        console.log("path images===", this.state.images);
+        let displayRelatedData;
 
         if (this.state.productDetailList) displayData = this.state.productDetailList.map(data =>
             <div className="single_product" data-aos="flip-left" data-aos-duration="1500">
@@ -113,10 +132,7 @@ class SingleProduct extends React.Component {
                             </button>
                         </div>
                     </div>
-
                 </div>
-
-
             </div>
         )
 
@@ -126,7 +142,39 @@ class SingleProduct extends React.Component {
             </MDBCol>
         )
 
-
+        if (this.state.relatedProductList) displayRelatedData = this.state.relatedProductList.map(data =>
+            <div className="single_product" data-aos="flip-left" data-aos-duration="1500">
+                <div className="product_content">
+                    <div className="product_image">
+                        {(data.productImage) ?
+                            (<div>
+                                {data.productImage.containerName ? (<img src={config.baseMediaUrl + data.productImage.containerName + data.productImage.image} className="img-fluid" alt="product image" />) : (<img src={config.baseMediaUrl + data.productImage.image} className="img-fluid" alt="product image" />)}
+                            </div>) : ('')}
+                        <div className="on_hover_btns">
+                            <div className="d-flex flex-wrap align-content-center">
+                                <div className="text-center p-2 m-auto">
+                                    <Link><i className="fa fa-shopping-cart" aria-hidden="true" onClick={() => this.addInCart(data.productId)}></i></Link>
+                                    <Link><i className="fa fa-heart" aria-hidden="true" onClick={() => this.addWishList(data.productId)}></i></Link>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="product_text">
+                        <span className="product_type">{data.metaTagTitle}</span>
+                        <p>{data.name}</p>
+                        <ul className="ratings">
+                            <li className="fill"><i className="fa fa-star" aria-hidden="true"></i></li>
+                            <li className="fill"><i className="fa fa-star" aria-hidden="true"></i></li>
+                            <li className="fill"><i className="fa fa-star" aria-hidden="true"></i></li>
+                            <li className="fill"><i className="fa fa-star" aria-hidden="true"></i></li>
+                            <li><i className="fa fa-star" aria-hidden="true"></i></li>
+                        </ul>
+                        <p><i class="fas fa-rupee-sign"></i> <span className="procuct_price">{data.price}</span></p>
+                        <p> <b>Discription:</b> {renderHTML(data.description)}</p>
+                    </div>
+                </div>
+            </div>
+        )
 
         return (
             <div>
@@ -142,7 +190,6 @@ class SingleProduct extends React.Component {
                                     )
                                 }
                             </Carousel>
-
                         </MDBCol>
                         <MDBCol md="8">
                             <section className="product_section">
@@ -163,8 +210,20 @@ class SingleProduct extends React.Component {
                             {displayDisc}
                         </div>
                     </MDBRow>
+                    <hr />
+                    <MDBRow>
+                        <section className="product_section">
+                            <div className="container">
+                                <div className="section_title">
+                                    <h3>Related Products</h3>
+                                </div>
+                                <div className="product_slider">
+                                    {displayRelatedData}
+                                </div>
+                            </div>
+                        </section>
+                    </MDBRow>
                 </MDBContainer>
-
             </div>
         );
     }

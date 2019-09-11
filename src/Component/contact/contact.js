@@ -6,13 +6,48 @@ class Contact extends React.Component {
         super(props);
         this.state = {
             name: '',
+            nameError: '',
             phoneNumber: '',
+            phoneNumberError: '',
             email: '',
-            message: ''
+            emailError: '',
+            message: '',
+            messageError: ''
         }
         this.handleChangeEvent = this.handleChangeEvent.bind(this);
         this.contact = this.contact.bind(this);
     }
+
+    validate = () => {
+        let nameError = "";
+        let messageError = "";
+        let emailError = "";
+        let phoneNumberError = "";
+
+        if (!this.state.name) {
+            nameError = "please enter  name";
+        }
+
+        const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        if (!reg.test(this.state.email)) {
+            emailError = "invalid email";
+        }
+
+        if (!this.state.message) {
+            messageError = "please enter  message";
+        }
+
+        if (!this.state.phoneNumber) {
+            phoneNumberError = "please enter phone number";
+        }
+
+        if (nameError || emailError || messageError || phoneNumberError) {
+            this.setState({ nameError, emailError, messageError, phoneNumberError });
+            return false;
+        }
+        return true;
+    };
+
 
     /** 
      * @param {JSON} event
@@ -27,16 +62,33 @@ class Contact extends React.Component {
 
     /** Contact form functionality */
     contact() {
-        const obj = {
-            name: this.state.name,
-            phoneNumber: this.state.phoneNumber,
-            email: this.state.email,
-            message: this.state.message
+        const isValid = this.validate();
+        if (isValid) {
+            console.log(this.state);
+            this.setState({
+                name: '',
+                nameError: '',
+                phoneNumber: '',
+                phoneNumberError: '',
+                email: '',
+                emailError: '',
+                message: '',
+                messageError: ''
+            })
+        };
+
+        if (this.state.name && this.state.email && this.state.phoneNumber && this.state.message) {
+            const obj = {
+                name: this.state.name,
+                phoneNumber: this.state.phoneNumber,
+                email: this.state.email,
+                message: this.state.message
+            }
+            API.contactUs(obj).
+                then((findresponse) => {
+                    console.log("response==", findresponse);
+                }).catch({ status: 500, message: 'Internal Server Error' });
         }
-        API.contactUs(obj).
-            then((findresponse) => {
-                console.log("response==", findresponse);
-            }).catch({ status: 500, message: 'Internal Server Error' });
     }
 
 
@@ -54,6 +106,9 @@ class Contact extends React.Component {
                                             <input type="text" name="name" value={this.state.name}
                                                 onChange={this.handleChangeEvent} class="form-control" />
                                             <label for="name">Your name</label>
+                                            <div style={{ fontSize: 12, color: "red" }}>
+                                                {this.state.nameError}
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -61,6 +116,9 @@ class Contact extends React.Component {
                                             <input type="email" name="email" value={this.state.email}
                                                 onChange={this.handleChangeEvent} class="form-control" />
                                             <label for="email">Your email</label>
+                                            <div style={{ fontSize: 12, color: "red" }}>
+                                                {this.state.emailError}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -70,6 +128,9 @@ class Contact extends React.Component {
                                             <input type="text" name="phoneNumber" value={this.state.phoneNumber}
                                                 onChange={this.handleChangeEvent} class="form-control" />
                                             <label for="phoneNumber">phoneNumber</label>
+                                            <div style={{ fontSize: 12, color: "red" }}>
+                                                {this.state.messageError}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -79,6 +140,9 @@ class Contact extends React.Component {
                                             <textarea type="text" name="message" value={this.state.message}
                                                 onChange={this.handleChangeEvent} rows="2" class="form-control md-textarea"></textarea>
                                             <label for="message">Your message</label>
+                                            <div style={{ fontSize: 12, color: "red" }}>
+                                                {this.state.nameError}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

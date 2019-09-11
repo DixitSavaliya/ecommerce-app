@@ -41,7 +41,6 @@ class Login extends React.Component {
             emailIdError = "invalid email";
         }
 
-
         if (!this.state.password) {
             passwordError = "please enter password";
         }

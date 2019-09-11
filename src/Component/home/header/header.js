@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import history from '../../../history';
 import API from '../../../service/homeservice';
+import './header.css';
 
 class Header extends React.Component {
     constructor(props) {
@@ -62,7 +63,7 @@ class Header extends React.Component {
                 <header>
                     <div className="header_top">
                         <div className="container">
-                            <div className="top_select float-left">
+                            {/* <div className="top_select float-left">
                                 <div className="custom_select language">
                                     <a href={{ javascript: void (0) }}>ENG</a>
                                     <div className="languages" style={{ display: (showing ? 'none' : 'none') }} >
@@ -81,7 +82,7 @@ class Header extends React.Component {
                                         </ul>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                             <div className="contact_number float-left">
                                 <a href="tel:9876543210">
 
@@ -173,9 +174,9 @@ class Header extends React.Component {
                                 <div className="cart">
                                     <ul>
                                         <li>
-                                            <a className="contact">
-                                                <Link to="/contact">Contact</Link>
-                                            </a>
+                                            <Link to="/contact" className="contact">Contact</Link>
+                                        </li>
+                                        <li>
                                             <a className="search_toggle_btn">
                                                 <Link to="/searchproduct"><i class="fas fa-search"></i></Link>
                                             </a>

@@ -8,7 +8,7 @@ const _ = require('lodash');
 let finalArr = [];
 let priceArr = [];
 let total = 0;
-// let productDetails =[];
+
 class Cart extends React.Component {
     constructor(props) {
         console.log("props Home======", props);
@@ -58,10 +58,10 @@ class Cart extends React.Component {
         })
     }
 
-     /** 
-    * @param {string} id
-    * Delete wishlist
-    */
+    /** 
+   * @param {string} id
+   * Delete wishlist
+   */
     deleteWishList(id) {
         const index = finalArr.indexOf(id);
         if (index !== -1) {
@@ -76,10 +76,10 @@ class Cart extends React.Component {
         this.componentDidMount();
     }
 
-     /** 
-    * @param {string} id
-    * Quantity Decrement
-    */
+    /** 
+   * @param {string} id
+   * Quantity Decrement
+   */
     decrement(id) {
         console.log('index in decrement-=-=', id);
         console.log(this.state.cartItem[id].qty);
@@ -98,10 +98,10 @@ class Cart extends React.Component {
         })
     }
 
-     /** 
-    * @param {string} index
-    * Quantity Decrement
-    */
+    /** 
+   * @param {string} index
+   * Quantity Decrement
+   */
     increment(index) {
         console.log('index in increment-=-=', index);
         this.state.cartItem[index].qty = this.state.cartItem[index].qty + 1;
@@ -166,7 +166,6 @@ class Cart extends React.Component {
                                     <MDBCol md="2" >Name</MDBCol>
                                     <MDBCol md="2">Price</MDBCol>
                                     <MDBCol md="2">Quantity</MDBCol>
-                                    <MDBCol md="2">total</MDBCol>
                                     <MDBCol md="2">Action</MDBCol>
                                 </MDBRow>
                             </MDBCardTitle>
