@@ -26,13 +26,15 @@ class CategoryProduct extends React.Component {
 
         if (this.state.categoryList) displayData = this.state.categoryList.map(data =>
             <li>
-                <a className="dropdown-toggle" href={{ javascript: void (0) }} data-toggle="dropdown">{data.name}<i className="fa fa-caret-right" aria-hidden="true"></i></a>
+                {
+                    data.children ? (<a className="dropdown-toggle" href={{ javascript: void (0) }} data-toggle="dropdown">{data.name}<i className="fa fa-caret-right" aria-hidden="true"></i></a>) : (<Link to={`/subcategories/${data.categoryId}`}><a>{data.name}<i className="fa fa-caret-right" aria-hidden="true"></i></a></Link>)
+                }
                 <div>
                     {
                         data.children ? (
                             data.children.map(list =>
                                 <div className="dropdown-menu">
-                                    <a className="dropdown-item" href="#">{list.name}</a>
+                                    <Link to={`/subcategories/${list.categoryId}`}><a className="dropdown-item">{list.name}</a></Link>
                                     <div>
                                         {
                                             list.children ? (

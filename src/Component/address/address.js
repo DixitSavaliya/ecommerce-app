@@ -1,6 +1,6 @@
 import React from 'react';
 import API from '../../service/homeservice';
-import { MDBContainer, MDBRow, MDBCol, MDBBtn ,MDBCard, MDBCardBody,MDBCardTitle,MDBCardText} from 'mdbreact';
+import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText } from 'mdbreact';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Swal from 'sweetalert2';
 import './address.css';
@@ -42,6 +42,10 @@ class Address extends React.Component {
     }
 
 
+    /** 
+    * @param {string} id
+    * get address
+    */
     getAddress(id) {
         console.log("id===", id);
         API.getAddress(id).
@@ -56,6 +60,11 @@ class Address extends React.Component {
             );
     }
 
+
+    /** 
+    * @param {string} data
+    * delete address
+    */
     deleteaddress(data) {
         const deletedata = data.addressId;
         console.log("delete", deletedata);

@@ -43,7 +43,6 @@ class Product extends React.Component {
                             </div>
                         )
                     }
-
                 </Carousel>
             </div>
         );

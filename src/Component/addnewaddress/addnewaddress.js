@@ -39,6 +39,10 @@ class Address extends React.Component {
             );
     }
 
+    /** 
+    * @param {JSON} event
+    * handleChangeName
+    */
     handleChangeName(event) {
         const { name, value } = event.target;
         this.setState({
@@ -46,6 +50,7 @@ class Address extends React.Component {
         })
     }
 
+    /** Add Address */
     addAddress() {
         const obj = {
             customerId: this.state.getProfileList.id,
@@ -55,7 +60,6 @@ class Address extends React.Component {
             state: this.state.state,
             postcode: this.state.pincode
         }
-
         API.addAddress(obj).
             then((findresponse) => {
                 console.log("addAddress response===", findresponse);
@@ -107,7 +111,6 @@ class Address extends React.Component {
                                     className="form-control"
                                 />
                                 <br />
-
                             </form>
                         </MDBCol>
 

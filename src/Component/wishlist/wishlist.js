@@ -5,8 +5,6 @@ import { MDBBtn, MDBCard, MDBCardBody, MDBRow, MDBCardTitle, MDBCardText, MDBCol
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Swal from 'sweetalert2';
 
-
-
 class WishList extends React.Component {
     constructor(props) {
         console.log("props Home======", props);
@@ -27,6 +25,10 @@ class WishList extends React.Component {
             );
     }
 
+    /** 
+  * @param {string} id
+  * delete wishlist
+  */
     deleteWishList(id) {
         API.deleteWishList(id).
             then((findresponse) => {
@@ -57,7 +59,7 @@ class WishList extends React.Component {
                     <MDBCol md="2"><i class="fas fa-rupee-sign"></i> {data.product.price}</MDBCol>
                     <MDBCol md="2">{data.product.dateAvailable}</MDBCol>
                     <MDBCol md="2">
-                    <i class="fas fa-trash" onClick={() => this.deleteWishList(data._id)}></i>
+                        <i class="fas fa-trash" onClick={() => this.deleteWishList(data._id)}></i>
                     </MDBCol>
                     <MDBCol md="1"></MDBCol>
                 </MDBRow>
@@ -69,7 +71,6 @@ class WishList extends React.Component {
                 <MDBCol>
                     <MDBCard>
                         <MDBCardBody>
-
                             <MDBCardTitle>
                                 <MDBRow>
                                     <MDBCol md="1"></MDBCol>

@@ -25,7 +25,6 @@ class Profile extends React.Component {
         }
         this.handleChangeName = this.handleChangeName.bind(this);
         this.editProfile = this.editProfile.bind(this);
-
     }
 
     componentDidMount() {
@@ -45,6 +44,10 @@ class Profile extends React.Component {
             );
     }
 
+    /** 
+ * @param {JSON} event
+ * handleChangeName
+ */
     handleChangeName(event) {
         const { name, value } = event.target;
         this.setState({
@@ -52,6 +55,7 @@ class Profile extends React.Component {
         })
     }
 
+    /** Edit profile */
     editProfile() {
         const obj = {
             firstName: this.state.firstName,

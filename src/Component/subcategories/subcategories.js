@@ -2,6 +2,9 @@ import React from 'react';
 import API from '../../service/homeservice';
 import { config } from '../../config';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import renderHTML from 'react-render-html';
+import Swal from 'sweetalert2';
+import './subcategories.css';
 
 class SubCategories extends React.Component {
     constructor(props) {
@@ -24,6 +27,43 @@ class SubCategories extends React.Component {
             );
     }
 
+    /** 
+    * @param {string} productId
+    * Add Cart function
+    */
+    addInCart(productId) {
+        console.log("productId==", productId);
+        this.value = localStorage.getItem('productId');
+        const data = []
+        data.push(this.value);
+        data.push(productId);
+        localStorage.setItem('productId', data.toString());
+        Swal.fire("Successfully Added!", "", "success");
+        console.log("data==", data);
+    }
+
+    /** 
+   * @param {string} productId
+   * Add Wishlist function
+   */
+    addWishList(productId) {
+        const obj = {
+            productId: productId
+        }
+        if (localStorage.getItem('token')) {
+            API.addwishlist(obj).
+                then((findresponse) => {
+                    console.log("addWishList response===", findresponse);
+                    Swal.fire("Successfully Added!", "", "success");
+                }).catch(
+                    { status: 500, message: 'Internal Server Error' }
+                );
+        } else {
+            Swal.fire("Please Login First");
+        }
+
+    }
+
     render() {
         let displayData;
 
@@ -39,8 +79,8 @@ class SubCategories extends React.Component {
                         <div className="on_hover_btns">
                             <div className="d-flex flex-wrap align-content-center">
                                 <div className="text-center p-2 m-auto">
-                                    <Link to="/cart"><i className="fa fa-shopping-cart" aria-hidden="true"></i></Link>
-                                    <Link to="/wishlist"><i className="fa fa-heart" aria-hidden="true"></i></Link>
+                                    <i className="fa fa-shopping-cart" aria-hidden="true" onClick={() => this.addInCart(data.productId)}></i>
+                                    <i className="fa fa-heart" aria-hidden="true" onClick={() => this.addWishList(data.productId)}></i>
                                 </div>
                             </div>
                         </div>
@@ -49,8 +89,10 @@ class SubCategories extends React.Component {
                         <span className="product_type">{data.metaTagTitle}</span>
                         <p>{data.name}</p>
                         <p><i class="fas fa-rupee-sign"></i> <span className="procuct_price">{data.price}</span></p>
+                        <p> {renderHTML(data.description)}</p>
                     </div>
                 </div>
+                <br />
             </div>
         )
         return (

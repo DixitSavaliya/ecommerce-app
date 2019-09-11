@@ -74,7 +74,6 @@ class Footer extends React.Component {
                                                             }
                                                         </div>
                                                     </li>
-
                                                 )
                                             }
                                         </ul>

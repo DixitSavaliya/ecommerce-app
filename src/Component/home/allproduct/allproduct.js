@@ -25,20 +25,10 @@ class AllProduct extends React.Component {
             );
     }
 
-    addWishList(productId) {
-        console.log("id=====", productId);
-        const obj = {
-            productId: productId
-        }
-        API.addwishlist(obj).
-            then((findresponse) => {
-                console.log("addWishList response===", findresponse);
-                Swal.fire("Successfully Added!", "", "success");
-            }).catch(
-                { status: 500, message: 'Internal Server Error' }
-            );
-    }
-
+    /** 
+    * @param {string} productId
+    * Add Cart function
+    */
     addInCart(productId) {
         console.log("productId==", productId);
         this.value = localStorage.getItem('productId');
@@ -48,6 +38,29 @@ class AllProduct extends React.Component {
         localStorage.setItem('productId', data.toString());
         Swal.fire("Successfully Added!", "", "success");
         console.log("data==", data);
+    }
+
+    /** 
+   * @param {string} productId
+   * Add Wishlist function
+   */
+    addWishList(productId) {
+        console.log("id=====", productId);
+        const obj = {
+            productId: productId
+        }
+        if(localStorage.getItem('token')){
+            API.addwishlist(obj).
+            then((findresponse) => {
+                console.log("addWishList response===", findresponse);
+                Swal.fire("Successfully Added!", "", "success");
+            }).catch(
+                { status: 500, message: 'Internal Server Error' }
+            );
+        } else {
+            Swal.fire("Please Login First");
+        }
+      
     }
 
     render() {
@@ -61,7 +74,6 @@ class AllProduct extends React.Component {
                             (<div>
                                 {data.Images.containerName ? (<img src={config.baseMediaUrl + data.Images.containerName + data.Images.image} className="img-fluid" alt="product image" />) : (<img src={config.baseMediaUrl + data.Images.image} className="img-fluid" alt="product image" />)}
                             </div>) : ('')}
-
                         <div className="on_hover_btns">
                             <div className="d-flex flex-wrap align-content-center">
                                 <div className="text-center p-2 m-auto">

@@ -16,34 +16,11 @@ class SearchProduct extends React.Component {
         this.handleLoginKeyUp = this.keyUpHandler.bind(this);
     }
 
-    // componentDidMount() {
-    //     console.log("query=", this.props.location.pathname.split('/')[2]);
-    //     const query = this.props.location.pathname.split('/')[2];
-    //     API.searchList(query).
-    //     then((findresponse) => {
-    //         console.log("searchList response===", findresponse);
-    //         this.setState({searchList:findresponse.data.data.productList});
-    //         console.log("searchList",this.state.searchList);
-    //     }).catch(
-    //         { status: 500, message: 'Internal Server Error' }
-    //     );
-    // }
 
-
-    addWishList(productId) {
-        console.log("id=====", productId);
-        const obj = {
-            productId: productId
-        }
-        API.addwishlist(obj).
-            then((findresponse) => {
-                console.log("addWishList response===", findresponse);
-                Swal.fire("Successfully Added!", "", "success");
-            }).catch(
-                { status: 500, message: 'Internal Server Error' }
-            );
-    }
-
+    /** 
+     * @param {string} productId
+     * Add Cart function
+     */
     addInCart(productId) {
         console.log("productId==", productId);
         this.value = localStorage.getItem('productId');
@@ -55,6 +32,31 @@ class SearchProduct extends React.Component {
         console.log("data==", data);
     }
 
+    /** 
+   * @param {string} productId
+   * Add Wishlist function
+   */
+    addWishList(productId) {
+        const obj = {
+            productId: productId
+        }
+        if (localStorage.getItem('token')) {
+            API.addwishlist(obj).
+                then((findresponse) => {
+                    console.log("addWishList response===", findresponse);
+                    Swal.fire("Successfully Added!", "", "success");
+                }).catch(
+                    { status: 500, message: 'Internal Server Error' }
+                );
+        } else {
+            Swal.fire("Please Login First");
+        }
+    }
+
+    /** 
+    * @param {JSON} e
+    * keyUpHandler event
+    */
     keyUpHandler(e) {
         console.log("e", e.target.value);
         this.setState({ value: e.target.value })
@@ -110,9 +112,9 @@ class SearchProduct extends React.Component {
         return (
             <div>
                 <div>
-                <span>Search: 
-                 <input type="text" onKeyUp={this.handleLoginKeyUp}/>
-               </span>
+                    <span>Search:
+                 <input type="text" onKeyUp={this.handleLoginKeyUp} />
+                    </span>
                 </div>
                 <div>
                     {displayData}

@@ -6,12 +6,12 @@ import history from '../../history';
 
 class EditAddress extends React.Component {
     constructor(props) {
-        console.log("props",props);
+        console.log("props", props);
         super(props);
         this.state = {
             getProfileList: [],
             addressList: [],
-            editList:[],
+            editList: [],
             id: '',
             address_1: '',
             address_1Error: '',
@@ -22,7 +22,7 @@ class EditAddress extends React.Component {
             stateError: '',
             pincode: '',
             pincodeError: '',
-            addressId:''
+            addressId: ''
         }
         this.handleChangeName = this.handleChangeName.bind(this);
         this.EditAddress = this.EditAddress.bind(this);
@@ -30,20 +30,20 @@ class EditAddress extends React.Component {
 
     componentDidMount() {
         const data = this.props.location.state.name;
-        console.log("editaddress====",data);
+        console.log("editaddress====", data);
         this.setState({
-            address_1:data.address1,
-            city:data.city,
-            address_2:data.address2,
-            state:data.state,
-            pincode:data.postcode,
-            addressId:data.addressId
+            address_1: data.address1,
+            city: data.city,
+            address_2: data.address2,
+            state: data.state,
+            pincode: data.postcode,
+            addressId: data.addressId
         })
 
         API.getProfile().
             then((findresponse) => {
                 this.setState({ getProfileList: findresponse.data.data })
-                console.log("getProfileList",this.state.getProfileList);
+                console.log("getProfileList", this.state.getProfileList);
                 this.setState({
                     id: this.state.getProfileList.id
                 });
@@ -52,6 +52,11 @@ class EditAddress extends React.Component {
             );
     }
 
+
+    /** 
+   * @param {JSON} event
+   * handleChangeName
+   */
     handleChangeName(event) {
         const { name, value } = event.target;
         this.setState({
@@ -59,25 +64,24 @@ class EditAddress extends React.Component {
         })
     }
 
-
+    /** EditAddress functionality */
     EditAddress() {
         const obj = {
-            addressId:this.state.addressId,
-            customerId:this.state.getProfileList.id,
-            address1:this.state.address_1,
-            address2:this.state.address_2,
-            city:this.state.city,
-            state:this.state.state,
-            postcode:this.state.pincode
+            addressId: this.state.addressId,
+            customerId: this.state.getProfileList.id,
+            address1: this.state.address_1,
+            address2: this.state.address_2,
+            city: this.state.city,
+            state: this.state.state,
+            postcode: this.state.pincode
         }
-
-        API.editAddress(obj,this.state.addressId).
-        then((findresponse) => {
-            console.log("editList======",findresponse);
-        	history.push('/address');
-        }).catch(
-            { status: 500, message: 'Internal Server Error' }
-        );
+        API.editAddress(obj, this.state.addressId).
+            then((findresponse) => {
+                console.log("editList======", findresponse);
+                history.push('/address');
+            }).catch(
+                { status: 500, message: 'Internal Server Error' }
+            );
     }
 
     render() {

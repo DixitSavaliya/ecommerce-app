@@ -12,7 +12,7 @@ class ForgotPassword extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: '',
+            emailId: '',
             emailError: '',
             modal: false
         }
@@ -45,7 +45,7 @@ class ForgotPassword extends React.Component {
         let emailError = "";
 
         const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-        if (!reg.test(this.state.email)) {
+        if (!reg.test(this.state.emailId)) {
             emailError = "invalid email";
         }
 
@@ -62,13 +62,13 @@ class ForgotPassword extends React.Component {
         if (isValid) {
             console.log(this.state);
             this.setState({
-                email: '',
+                emailId: '',
                 emailError: ''
             })
         };
-        if (this.state.email) {
+        if (this.state.emailId) {
             const obj = {
-                emailId: this.state.email
+                emailId: this.state.emailId
             }
             console.log("obj==", obj);
             API.ForgotPassword(obj).
@@ -93,9 +93,9 @@ class ForgotPassword extends React.Component {
                           </label>
                                 <input
                                     type="email"
-                                    name="email"
+                                    name="emailId"
                                     className="form-control"
-                                    value={this.state.email}
+                                    value={this.state.emailId}
                                     onChange={this.handleChangeEvent}
                                 />
                                 <div style={{ fontSize: 12, color: "red" }}>
@@ -105,7 +105,7 @@ class ForgotPassword extends React.Component {
                             </form>
                         </MDBModalBody>
                         <MDBModalFooter>
-                            <MDBBtn color="primary" onClick={this.forgotpassword} disabled={!this.state.email}>Send</MDBBtn>
+                            <MDBBtn color="primary" onClick={this.forgotpassword} disabled={!this.state.emailId}>Send</MDBBtn>
                         </MDBModalFooter>
                     </MDBModal>
                 </MDBContainer>

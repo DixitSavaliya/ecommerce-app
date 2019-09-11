@@ -17,6 +17,7 @@ class Header extends React.Component {
         this.handleLoginKeyUp = this.keyUpHandler.bind(this);
     }
 
+    /** User Logout */
     logout() {
         localStorage.removeItem('token');
         localStorage.removeItem('name');
@@ -35,6 +36,10 @@ class Header extends React.Component {
             );
     }
 
+    /** 
+  * @param {string} e
+  * key up handler
+  */
     keyUpHandler(e) {
         console.log("e", e.target.value);
         this.setState({ value: e.target.value })
@@ -48,7 +53,6 @@ class Header extends React.Component {
             }).catch(
                 { status: 500, message: 'Internal Server Error' }
             );
-
     }
 
     render() {
@@ -133,13 +137,16 @@ class Header extends React.Component {
                                                     this.state.categoryList.map(data =>
                                                         <li className="nav-item">
 
-                                                            <a className="dropdown-toggle" href={{ javascript: void (0) }} data-toggle="dropdown">{data.name}<i className="fa fa-chevron-down" aria-hidden="true"></i></a>
+                                                            {
+                                                                data.children ? (<a className="dropdown-toggle" href={{ javascript: void (0) }} data-toggle="dropdown">{data.name}<i className="fa fa-caret-right" aria-hidden="true"></i></a>) : (<Link to={`/subcategories/${data.categoryId}`}><a>{data.name}<i className="fa fa-caret-right" aria-hidden="true"></i></a></Link>)
+                                                            }
+
                                                             <div>
                                                                 {
                                                                     data.children ? (
                                                                         data.children.map(list =>
                                                                             <div className="dropdown-menu">
-                                                                                <a className="dropdown-item" href="#">{list.name}</a>
+                                                                                <Link to={`/subcategories/${list.categoryId}`}><a className="dropdown-item">{list.name}</a></Link>
                                                                                 <div>
                                                                                     {
                                                                                         list.children ? (
@@ -157,7 +164,6 @@ class Header extends React.Component {
                                                                 }
                                                             </div>
                                                         </li>
-
                                                     )
                                                 }
                                             </ul>
@@ -167,8 +173,11 @@ class Header extends React.Component {
                                 <div className="cart">
                                     <ul>
                                         <li>
+                                            <a className="contact">
+                                                <Link to="/contact">Contact</Link>
+                                            </a>
                                             <a className="search_toggle_btn">
-                                            <Link to="/searchproduct"><i class="fas fa-search"></i></Link>
+                                                <Link to="/searchproduct"><i class="fas fa-search"></i></Link>
                                             </a>
                                             {/* <div className="search_box">
                                                 <input type="text" placeholder="search" onKeyUp={this.handleLoginKeyUp} />

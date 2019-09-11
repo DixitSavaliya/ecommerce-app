@@ -40,6 +40,7 @@ class Checkout extends React.Component {
 
     componentDidMount() {
 
+        /** Get Countrylist */
         API.getCountryList().
             then((findresponse) => {
                 // console.log("getCountryList response===", findresponse);
@@ -50,7 +51,7 @@ class Checkout extends React.Component {
                 { status: 500, message: 'Internal Server Error' }
             );
 
-
+        /** Get Zonelist */
         API.getZoneList().
             then((findresponse) => {
                 console.log("getZoneList response===", findresponse);
@@ -61,6 +62,7 @@ class Checkout extends React.Component {
                 { status: 500, message: 'Internal Server Error' }
             );
 
+        /** Get Profile */
         API.getProfile().
             then((findresponse) => {
                 // console.log("getProfile response===", findresponse);
@@ -186,9 +188,7 @@ class Checkout extends React.Component {
                 shippingZone: this.state.zone,
                 shippingPostCode: this.state.pincode,
                 shippingCountry: this.state.country
-
             }
-
             API.checkoutListOrder(obj).
                 then((findresponse) => {
                     console.log("checkoutListOrder response===", findresponse);

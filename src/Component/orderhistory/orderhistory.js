@@ -23,6 +23,11 @@ class OrderHistory extends React.Component {
             );
     }
 
+
+    /** 
+   * @param {string} data
+   * get myorder details
+   */
     getOrderDetails(data) {
         API.getOrderDetail(data.orderId).
             then((findresponse) => {
@@ -43,7 +48,7 @@ class OrderHistory extends React.Component {
                     <MDBCol md="2">{data.createdDate}</MDBCol>
                     <MDBCol md="2">{data.total}</MDBCol>
                     <MDBCol md="3">
-                        <Link to ={{ pathname:`orderdetail/${data.orderId}`}}><i class="fas fa-eye"></i></Link>
+                        <Link to={{ pathname: `orderdetail/${data.orderId}` }}><i class="fas fa-eye"></i></Link>
                     </MDBCol>
                 </MDBRow>
                 <br />

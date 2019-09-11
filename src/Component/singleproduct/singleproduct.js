@@ -33,7 +33,9 @@ class SingleProduct extends React.Component {
                         data.productImage.map(list =>
                             list.containerName ? (this.setState({
                                 images: [...this.state.images, config.baseMediaUrl + list.containerName + list.image]
-                            })) : ('')
+                            })) : (this.setState({
+                                images: [...this.state.images, config.baseMediaUrl + list.image]
+                            }))
 
                         )
                     ) : (null)
@@ -43,6 +45,10 @@ class SingleProduct extends React.Component {
             );
     }
 
+    /** 
+     * @param {string} productId
+     * Add Cart function
+     */
     addInCart(productId) {
         console.log("productId==", productId);
         this.value = localStorage.getItem('productId');
@@ -54,20 +60,26 @@ class SingleProduct extends React.Component {
         console.log("data==", data);
     }
 
+    /** 
+   * @param {string} productId
+   * Add Wishlist function
+   */
     addWishList(productId) {
-        console.log("id=====", productId);
         const obj = {
             productId: productId
         }
-        API.addwishlist(obj).
-            then((findresponse) => {
-                console.log("addWishList response===", findresponse);
-                Swal.fire("Successfully Added!", "", "success");
-            }).catch(
-                { status: 500, message: 'Internal Server Error' }
-            );
+        if (localStorage.getItem('token')) {
+            API.addwishlist(obj).
+                then((findresponse) => {
+                    console.log("addWishList response===", findresponse);
+                    Swal.fire("Successfully Added!", "", "success");
+                }).catch(
+                    { status: 500, message: 'Internal Server Error' }
+                );
+        } else {
+            Swal.fire("Please Login First");
+        }
     }
-
 
     render() {
         let displayData;
@@ -90,18 +102,18 @@ class SingleProduct extends React.Component {
                         <p><i class="fas fa-rupee-sign"></i> <span className="procuct_price">{data.price}</span></p>
                     </div>
                     <div className="row">
-                    <div className="col-md-6">
-                        <button className="btn btn-blue" onClick={() => this.addInCart(data.productId)}>
-                            <span>Add Cart</span>
-                        </button>
+                        <div className="col-md-6">
+                            <button className="btn btn-blue" onClick={() => this.addInCart(data.productId)}>
+                                <span>Add Cart</span>
+                            </button>
+                        </div>
+                        <div className="col-md-6">
+                            <button className="btn btn-blue" onClick={() => this.addWishList(data.productId)}>
+                                <span>Add WishList</span>
+                            </button>
+                        </div>
                     </div>
-                    <div className="col-md-6">
-                        <button className="btn btn-blue" onClick={() => this.addWishList(data.productId)}>
-                            <span>Add WishList</span>
-                        </button>
-                    </div>
-                    </div>
-                    
+
                 </div>
 
 
@@ -148,7 +160,7 @@ class SingleProduct extends React.Component {
                     <MDBRow>
                         <h1>Discription</h1>
                         <div>
-                        {displayDisc}
+                            {displayDisc}
                         </div>
                     </MDBRow>
                 </MDBContainer>

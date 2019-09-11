@@ -8,7 +8,6 @@ import './login.css';
 import API from '../../service/homeservice';
 import * as jwt_decode from 'jwt-decode';
 
-
 class Login extends React.Component {
 
     /** First Constructor Call */
@@ -137,7 +136,7 @@ class Login extends React.Component {
                                     <p><Link to="/forgotpassword">Forgot password?</Link></p>
                                 </span>
                                 <span>
-                                    <p><Link to="/signup">Create new account</Link></p>
+                                    <p><Link to="/register">Create new account</Link></p>
                                 </span>
                             </div>
                         </form>

@@ -58,7 +58,10 @@ class Cart extends React.Component {
         })
     }
 
-
+     /** 
+    * @param {string} id
+    * Delete wishlist
+    */
     deleteWishList(id) {
         const index = finalArr.indexOf(id);
         if (index !== -1) {
@@ -73,6 +76,10 @@ class Cart extends React.Component {
         this.componentDidMount();
     }
 
+     /** 
+    * @param {string} id
+    * Quantity Decrement
+    */
     decrement(id) {
         console.log('index in decrement-=-=', id);
         console.log(this.state.cartItem[id].qty);
@@ -90,6 +97,11 @@ class Cart extends React.Component {
             demo: ''
         })
     }
+
+     /** 
+    * @param {string} index
+    * Quantity Decrement
+    */
     increment(index) {
         console.log('index in increment-=-=', index);
         this.state.cartItem[index].qty = this.state.cartItem[index].qty + 1;
@@ -103,6 +115,7 @@ class Cart extends React.Component {
         console.log("after increment=============", this.state.cartItem[index].qty);
     }
 
+    /** Total amount */
     totalFunc = () => {
         console.log("pricearr---==", priceArr);
         total = _.sum(priceArr);
@@ -147,7 +160,6 @@ class Cart extends React.Component {
                 <MDBCol>
                     <MDBCard>
                         <MDBCardBody>
-
                             <MDBCardTitle>
                                 <MDBRow>
                                     <MDBCol md="2">Product</MDBCol>

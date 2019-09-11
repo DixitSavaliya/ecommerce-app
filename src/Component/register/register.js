@@ -59,6 +59,7 @@ class SignUp extends React.Component {
         return true;
     };
 
+    /** New-User Register */
     Signup() {
         const isValid = this.validate();
         if (isValid) {
@@ -93,6 +94,10 @@ class SignUp extends React.Component {
         }
     }
 
+    /** 
+* @param {JSON} event
+* handleChangeEvent
+*/
     handleChangeEvent(event) {
         event.preventDefault();
         const state = this.state
