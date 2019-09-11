@@ -35,7 +35,7 @@ button.btn span{
 }
 button.btn:before {
     position: absolute;
-    background-color: #00306a;
+    /* background-color: #00306a; */
     top: 100%;
     left: 100%;
     height: 100%;

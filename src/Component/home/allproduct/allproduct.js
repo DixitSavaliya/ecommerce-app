@@ -2,6 +2,7 @@ import React from 'react';
 import API from '../../../service/homeservice';
 import { config } from '../../../config';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import Swal from 'sweetalert2';
 
 class AllProduct extends React.Component {
     constructor(props) {
@@ -24,6 +25,31 @@ class AllProduct extends React.Component {
             );
     }
 
+    addWishList(productId) {
+        console.log("id=====", productId);
+        const obj = {
+            productId: productId
+        }
+        API.addwishlist(obj).
+            then((findresponse) => {
+                console.log("addWishList response===", findresponse);
+                Swal.fire("Successfully Added!", "", "success");
+            }).catch(
+                { status: 500, message: 'Internal Server Error' }
+            );
+    }
+
+    addInCart(productId) {
+        console.log("productId==", productId);
+        this.value = localStorage.getItem('productId');
+        const data = []
+        data.push(this.value);
+        data.push(productId);
+        localStorage.setItem('productId', data.toString());
+        Swal.fire("Successfully Added!", "", "success");
+        console.log("data==", data);
+    }
+
     render() {
         let displayData;
 
@@ -40,8 +66,8 @@ class AllProduct extends React.Component {
                             <div className="d-flex flex-wrap align-content-center">
                                 <div className="text-center p-2 m-auto">
                                     <Link to={`/singleproduct/${data._id}`}><i className="fa fa-eye" aria-hidden="true"></i></Link>
-                                    <Link to="/cart"><i className="fa fa-shopping-cart" aria-hidden="true"></i></Link>
-                                    <Link to="/wishlist"><i className="fa fa-heart" aria-hidden="true"></i></Link>
+                                    <Link><i className="fa fa-shopping-cart" aria-hidden="true" onClick={() => this.addInCart(data.productId)}></i></Link>
+                                    <Link><i className="fa fa-heart" aria-hidden="true" onClick={() => this.addWishList(data.productId)}></i></Link>
                                 </div>
                             </div>
                         </div>

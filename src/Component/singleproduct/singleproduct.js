@@ -5,6 +5,9 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 import { MDBContainer, MDBRow, MDBCol } from "mdbreact";
 import './singleproduct.css';
+import renderHTML from 'react-render-html';
+import Swal from 'sweetalert2';
+
 
 class SingleProduct extends React.Component {
     constructor(props) {
@@ -40,8 +43,35 @@ class SingleProduct extends React.Component {
             );
     }
 
+    addInCart(productId) {
+        console.log("productId==", productId);
+        this.value = localStorage.getItem('productId');
+        const data = []
+        data.push(this.value);
+        data.push(productId);
+        localStorage.setItem('productId', data.toString());
+        Swal.fire("Successfully Added!", "", "success");
+        console.log("data==", data);
+    }
+
+    addWishList(productId) {
+        console.log("id=====", productId);
+        const obj = {
+            productId: productId
+        }
+        API.addwishlist(obj).
+            then((findresponse) => {
+                console.log("addWishList response===", findresponse);
+                Swal.fire("Successfully Added!", "", "success");
+            }).catch(
+                { status: 500, message: 'Internal Server Error' }
+            );
+    }
+
+
     render() {
         let displayData;
+        let displayDisc;
         console.log("path images===", this.state.images);
 
         if (this.state.productDetailList) displayData = this.state.productDetailList.map(data =>
@@ -59,9 +89,32 @@ class SingleProduct extends React.Component {
                         </ul>
                         <p><i class="fas fa-rupee-sign"></i> <span className="procuct_price">{data.price}</span></p>
                     </div>
+                    <div className="row">
+                    <div className="col-md-6">
+                        <button className="btn btn-blue" onClick={() => this.addInCart(data.productId)}>
+                            <span>Add Cart</span>
+                        </button>
+                    </div>
+                    <div className="col-md-6">
+                        <button className="btn btn-blue" onClick={() => this.addWishList(data.productId)}>
+                            <span>Add WishList</span>
+                        </button>
+                    </div>
+                    </div>
+                    
                 </div>
+
+
             </div>
         )
+
+        if (this.state.productDetailList) displayDisc = this.state.productDetailList.map(data =>
+            <MDBCol md="6">
+                <p> {renderHTML(data.description)}</p>
+            </MDBCol>
+        )
+
+
 
         return (
             <div>
@@ -91,6 +144,12 @@ class SingleProduct extends React.Component {
                                 </div>
                             </section>
                         </MDBCol>
+                    </MDBRow>
+                    <MDBRow>
+                        <h1>Discription</h1>
+                        <div>
+                        {displayDisc}
+                        </div>
                     </MDBRow>
                 </MDBContainer>
 
