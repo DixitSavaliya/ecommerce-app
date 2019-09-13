@@ -107,12 +107,13 @@ class SearchProduct extends React.Component {
                         <p><i class="fas fa-rupee-sign"></i> <span className="procuct_price">{data.price}</span></p>
                     </div>
                 </div>
+                <hr/>
             </div>
         )
         return (
             <div>
-                <div>
-                    <span>Search:
+                <div className="text_center">
+                    <span><strong>Search:</strong>
                  <input type="text" onKeyUp={this.handleLoginKeyUp} />
                     </span>
                 </div>

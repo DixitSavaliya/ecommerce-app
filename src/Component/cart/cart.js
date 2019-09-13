@@ -16,7 +16,8 @@ class Cart extends React.Component {
         this.state = {
             cartItem: '',
             demo: '',
-            productDetails: []
+            productDetails: [],
+            finalArry:[]
         }
     }
 
@@ -27,6 +28,9 @@ class Cart extends React.Component {
         const filter = _.filter(val, _.size); // null value remove
         console.log('value of filter-=-=', filter, priceArr);
         finalArr = filter;
+        let finalArrLength = finalArr.length;
+        console.log('cart count in get item=====', finalArrLength);
+        localStorage.setItem('cartCount', finalArrLength.toString());
         finalArr.map((id) => {
             console.log('id-=-=', id);
             API.productDetail(id)
@@ -62,17 +66,21 @@ class Cart extends React.Component {
    * @param {string} id
    * Delete wishlist
    */
-    deleteWishList(id) {
+    deleteWishList(id,price) {
+        priceArr.splice(_.findIndex(priceArr, price), 1);
+        console.log("pricearr==========>", priceArr)
         const index = finalArr.indexOf(id);
         if (index !== -1) {
             finalArr.splice(index, 1);
         }
         console.log('finalArr-=-=', finalArr);
+        this.setState({finalArry:finalArr});
         Swal.fire("Successfully Delete!", "", "success");
         localStorage.setItem('productId', finalArr.toString());
         this.setState({
             cartItem: ''
         })
+        priceArr = [];
         this.componentDidMount();
     }
 
@@ -123,9 +131,8 @@ class Cart extends React.Component {
     }
 
     render() {
-
         let displayData;
-
+        console.log("finalarray==",this.state.finalArry);
         if (this.state.cartItem) displayData = this.state.cartItem.map((data, index) => (
             <div>
                 <MDBRow>
@@ -147,7 +154,7 @@ class Cart extends React.Component {
                         </MDBRow>
                     </MDBCol>
                     <MDBCol md="2">
-                        <i className="fas fa-trash" onClick={() => this.deleteWishList(data.productId)}></i>
+                        <i className="fas fa-trash" onClick={() => this.deleteWishList(data.productId,data.price)}></i>
                     </MDBCol>
                 </MDBRow>
                 <hr />
@@ -173,7 +180,8 @@ class Cart extends React.Component {
                                 <div>
                                     {displayData}
                                 </div>
-                                <div className="row">
+                                {
+                                    localStorage.getItem('productId')? ( <div className="row">
                                     <div className="col-md-4">
                                         <div className="text-center mt-4">
                                             <Link to="/home"> <MDBBtn color="indigo">Continue With Shopping</MDBBtn></Link>
@@ -185,7 +193,9 @@ class Cart extends React.Component {
                                     <div className="col-md-4">
                                         <Link to={{ pathname: '/checkout', state: { name: this.state.productDetails } }}  > <MDBBtn color="indigo">Proceed To Checkout</MDBBtn></Link>
                                     </div>
-                                </div>
+                                </div>) : ('')
+                                }
+                               
                             </MDBCardText>
                         </MDBCardBody>
                     </MDBCard>

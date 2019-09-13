@@ -1,3 +1,13 @@
 .flex{
     display: flex;
 }
+input[type="text"] {
+    width: 500px;
+    margin: 15px;
+}
+.text_center{
+    text-align: center;
+}
+.single_product.aos-init.aos-animate {
+    margin-top: 15px !important;
+}

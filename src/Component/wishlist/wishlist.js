@@ -4,6 +4,7 @@ import { config } from '../../config';
 import { MDBBtn, MDBCard, MDBCardBody, MDBRow, MDBCardTitle, MDBCardText, MDBCol } from 'mdbreact';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Swal from 'sweetalert2';
+const _ = require('lodash');
 
 class WishList extends React.Component {
     constructor(props) {
@@ -40,7 +41,7 @@ class WishList extends React.Component {
             );
     }
 
-    /** 
+   /** 
     * @param {string} productId
     * Add Cart function
     */
@@ -50,7 +51,15 @@ class WishList extends React.Component {
     const data = []
     data.push(this.value);
     data.push(productId);
+    console.log("data",data);
+    const strVal = data.toString();
+    console.log('strVal=====', strVal);
+    const arrVal = strVal.split(',');
+    console.log('arrVal=====', _.uniq(arrVal));
+    const filter = _.filter(_.uniq(arrVal), _.size);
+    console.log('filter=====', filter);
     localStorage.setItem('productId', data.toString());
+    localStorage.setItem('cartCount', filter.length.toString());
     Swal.fire("Successfully Added!", "", "success");
     console.log("data==", data);
 }

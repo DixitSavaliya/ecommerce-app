@@ -1,5 +1,6 @@
 import React from 'react';
 import API from '../../service/homeservice';
+import Swal from 'sweetalert2';
 
 class Contact extends React.Component {
     constructor(props) {
@@ -37,8 +38,9 @@ class Contact extends React.Component {
             messageError = "please enter  message";
         }
 
-        if (!this.state.phoneNumber) {
-            phoneNumberError = "please enter phone number";
+        const phone = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+        if (!phone.test(this.state.phoneNumber)) {
+            phoneNumberError = "please enter valid number";
         }
 
         if (nameError || emailError || messageError || phoneNumberError) {
@@ -77,7 +79,7 @@ class Contact extends React.Component {
             })
         };
 
-        if (this.state.name && this.state.email && this.state.phoneNumber && this.state.message) {
+        if (this.state.name && this.state.email && this.state.phoneNumber && this.state.message && !this.state.phoneNumberError && !this.state.emailError) {
             const obj = {
                 name: this.state.name,
                 phoneNumber: this.state.phoneNumber,
@@ -87,6 +89,7 @@ class Contact extends React.Component {
             API.contactUs(obj).
                 then((findresponse) => {
                     console.log("response==", findresponse);
+                    Swal.fire("Mail sent successfully", "", "success");
                 }).catch({ status: 500, message: 'Internal Server Error' });
         }
     }
@@ -125,11 +128,11 @@ class Contact extends React.Component {
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="md-form mb-0">
-                                            <input type="text" name="phoneNumber" value={this.state.phoneNumber}
+                                            <input type="number" name="phoneNumber" value={this.state.phoneNumber}
                                                 onChange={this.handleChangeEvent} class="form-control" />
                                             <label for="phoneNumber">phoneNumber</label>
                                             <div style={{ fontSize: 12, color: "red" }}>
-                                                {this.state.messageError}
+                                                {this.state.phoneNumberError}
                                             </div>
                                         </div>
                                     </div>
@@ -141,7 +144,7 @@ class Contact extends React.Component {
                                                 onChange={this.handleChangeEvent} rows="2" class="form-control md-textarea"></textarea>
                                             <label for="message">Your message</label>
                                             <div style={{ fontSize: 12, color: "red" }}>
-                                                {this.state.nameError}
+                                                {this.state.messageError}
                                             </div>
                                         </div>
                                     </div>

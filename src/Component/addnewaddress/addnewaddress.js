@@ -166,7 +166,7 @@ class Address extends React.Component {
                                     Pincode
                                 </label>
                                 <input
-                                    type="text"
+                                    type="number"
                                     name="pincode"
                                     value={this.state.pincode}
                                     onChange={this.handleChangeName}

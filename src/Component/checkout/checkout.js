@@ -1,6 +1,8 @@
 import React from 'react';
 import API from '../../service/homeservice';
 import './checkout.css';
+import history from '../../history';
+import Swal from 'sweetalert2';
 
 class Checkout extends React.Component {
     constructor(props) {
@@ -102,8 +104,9 @@ class Checkout extends React.Component {
             emailError = "invalid email";
         }
 
-        if (!this.state.mobileNumber) {
-            mobileNumberError = "please enter phone number";
+        const phone = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+        if (!phone.test(this.state.mobileNumber)) {
+            mobileNumberError = "please enter valid number";
         }
 
         if (!this.state.address_1) {
@@ -133,6 +136,10 @@ class Checkout extends React.Component {
         return true;
     };
 
+    /** 
+  * @param {string} event
+  * handleChangeName
+  */
     handleChangeName(event) {
         const { name, value } = event.target;
         this.setState({
@@ -140,14 +147,23 @@ class Checkout extends React.Component {
         })
     }
 
+    /** 
+ * @param {string} event
+ * get zone name
+ */
     handleChange(event) {
         this.setState({ zone: event.target.value })
     }
 
+    /** 
+ * @param {string} event
+ * get country name
+ */
     handleChangeCountry(event) {
         this.setState({ country: event.target.value })
     }
 
+    /** Process to checkout order */
     Checkout() {
         const isValid = this.validate();
         if (isValid) {
@@ -175,7 +191,7 @@ class Checkout extends React.Component {
             })
         };
 
-        if (this.state.firstName && this.state.lastName && this.state.email && this.state.mobileNumber && this.state.address_1 && this.state.city && this.state.zone && this.state.pincode && this.state.country) {
+        if (this.state.firstName && this.state.lastName && this.state.email && this.state.mobileNumber && this.state.address_1 && this.state.city && this.state.zone && this.state.pincode && this.state.country && !this.state.mobileNumberError) {
             const obj = {
                 productDetails: this.productDetails,
                 shippingFirstName: this.state.firstName,
@@ -193,6 +209,7 @@ class Checkout extends React.Component {
                 then((findresponse) => {
                     console.log("checkoutListOrder response===", findresponse);
                     window.location.href = '/home';
+                    // history.push('/home');
                 }).catch(
                     { status: 500, message: 'Internal Server Error' }
                 );

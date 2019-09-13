@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import renderHTML from 'react-render-html';
 import Swal from 'sweetalert2';
 import './subcategories.css';
+const _ = require('lodash');
 
 class SubCategories extends React.Component {
     constructor(props) {
@@ -20,8 +21,12 @@ class SubCategories extends React.Component {
         API.SubCategoryList(query).
             then((findresponse) => {
                 console.log("SubCategoryList response===", findresponse);
-                this.setState({ SubCategoryList: findresponse.data.data.productList })
-                console.log("SubCategoryList response===", this.state.SubCategoryList);
+                if (!findresponse.data.data.productList.length) {
+                    Swal.fire("Product not available!", "", "warning");
+                } else {
+                    this.setState({ SubCategoryList: findresponse.data.data.productList })
+                    console.log("SubCategoryList response===", this.state.SubCategoryList);
+                }
             }).catch(
                 { status: 500, message: 'Internal Server Error' }
             );
@@ -31,16 +36,24 @@ class SubCategories extends React.Component {
     * @param {string} productId
     * Add Cart function
     */
-    addInCart(productId) {
-        console.log("productId==", productId);
-        this.value = localStorage.getItem('productId');
-        const data = []
-        data.push(this.value);
-        data.push(productId);
-        localStorage.setItem('productId', data.toString());
-        Swal.fire("Successfully Added!", "", "success");
-        console.log("data==", data);
-    }
+   addInCart(productId) {
+    console.log("productId==", productId);
+    this.value = localStorage.getItem('productId');
+    const data = []
+    data.push(this.value);
+    data.push(productId);
+    console.log("data",data);
+    const strVal = data.toString();
+    console.log('strVal=====', strVal);
+    const arrVal = strVal.split(',');
+    console.log('arrVal=====', _.uniq(arrVal));
+    const filter = _.filter(_.uniq(arrVal), _.size);
+    console.log('filter=====', filter);
+    localStorage.setItem('productId', data.toString());
+    localStorage.setItem('cartCount', filter.length.toString());
+    Swal.fire("Successfully Added!", "", "success");
+    console.log("data==", data);
+}
 
     /** 
    * @param {string} productId
@@ -61,7 +74,6 @@ class SubCategories extends React.Component {
         } else {
             Swal.fire("Please Login First");
         }
-
     }
 
     render() {
@@ -92,7 +104,7 @@ class SubCategories extends React.Component {
                         <p> {renderHTML(data.description)}</p>
                     </div>
                 </div>
-                <br />
+                <hr />
             </div>
         )
         return (

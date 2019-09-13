@@ -3,6 +3,8 @@ import API from '../../../service/homeservice';
 import { config } from '../../../config';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Swal from 'sweetalert2';
+import { EventEmitter } from '../../../event';
+const _ = require('lodash');
 
 class AllProduct extends React.Component {
     constructor(props) {
@@ -10,7 +12,8 @@ class AllProduct extends React.Component {
         super(props);
         this.state = {
             productlist: [],
-            images: []
+            images: [],
+            wishList:[]
         }
     }
 
@@ -20,6 +23,17 @@ class AllProduct extends React.Component {
                 console.log("ProductList response===", findresponse);
                 this.setState({ productlist: findresponse.data.data });
                 console.log("all products=====", this.state.productlist);
+            }).catch(
+                { status: 500, message: 'Internal Server Error' }
+            );
+
+            API.getWishList().
+            then((findresponse) => {
+                console.log("getWishList response===", findresponse);
+                this.setState({ wishList: findresponse.data.data })
+                console.log("data==", this.state.wishList);
+                console.log("data==", this.state.wishList.length);
+                EventEmitter.dispatch('length',this.state.wishList.length);
             }).catch(
                 { status: 500, message: 'Internal Server Error' }
             );
@@ -35,7 +49,15 @@ class AllProduct extends React.Component {
         const data = []
         data.push(this.value);
         data.push(productId);
+        console.log("data",data);
+        const strVal = data.toString();
+        console.log('strVal=====', strVal);
+        const arrVal = strVal.split(',');
+        console.log('arrVal=====', _.uniq(arrVal));
+        const filter = _.filter(_.uniq(arrVal), _.size);
+        console.log('filter=====', filter);
         localStorage.setItem('productId', data.toString());
+        localStorage.setItem('cartCount', filter.length.toString());
         Swal.fire("Successfully Added!", "", "success");
         console.log("data==", data);
     }
@@ -54,6 +76,7 @@ class AllProduct extends React.Component {
             then((findresponse) => {
                 console.log("addWishList response===", findresponse);
                 Swal.fire("Successfully Added!", "", "success");
+                this.componentDidMount();
             }).catch(
                 { status: 500, message: 'Internal Server Error' }
             );

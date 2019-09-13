@@ -660,8 +660,8 @@ nav.navbar .navbar-nav .nav-item a i {
     margin-bottom: 25px;
 }
 .slider_img{
-    width: 500px !important;
-    height: 500px !important;
+    /* width: 500px !important;
+    height: 500px !important; */
     margin: auto;
 }
 .slider_img img{

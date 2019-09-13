@@ -116,7 +116,7 @@ export default {
             }).catch({ status: 500, message: 'Internal Server Error' });
     },
 
-    /** 
+  /** 
   * @param {string} pid
   * delete product in wishlist
   */
@@ -135,7 +135,7 @@ export default {
             }).catch({ status: 500, message: 'Internal Server Error' });
     },
 
-    /** 
+/** 
 * @param {string} data
 * search product
 */
@@ -167,7 +167,7 @@ export default {
             }).catch({ status: 500, message: 'Internal Server Error' });
     },
 
-    /** 
+ /** 
  * @param {string} obj
  * Update Profile
  */
@@ -216,7 +216,7 @@ export default {
             }).catch({ status: 500, message: 'Internal Server Error' });
     },
 
-    /** 
+/** 
  * @param {string} obj
  * Procced to checkout
  */
@@ -234,7 +234,7 @@ export default {
             }).catch({ status: 500, message: 'Internal Server Error' });
     },
 
-    /** 
+/** 
 * @param {string} obj
 * ForgotPassword
 */
@@ -248,7 +248,7 @@ export default {
     },
 
 
-    /** 
+/** 
 * @param {string} obj
 * UpdatePasswordUser
 */
@@ -265,7 +265,7 @@ export default {
             }).catch({ status: 500, message: 'Internal Server Error' });
     },
 
-    /** 
+/** 
 * @param {string} obj
 * Add address
 */
@@ -284,7 +284,7 @@ export default {
     },
 
 
-    /** 
+/** 
 * @param {string} id
 * get address
 */
@@ -303,7 +303,7 @@ export default {
     },
 
 
-    /** 
+/** 
 * @param {string} id
 * @param {string} obj
 * editAddress 
@@ -323,7 +323,7 @@ export default {
     },
 
 
-    /** 
+/** 
 * @param {string} id
 * delete address
 */
@@ -356,7 +356,7 @@ export default {
             }).catch({ status: 500, message: 'Internal Server Error' });
     },
 
-    /** 
+/** 
 * @param {string} obj
 * get order details
 */
@@ -374,7 +374,7 @@ export default {
             }).catch({ status: 500, message: 'Internal Server Error' });
     },
 
-    /** 
+/** 
 * @param {string} obj
 * contactUs details
 */
@@ -386,14 +386,14 @@ export default {
             }).catch({ status: 500, message: 'Internal Server Error' });
     },
 
-    /** 
+/** 
 * @param {string} productId
 * relatedProduct details
 */
     relatedProduct: (productId) => {
         return axios.get(config.baseApiUrl + "api/list/related-product-list", {
             params: {
-                productId:productId
+                productId: productId
             }
         })
             .then(response => {

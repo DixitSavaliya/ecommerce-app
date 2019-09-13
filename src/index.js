@@ -39,17 +39,29 @@ ReactDOM.render(
     <Route exact path="/profile" component={Profile} />
     <Route exact path="/subcategories/:id" component={SubCategories} />
     <Route exact path="/searchproduct" component={SearchProduct} />
-    <Route exact path="/checkout" component={Checkout} />
+    <Route exact path="/checkout" render={() => (
+      localStorage.getItem('token') ? (<Route component={Checkout} />)
+        : (<Route component={Login} />)
+    )} />
     <Route exact path="/forgotpassword" component={ForgotPassword} />
     <Route exact path="/updatepassword" render={() => (
       localStorage.getItem('token') ? (<Route component={UpdatePassword} />)
         : (<Route component={Login} />)
     )} />
-    <Route exact path="/address" component={Address} />
+    <Route exact path="/address" render={() => (
+      localStorage.getItem('token') ? (<Route component={Address} />)
+        : (<Route component={Login} />)
+    )} />
     <Route exact path="/addnewaddress" component={AddNewAddress} />
     <Route exact path="/editaddress/:id" component={EditAddress} />
-    <Route exact path="/orderhistory" component={OrderHistory} />
-    <Route exact path="/orderdetail/:id" component={OrderDetail} />
+    <Route exact path="/orderhistory" render={() => (
+      localStorage.getItem('token') ? (<Route component={OrderHistory} />)
+        : (<Route component={Login} />)
+    )} />
+     <Route exact path="/orderdetail/:id" render={() => (
+      localStorage.getItem('token') ? (<Route component={OrderDetail} />)
+        : (<Route component={Login} />)
+    )} />
     <Route exact path="/contact" component={Contact} />
   </Router>,
   document.getElementById('root')

@@ -2,6 +2,7 @@ import React from 'react';
 import { MDBContainer, MDBRow, MDBBtn } from 'mdbreact';
 import API from '../../service/homeservice';
 import '../login/login.css'
+import history from '../../history';
 
 class SignUp extends React.Component {
     /** constructor call */
@@ -48,8 +49,9 @@ class SignUp extends React.Component {
             confirmPasswordError = "please enter confirm password";
         }
 
-        if (!this.state.phoneNumber) {
-            phoneNumberError = "please enter phone number";
+        const phone = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+        if (!phone.test(this.state.phoneNumber)) {
+            phoneNumberError = "please enter valid number";
         }
 
         if (nameError || emailIdError || passwordError || confirmPasswordError || phoneNumberError) {
@@ -78,7 +80,7 @@ class SignUp extends React.Component {
             })
         };
 
-        if (this.state.name && this.state.password && this.state.emailId && this.state.confirmPassword && this.state.phoneNumber) {
+        if (this.state.name && this.state.password && this.state.emailId && this.state.confirmPassword && this.state.phoneNumber && !this.state.phoneNumberError && !this.state.emailIdError) {
             const obj = {
                 name: this.state.name,
                 password: this.state.password,
@@ -89,7 +91,8 @@ class SignUp extends React.Component {
             API.Signup(obj).
                 then((findresponse) => {
                     console.log("response==", findresponse);
-                    window.location.href = '/login'
+                    window.location.href = '/login';
+                    // history.push('/login');
                 }).catch({ status: 500, message: 'Internal Server Error' });
         }
     }
@@ -178,7 +181,7 @@ class SignUp extends React.Component {
                                 PhoneNumber
           						  </label>
                             <input
-                                type="text"
+                                type="number"
                                 className="form-control"
                                 name="phoneNumber"
                                 value={this.state.phoneNumber}

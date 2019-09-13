@@ -106,14 +106,13 @@ class Profile extends React.Component {
                                     Phone Number
                                 </label>
                                 <input
-                                    type="text"
+                                    type="number"
                                     name="mobileNumber"
                                     value={this.state.mobileNumber}
                                     onChange={this.handleChangeName}
                                     className="form-control"
                                 />
                                 <br />
-
                                 <div className="text-center mt-4">
                                     <MDBBtn color="unique" onClick={this.editProfile} >
                                         Save

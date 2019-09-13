@@ -44,26 +44,31 @@ class SingleProduct extends React.Component {
             }).catch(
                 { status: 500, message: 'Internal Server Error' }
             );
-
         this.relatedProduct(query);
     }
 
     /** 
-     * @param {string} productId
-     * Add Cart function
-     */
+    * @param {string} productId
+    * Add Cart function
+    */
     addInCart(productId) {
         console.log("productId==", productId);
         this.value = localStorage.getItem('productId');
         const data = []
         data.push(this.value);
         data.push(productId);
+        console.log("data", data);
         localStorage.setItem('productId', data.toString());
         Swal.fire("Successfully Added!", "", "success");
         console.log("data==", data);
+        var filtered = data.filter(function (el) {
+            return el != null;
+        });
+        console.log("filtered", filtered);
+        localStorage.setItem('cartCount', filtered.length)
     }
 
-    /** 
+    /**
    * @param {string} productId
    * Add Wishlist function
    */

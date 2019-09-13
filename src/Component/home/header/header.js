@@ -3,19 +3,30 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import history from '../../../history';
 import API from '../../../service/homeservice';
 import './header.css';
+import { EventEmitter } from '../../../event';
 
 class Header extends React.Component {
+    count;
     constructor(props) {
         super(props);
         this.state = {
             showing: true,
             categoryList: [],
             value: '',
-            searchList: []
+            searchList: [],
+            count: ''
         }
         this.name = localStorage.getItem('name');
         this.logout = this.logout.bind(this);
         this.handleLoginKeyUp = this.keyUpHandler.bind(this);
+
+        EventEmitter.subscribe('length', (event) => {
+            console.log("wishlist=", event);
+            this.count = event;
+            console.log("count=>", this.count);
+            this.setState({ count: this.count })
+        }
+        );
     }
 
     /** User Logout */
@@ -23,10 +34,12 @@ class Header extends React.Component {
         localStorage.removeItem('token');
         localStorage.removeItem('name');
         localStorage.removeItem('productId');
+        localStorage.removeItem('cartCount');
         history.push('/home');
     }
 
     componentDidMount() {
+
         API.CategoryList().
             then((findresponse) => {
                 console.log("BannerList response===", findresponse);
@@ -63,30 +76,11 @@ class Header extends React.Component {
                 <header>
                     <div className="header_top">
                         <div className="container">
-                            {/* <div className="top_select float-left">
-                                <div className="custom_select language">
-                                    <a href={{ javascript: void (0) }}>ENG</a>
-                                    <div className="languages" style={{ display: (showing ? 'none' : 'none') }} >
-                                        <ul>
-                                            <li><a href="#">ENG</a></li>
-                                            <li><a href="#">FRE</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div className="custom_select currency">
-                                    <a href={{ javascript: void (0) }}>$ USD</a>
-                                    <div className="currencies" style={{ display: (showing ? 'none' : 'none') }}>
-                                        <ul>
-                                            <li><a href="#">$ USD</a></li>
-                                            <li><a href="#">€ EUR</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div> */}
                             <div className="contact_number float-left">
-                                <a href="tel:9876543210">
+                                {
+                                    localStorage.getItem('token') ? (<h6 className="user_name">Welcome  <i className="far fa-user"></i> {this.name}</h6>) : ('')
+                                }
 
-                                    98 765 432 10</a>
                             </div>
                             <div className="header_top_links float-right">
                                 <ul>
@@ -98,11 +92,13 @@ class Header extends React.Component {
                                                         <i className="far fa-user"></i> my account
                                                      </a>
                                                     <div className="dropdown-menu">
-                                                        <i className="far fa-user"></i> <span>{this.name}</span>
                                                         <Link to="/profile" className="dropdown-item">My Profile</Link>
                                                         <Link to="/address" className="dropdown-item">Address</Link>
                                                         <Link to="/orderhistory" className="dropdown-item">My OrderHistory</Link>
-                                                        <Link to="/cart" className="dropdown-item">Cart</Link>
+                                                        {
+                                                            localStorage.getItem('productId') ? (
+                                                                <Link to="/cart" className="dropdown-item">Cart</Link>) : ('')
+                                                        }
                                                         <Link to="/wishlist" className="dropdown-item">WishList</Link>
                                                         <Link className="dropdown-item" onClick={this.logout}>Logout</Link>
                                                     </div>
@@ -112,7 +108,7 @@ class Header extends React.Component {
                                     </li>
                                     <li className="font_color">
                                         {
-                                            localStorage.getItem('token') ? (this.name) : (<span><Link to="/login">Login/</Link>
+                                            localStorage.getItem('token') ? ('') : (<span><Link to="/login">Login/</Link>
                                                 <Link to="/register">register</Link></span>)
                                         }
                                     </li>
@@ -180,16 +176,22 @@ class Header extends React.Component {
                                             <a className="search_toggle_btn">
                                                 <Link to="/searchproduct"><i class="fas fa-search"></i></Link>
                                             </a>
-                                            {/* <div className="search_box">
-                                                <input type="text" placeholder="search" onKeyUp={this.handleLoginKeyUp} />
-                                            </div> */}
                                         </li>
                                         <li>
-                                            <Link to="/wishlist"><i class="far fa-heart"></i></Link>
+                                            <Link to="/wishlist"><i class="far fa-heart"></i>
+                                                {
+                                                    this.state.count ? (<span class="cart_count">{this.state.count}</span>) : ('')
+                                                }
+
+                                            </Link>
                                         </li>
-                                        <li className="desktop_only">
-                                            <Link to="/cart"><i class="fas fa-shopping-cart"></i></Link>
-                                        </li>
+                                        {
+                                            localStorage.getItem('productId') ? (<li className="desktop_only">
+                                                <Link to="/cart"><i class="fas fa-shopping-cart"></i>
+                                                    <span class="cart_count">{localStorage.getItem('cartCount')}</span>
+                                                </Link>
+                                            </li>) : ('')
+                                        }
                                     </ul>
                                 </div>
                             </div>
