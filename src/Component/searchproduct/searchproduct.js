@@ -4,6 +4,7 @@ import { config } from '../../config';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Swal from 'sweetalert2';
 import './searchproduct.css';
+import Header from '../home/header/header';
 
 class SearchProduct extends React.Component {
     constructor(props) {
@@ -28,7 +29,7 @@ class SearchProduct extends React.Component {
         data.push(this.value);
         data.push(productId);
         localStorage.setItem('productId', data.toString());
-        Swal.fire("Successfully Added!", "", "success");
+        Swal.fire("Added Successfully!", "", "success");
         console.log("data==", data);
     }
 
@@ -44,7 +45,7 @@ class SearchProduct extends React.Component {
             API.addwishlist(obj).
                 then((findresponse) => {
                     console.log("addWishList response===", findresponse);
-                    Swal.fire("Successfully Added!", "", "success");
+                    Swal.fire("Added Successfully!", "", "success");
                 }).catch(
                     { status: 500, message: 'Internal Server Error' }
                 );
@@ -112,6 +113,7 @@ class SearchProduct extends React.Component {
         )
         return (
             <div>
+                <Header/>
                 <div className="text_center">
                     <span><strong>Search:</strong>
                  <input type="text" onKeyUp={this.handleLoginKeyUp} />

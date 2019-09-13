@@ -3,15 +3,18 @@ import API from '../../service/homeservice';
 import { config } from '../../config';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import renderHTML from 'react-render-html';
+import Header from '../home/header/header';
 import Swal from 'sweetalert2';
 import './subcategories.css';
 const _ = require('lodash');
+
 
 class SubCategories extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            SubCategoryList: []
+            SubCategoryList: [],
+            isFlag:false
         }
     }
 
@@ -49,9 +52,10 @@ class SubCategories extends React.Component {
     console.log('arrVal=====', _.uniq(arrVal));
     const filter = _.filter(_.uniq(arrVal), _.size);
     console.log('filter=====', filter);
-    localStorage.setItem('productId', data.toString());
+    localStorage.setItem('productId', filter.toString());
     localStorage.setItem('cartCount', filter.length.toString());
-    Swal.fire("Successfully Added!", "", "success");
+    localStorage.setItem('isFlag',this.state.isFlag);
+    Swal.fire("Added Successfully!", "", "success");
     console.log("data==", data);
 }
 
@@ -67,10 +71,10 @@ class SubCategories extends React.Component {
             API.addwishlist(obj).
                 then((findresponse) => {
                     console.log("addWishList response===", findresponse);
-                    Swal.fire("Successfully Added!", "", "success");
-                }).catch(
-                    { status: 500, message: 'Internal Server Error' }
-                );
+                    Swal.fire("Added Successfully!", "", "success");
+                }).catch((err) => {
+                    Swal.fire("Already Added In Wishlist!", "", "warning");
+                });
         } else {
             Swal.fire("Please Login First");
         }
@@ -109,6 +113,7 @@ class SubCategories extends React.Component {
         )
         return (
             <div>
+                {/* <Header/> */}
                 <section className="product_section">
                     <div className="container">
                         <div>

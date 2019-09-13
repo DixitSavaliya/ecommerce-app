@@ -7,7 +7,9 @@ import { MDBContainer, MDBRow, MDBCol } from "mdbreact";
 import './singleproduct.css';
 import renderHTML from 'react-render-html';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import Header from '../home/header/header';
 import Swal from 'sweetalert2';
+const _ = require('lodash');
 
 class SingleProduct extends React.Component {
     constructor(props) {
@@ -47,26 +49,28 @@ class SingleProduct extends React.Component {
         this.relatedProduct(query);
     }
 
-    /** 
+  
+   /** 
     * @param {string} productId
     * Add Cart function
     */
-    addInCart(productId) {
-        console.log("productId==", productId);
-        this.value = localStorage.getItem('productId');
-        const data = []
-        data.push(this.value);
-        data.push(productId);
-        console.log("data", data);
-        localStorage.setItem('productId', data.toString());
-        Swal.fire("Successfully Added!", "", "success");
-        console.log("data==", data);
-        var filtered = data.filter(function (el) {
-            return el != null;
-        });
-        console.log("filtered", filtered);
-        localStorage.setItem('cartCount', filtered.length)
-    }
+   addInCart(productId) {
+    this.value = localStorage.getItem('productId');
+    const data = []
+    data.push(this.value);
+    data.push(productId);
+    console.log("data",data);
+    const strVal = data.toString();
+    console.log('strVal=====', strVal);
+    const arrVal = strVal.split(',');
+    console.log('arrVal=====', _.uniq(arrVal));
+    const filter = _.filter(_.uniq(arrVal), _.size);
+    console.log('filter=====', filter);
+    localStorage.setItem('productId', filter.toString());
+    localStorage.setItem('cartCount', filter.length.toString());
+    Swal.fire("Successfully Added!", "", "success");
+    console.log("data==", data);
+}
 
     /**
    * @param {string} productId
@@ -81,9 +85,9 @@ class SingleProduct extends React.Component {
                 then((findresponse) => {
                     console.log("addWishList response===", findresponse);
                     Swal.fire("Successfully Added!", "", "success");
-                }).catch(
-                    { status: 500, message: 'Internal Server Error' }
-                );
+                }).catch((err) => {
+                    Swal.fire("Already Added In Wishlist!", "", "warning");
+                });
         } else {
             Swal.fire("Please Login First");
         }
@@ -183,6 +187,7 @@ class SingleProduct extends React.Component {
 
         return (
             <div>
+                {/* <Header/> */}
                 <MDBContainer>
                     <MDBRow>
                         <MDBCol md="4">
@@ -210,7 +215,9 @@ class SingleProduct extends React.Component {
                         </MDBCol>
                     </MDBRow>
                     <MDBRow>
+                        <div>
                         <h1>Discription</h1>
+                        </div>
                         <div>
                             {displayDisc}
                         </div>

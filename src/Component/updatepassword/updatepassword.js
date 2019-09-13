@@ -16,7 +16,9 @@ class UpdatePassword extends React.Component {
             oldPassword: '',
             oldPasswordError: '',
             newPassword: '',
-            newPasswordError: ''
+            newPasswordError: '',
+            confirmPassword: '',
+            confirmPasswordError: ''
         }
         this.handleChangeEvent = this.handleChangeEvent.bind(this);
         this.UpdatePassword = this.UpdatePassword.bind(this);
@@ -34,6 +36,7 @@ class UpdatePassword extends React.Component {
     validate = () => {
         let oldPasswordError = "";
         let newPasswordError = "";
+        let confirmPasswordError = "";
 
         if (!this.state.oldPassword) {
             oldPasswordError = "please enter old password";
@@ -43,8 +46,12 @@ class UpdatePassword extends React.Component {
             newPasswordError = "please enter new password";
         }
 
-        if (oldPasswordError || newPasswordError) {
-            this.setState({oldPasswordError, newPasswordError });
+        if (!this.state.confirmPassword) {
+            confirmPasswordError = "please enter confirm password";
+        }
+
+        if (oldPasswordError || newPasswordError || confirmPasswordError) {
+            this.setState({ oldPasswordError, newPasswordError, confirmPasswordError });
             return false;
         }
         return true;
@@ -60,21 +67,27 @@ class UpdatePassword extends React.Component {
                 oldPassword: '',
                 oldPasswordError: '',
                 newPassword: '',
-                newPasswordError: ''
+                newPasswordError: '',
+                confirmPassword: '',
+                confirmPasswordError: ''
             })
         };
 
-        if (this.state.oldPassword && this.state.newPassword) {
-            const obj = {
-                oldPassword: this.state.oldPassword,
-                newPassword: this.state.newPassword,
+        if (this.state.oldPassword && this.state.newPassword && this.state.confirmPassword) {
+            if (this.state.newPassword == this.state.confirmPassword) {
+                const obj = {
+                    oldPassword: this.state.oldPassword,
+                    newPassword: this.state.newPassword,
+                }
+                API.UpdatePasswordUser(obj).
+                    then((findresponse) => {
+                        console.log("response==", findresponse);
+                        Swal.fire("Password Updated Successfully!", "", "success");
+                        history.push('/home');
+                    }).catch({ status: 500, message: 'Internal Server Error' });
+            } else {
+                Swal.fire("Does not match new password && confirm password!", "", "warning");
             }
-            API.UpdatePasswordUser(obj).
-                then((findresponse) => {
-                    console.log("response==", findresponse);
-                    Swal.fire("Password Update Succesfully!", "", "success");
-                    history.push('/home');
-                }).catch({ status: 500, message: 'Internal Server Error' });
         }
     }
 
@@ -118,6 +131,23 @@ class UpdatePassword extends React.Component {
                             />
                             <div style={{ fontSize: 12, color: "red" }}>
                                 {this.state.newPasswordError}
+                            </div>
+                            <label
+
+                                className="grey-text"
+                            >
+                                confirm password
+                            </label>
+                            <input
+                                type="password"
+                                name="confirmPassword"
+                                id="defaultFormRegisterPasswordEx3"
+                                className="form-control"
+                                value={this.state.confirmPassword}
+                                onChange={this.handleChangeEvent}
+                            />
+                            <div style={{ fontSize: 12, color: "red" }}>
+                                {this.state.confirmPasswordError}
                             </div>
                             <div className="text-center mt-4">
                                 <MDBBtn color="unique" onClick={this.UpdatePassword}>

@@ -1,5 +1,6 @@
 import React from 'react';
 import API from '../../service/homeservice';
+import Header from '../home/header/header';
 import Swal from 'sweetalert2';
 
 class Contact extends React.Component {
@@ -10,6 +11,7 @@ class Contact extends React.Component {
             nameError: '',
             phoneNumber: '',
             phoneNumberError: '',
+            phoneNumberErrors:'',
             email: '',
             emailError: '',
             message: '',
@@ -47,6 +49,7 @@ class Contact extends React.Component {
             this.setState({ nameError, emailError, messageError, phoneNumberError });
             return false;
         }
+
         return true;
     };
 
@@ -56,9 +59,12 @@ class Contact extends React.Component {
      * handleChangeEvent
      */
     handleChangeEvent(event) {
+        console.log("event=",event);
         event.preventDefault();
         const state = this.state
+        console.log("state==",state);
         state[event.target.name] = event.target.value;
+        console.log("state==",state);
         this.setState(state);
     }
 
@@ -79,7 +85,7 @@ class Contact extends React.Component {
             })
         };
 
-        if (this.state.name && this.state.email && this.state.phoneNumber && this.state.message && !this.state.phoneNumberError && !this.state.emailError) {
+        if (this.state.name && this.state.email && this.state.phoneNumber && this.state.message && this.state.phoneNumber.length == 10 && !this.state.emailError && !this.state.messageError && !this.state.nameError) {
             const obj = {
                 name: this.state.name,
                 phoneNumber: this.state.phoneNumber,
@@ -98,6 +104,7 @@ class Contact extends React.Component {
     render() {
         return (
             <div>
+                <Header/>
                 <section class="mb-4">
                     <h2 class="h1-responsive font-weight-bold text-center my-4">Contact us</h2>
                     <div class="row">
@@ -106,9 +113,8 @@ class Contact extends React.Component {
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="md-form mb-0">
-                                            <input type="text" name="name" value={this.state.name}
-                                                onChange={this.handleChangeEvent} class="form-control" />
-                                            <label for="name">Your name</label>
+                                            <input type="text" id="name" name="name" value={this.state.name}
+                                                onChange={this.handleChangeEvent} class="form-control" placeholder="Your Name" />
                                             <div style={{ fontSize: 12, color: "red" }}>
                                                 {this.state.nameError}
                                             </div>
@@ -116,9 +122,9 @@ class Contact extends React.Component {
                                     </div>
                                     <div class="col-md-6">
                                         <div class="md-form mb-0">
-                                            <input type="email" name="email" value={this.state.email}
-                                                onChange={this.handleChangeEvent} class="form-control" />
-                                            <label for="email">Your email</label>
+                                            <input type="email" id="email" name="email" value={this.state.email}
+                                                onChange={this.handleChangeEvent} class="form-control" placeholder="Your email" />
+                                        
                                             <div style={{ fontSize: 12, color: "red" }}>
                                                 {this.state.emailError}
                                             </div>
@@ -128,9 +134,9 @@ class Contact extends React.Component {
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="md-form mb-0">
-                                            <input type="number" name="phoneNumber" value={this.state.phoneNumber}
-                                                onChange={this.handleChangeEvent} class="form-control" />
-                                            <label for="phoneNumber">phoneNumber</label>
+                                            <input type="number" id="phoneNumber" name="phoneNumber" value={this.state.phoneNumber}
+                                                onChange={this.handleChangeEvent}  minlength="10" maxlength="10" class="form-control"  placeholder="Your Phonenumber" />
+                                         
                                             <div style={{ fontSize: 12, color: "red" }}>
                                                 {this.state.phoneNumberError}
                                             </div>
@@ -140,9 +146,9 @@ class Contact extends React.Component {
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="md-form">
-                                            <textarea type="text" name="message" value={this.state.message}
-                                                onChange={this.handleChangeEvent} rows="2" class="form-control md-textarea"></textarea>
-                                            <label for="message">Your message</label>
+                                            <textarea type="text" id="message" name="message" value={this.state.message}
+                                                onChange={this.handleChangeEvent} rows="2" class="form-control md-textarea" placeholder="message"></textarea>
+                                         
                                             <div style={{ fontSize: 12, color: "red" }}>
                                                 {this.state.messageError}
                                             </div>

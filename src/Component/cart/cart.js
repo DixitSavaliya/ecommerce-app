@@ -4,6 +4,7 @@ import { config } from '../../config';
 import { MDBBtn, MDBCard, MDBCardBody, MDBRow, MDBCardTitle, MDBCardText, MDBCol } from 'mdbreact';
 import Swal from 'sweetalert2';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import Header from '../home/header/header';
 const _ = require('lodash');
 let finalArr = [];
 let priceArr = [];
@@ -17,56 +18,61 @@ class Cart extends React.Component {
             cartItem: '',
             demo: '',
             productDetails: [],
-            finalArry:[]
+            finalArry: []
         }
     }
 
     componentDidMount() {
-        const value = localStorage.getItem('productId');
-        const val = _.uniq(value.split(',')); //dplicate value remove
-        console.log('value of token-=-=', val);
-        const filter = _.filter(val, _.size); // null value remove
-        console.log('value of filter-=-=', filter, priceArr);
-        finalArr = filter;
-        let finalArrLength = finalArr.length;
-        console.log('cart count in get item=====', finalArrLength);
-        localStorage.setItem('cartCount', finalArrLength.toString());
-        finalArr.map((id) => {
-            console.log('id-=-=', id);
-            API.productDetail(id)
-                .then((response) => {
-                    console.log('respone from cart-=-=', response.data.data);
-                    response.data.data[0]['qty'] = 1;
-                    console.log('priceArr initial-=-=', priceArr, response.data.data[0].price);
-                    let index = priceArr.indexOf(response.data.data[0].price);
-                    if (index === -1) {
-                        priceArr.push(response.data.data[0].price);
-                    }
-                    console.log('price array-=-=', priceArr);
-                    this.setState({
-                        cartItem: [...this.state.cartItem, ...response.data.data]
+        console.log("id===", localStorage.getItem('productId'), localStorage.getItem('isFlag'))
+        if (localStorage.getItem('productId')) {
+            const value = localStorage.getItem('productId');
+            const val = _.uniq(value.split(',')); //dplicate value remove
+            console.log('value of token-=-=', val);
+            const filter = _.filter(val, _.size); // null value remove
+            console.log('value of filter-=-=', filter, priceArr);
+            finalArr = filter;
+            let finalArrLength = finalArr.length;
+            console.log('cart count in get item=====', finalArrLength);
+            localStorage.setItem('cartCount', finalArrLength.toString());
+            finalArr.map((id) => {
+                console.log('id-=-=', id);
+                API.productDetail(id)
+                    .then((response) => {
+                        console.log('respone from cart-=-=', response.data.data);
+                        response.data.data[0]['qty'] = 1;
+                        console.log('priceArr initial-=-=', priceArr, response.data.data[0].price);
+                        let index = priceArr.indexOf(response.data.data[0].price);
+                        if (index === -1) {
+                            priceArr.push(response.data.data[0].price);
+                        }
+                        console.log('price array-=-=', priceArr);
+                        this.setState({
+                            cartItem: [...this.state.cartItem, ...response.data.data]
+                        })
+                        const obj = {
+                            productId: response.data.data[0].productId,
+                            quantity: response.data.data[0].qty,
+                            price: response.data.data[0].price,
+                            name: response.data.data[0].name
+                        }
+                        this.setState(prevState => ({
+                            productDetails: [...prevState.productDetails, obj]
+                        }))
                     })
-                    const obj = {
-                        productId: response.data.data[0].productId,
-                        quantity: response.data.data[0].qty,
-                        price: response.data.data[0].price,
-                        name: response.data.data[0].name
-                    }
-                    this.setState(prevState => ({
-                        productDetails: [...prevState.productDetails, obj]
-                    }))
-                })
-                .catch((err) => {
-                    console.log('err from cart-=-=', err);
-                })
-        })
+                    .catch((err) => {
+                        console.log('err from cart-=-=', err);
+                    })
+            })
+        } else {
+            Swal.fire("Please Add Item In Cart");
+        }
     }
 
     /** 
    * @param {string} id
    * Delete wishlist
    */
-    deleteWishList(id,price) {
+    deleteWishList(id, price) {
         priceArr.splice(_.findIndex(priceArr, price), 1);
         console.log("pricearr==========>", priceArr)
         const index = finalArr.indexOf(id);
@@ -74,8 +80,8 @@ class Cart extends React.Component {
             finalArr.splice(index, 1);
         }
         console.log('finalArr-=-=', finalArr);
-        this.setState({finalArry:finalArr});
-        Swal.fire("Successfully Delete!", "", "success");
+        this.setState({ finalArry: finalArr });
+        Swal.fire("Deleted Successfully!", "", "success");
         localStorage.setItem('productId', finalArr.toString());
         this.setState({
             cartItem: ''
@@ -132,7 +138,7 @@ class Cart extends React.Component {
 
     render() {
         let displayData;
-        console.log("finalarray==",this.state.finalArry);
+        console.log("finalarray==", this.state.finalArry);
         if (this.state.cartItem) displayData = this.state.cartItem.map((data, index) => (
             <div>
                 <MDBRow>
@@ -154,7 +160,7 @@ class Cart extends React.Component {
                         </MDBRow>
                     </MDBCol>
                     <MDBCol md="2">
-                        <i className="fas fa-trash" onClick={() => this.deleteWishList(data.productId,data.price)}></i>
+                        <i className="fas fa-trash" onClick={() => this.deleteWishList(data.productId, data.price)}></i>
                     </MDBCol>
                 </MDBRow>
                 <hr />
@@ -164,6 +170,7 @@ class Cart extends React.Component {
 
         return (
             <div>
+                <Header />
                 <MDBCol>
                     <MDBCard>
                         <MDBCardBody>
@@ -181,21 +188,21 @@ class Cart extends React.Component {
                                     {displayData}
                                 </div>
                                 {
-                                    localStorage.getItem('productId')? ( <div className="row">
-                                    <div className="col-md-4">
-                                        <div className="text-center mt-4">
-                                            <Link to="/home"> <MDBBtn color="indigo">Continue With Shopping</MDBBtn></Link>
+                                    localStorage.getItem('productId') ? (<div className="row">
+                                        <div className="col-md-4">
+                                            <div className="text-center mt-4">
+                                                <Link to="/home"> <MDBBtn color="indigo">Continue With Shopping</MDBBtn></Link>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="col-md-4">
-                                        <span>Total:<h3>{this.totalFunc()}</h3></span>
-                                    </div>
-                                    <div className="col-md-4">
-                                        <Link to={{ pathname: '/checkout', state: { name: this.state.productDetails } }}  > <MDBBtn color="indigo">Proceed To Checkout</MDBBtn></Link>
-                                    </div>
-                                </div>) : ('')
+                                        <div className="col-md-4">
+                                            <span>Total:<h3><i class="fas fa-rupee-sign"></i> {this.totalFunc()}</h3></span>
+                                        </div>
+                                        <div className="col-md-4">
+                                            <Link to={{ pathname: '/checkout', state: { name: this.state.productDetails } }}  > <MDBBtn color="indigo">Proceed To Checkout</MDBBtn></Link>
+                                        </div>
+                                    </div>) : ('')
                                 }
-                               
+
                             </MDBCardText>
                         </MDBCardBody>
                     </MDBCard>

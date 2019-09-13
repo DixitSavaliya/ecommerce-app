@@ -6,6 +6,7 @@ import "mdbreact/dist/css/mdb.css";
 import { Link } from 'react-router-dom';
 import './login.css';
 import API from '../../service/homeservice';
+import Swal from 'sweetalert2';
 import * as jwt_decode from 'jwt-decode';
 
 class Login extends React.Component {
@@ -71,20 +72,24 @@ class Login extends React.Component {
             }
             API.Login(obj).
                 then((findresponse) => {
-                    this.setState({
-                        user: findresponse
-                    })
-                    console.log("login response===", this.state.user);
-                    var token = this.state.user.data.data.token;
-                    localStorage.setItem('token', token);
-                    var decoded = jwt_decode(token);
-                    console.log("decode=====", decoded);
-                    localStorage.setItem('name', decoded.customer.first_name);
-                    window.location.href = '/home';
+                    if(findresponse) {
+                        this.setState({
+                            user: findresponse
+                        })
+                        console.log("login response===", this.state.user);
+                        var token = this.state.user.data.data.token;
+                        localStorage.setItem('token', token);
+                        var decoded = jwt_decode(token);
+                        console.log("decode=====", decoded);
+                        localStorage.setItem('name', decoded.customer.first_name);
+                        window.location.href = '/home';
+                    } else  {
+                        Swal.fire("Something went wrong!", "", "warning");
+                    }
                 }).catch(
                     { status: 500, message: 'Internal Server Error' }
                 );
-        }
+        } 
     }
 
     render() {

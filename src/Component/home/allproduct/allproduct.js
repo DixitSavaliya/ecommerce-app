@@ -13,7 +13,7 @@ class AllProduct extends React.Component {
         this.state = {
             productlist: [],
             images: [],
-            wishList:[]
+            wishList: []
         }
     }
 
@@ -27,13 +27,13 @@ class AllProduct extends React.Component {
                 { status: 500, message: 'Internal Server Error' }
             );
 
-            API.getWishList().
+        API.getWishList().
             then((findresponse) => {
                 console.log("getWishList response===", findresponse);
                 this.setState({ wishList: findresponse.data.data })
                 console.log("data==", this.state.wishList);
                 console.log("data==", this.state.wishList.length);
-                EventEmitter.dispatch('length',this.state.wishList.length);
+                EventEmitter.dispatch('length', this.state.wishList.length);
             }).catch(
                 { status: 500, message: 'Internal Server Error' }
             );
@@ -44,23 +44,22 @@ class AllProduct extends React.Component {
     * Add Cart function
     */
     addInCart(productId) {
-        console.log("productId==", productId);
         this.value = localStorage.getItem('productId');
         const data = []
         data.push(this.value);
         data.push(productId);
-        console.log("data",data);
+        console.log("data", data);
         const strVal = data.toString();
         console.log('strVal=====', strVal);
         const arrVal = strVal.split(',');
         console.log('arrVal=====', _.uniq(arrVal));
         const filter = _.filter(_.uniq(arrVal), _.size);
         console.log('filter=====', filter);
-        localStorage.setItem('productId', data.toString());
+        localStorage.setItem('productId', filter.toString());
         localStorage.setItem('cartCount', filter.length.toString());
-        Swal.fire("Successfully Added!", "", "success");
-        console.log("data==", data);
+        Swal.fire("Added Successfully!", "", "success");
     }
+
 
     /** 
    * @param {string} productId
@@ -71,19 +70,18 @@ class AllProduct extends React.Component {
         const obj = {
             productId: productId
         }
-        if(localStorage.getItem('token')){
+        if (localStorage.getItem('token')) {
             API.addwishlist(obj).
-            then((findresponse) => {
-                console.log("addWishList response===", findresponse);
-                Swal.fire("Successfully Added!", "", "success");
-                this.componentDidMount();
-            }).catch(
-                { status: 500, message: 'Internal Server Error' }
-            );
+                then((findresponse, err) => {
+                    console.log("addWishList response===", findresponse);
+                    Swal.fire("Added Successfully!", "", "success");
+                    this.componentDidMount();
+                }).catch((err) => {
+                    Swal.fire("Already Added In Wishlist!", "", "warning");
+                });
         } else {
             Swal.fire("Please Login First");
         }
-      
     }
 
     render() {

@@ -185,13 +185,16 @@ class Header extends React.Component {
 
                                             </Link>
                                         </li>
-                                        {
-                                            localStorage.getItem('productId') ? (<li className="desktop_only">
-                                                <Link to="/cart"><i class="fas fa-shopping-cart"></i>
-                                                    <span class="cart_count">{localStorage.getItem('cartCount')}</span>
-                                                </Link>
-                                            </li>) : ('')
-                                        }
+
+                                        <li className="desktop_only">
+                                            <Link to="/cart"><i class="fas fa-shopping-cart"></i>
+                                            {
+                                                    localStorage.getItem('cartCount') ? ( <span class="cart_count">{localStorage.getItem('cartCount')}</span>) : ('')
+                                                }
+                                               
+                                            </Link>
+                                        </li>
+
                                     </ul>
                                 </div>
                             </div>

@@ -3,17 +3,21 @@ import API from '../../service/homeservice';
 import { MDBContainer, MDBRow, MDBBtn, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText, MDBCol } from 'mdbreact';
 import * as jsPDF from 'jspdf';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import Header from '../home/header/header';
 import * as html2canvas from 'html2canvas';
 import './orderdetail.css';
 
 class OrderDetail extends React.Component {
     constructor(props) {
+        console.log("props",props);
         super(props);
         this.state = {
             orderDetailsList: [],
             numPages: null
         }
         this.handlePdf = this.handlePdf.bind(this);
+           this.orderId = props.location.state.name
+     
     }
 
 
@@ -49,7 +53,7 @@ class OrderDetail extends React.Component {
         let displayData;
         let displayProduct;
         let totalamount;
-
+    
         if (this.state.orderDetailsList) displayData = this.state.orderDetailsList.map(data =>
             <MDBCardText>
                 <span>{data.shippingAddress1} {data.shippingAddress2}</span>
@@ -70,12 +74,14 @@ class OrderDetail extends React.Component {
         )
 
         if (this.state.orderDetailsList) totalamount = this.state.orderDetailsList.map(data =>
-            <p>Total Amount:{data.total}</p>
+            <p>Total Amount: <i class="fas fa-rupee-sign"></i> {data.total}</p>
         )
 
         return (
             <div>
+                {/* <Header/> */}
                 <MDBContainer id="page">
+                        <h3><strong>OrderId:</strong> { this.orderId}</h3>
                     <MDBRow>
                         <MDBCol md="6">
                             <MDBCard style={{ width: "22rem" }}>
@@ -120,7 +126,7 @@ class OrderDetail extends React.Component {
                         </MDBCol>
                         <MDBCol md="4">
                             <MDBCardTitle>
-                                {totalamount}
+                              {totalamount}
                             </MDBCardTitle>
                         </MDBCol>
                     </MDBRow>

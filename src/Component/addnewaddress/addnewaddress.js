@@ -2,6 +2,8 @@ import React from 'react';
 import API from '../../service/homeservice';
 import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
 import history from '../../history';
+import Header from '../home/header/header';
+
 // import './addnewaddress.css';
 
 class Address extends React.Component {
@@ -64,8 +66,9 @@ class Address extends React.Component {
             stateError = "please enter state";
         }
 
-        if (!this.state.pincode) {
-            pincodeError = "please enter pincode";
+        const pincode = /^[1-9][0-9]{5}$/;
+        if (!pincode.test(this.state.pincode)) {
+            pincodeError = "please enter valid pincode";
         }
 
         if (address_1Error || address_2Error || cityError || stateError || pincodeError) {
@@ -106,7 +109,7 @@ class Address extends React.Component {
             })
         };
 
-        if (this.state.address_1 && this.state.address_2 && this.state.city && this.state.state && this.state.pincode) {
+        if (this.state.address_1 && this.state.address_2 && this.state.city && this.state.state && this.state.pincode && this.state.pincode.length == 6) {
             const obj = {
                 customerId: this.state.getProfileList.id,
                 address1: this.state.address_1,
@@ -128,6 +131,7 @@ class Address extends React.Component {
     render() {
         return (
             <div>
+                <Header />
                 <MDBContainer>
                     <MDBRow>
                         <MDBCol md="6">

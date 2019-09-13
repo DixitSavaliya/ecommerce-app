@@ -1,8 +1,8 @@
 import React from 'react';
 import API from '../../service/homeservice';
-import './checkout.css';
-import history from '../../history';
+import Header from '../home/header/header';
 import Swal from 'sweetalert2';
+import './checkout.css';
 
 class Checkout extends React.Component {
     constructor(props) {
@@ -29,7 +29,8 @@ class Checkout extends React.Component {
             pincode: '',
             pincodeError: '',
             country: '',
-            countryError: ''
+            countryError: '',
+            isFlag: false
 
         }
         this.productDetails = this.props.location.state.name;
@@ -41,7 +42,7 @@ class Checkout extends React.Component {
     }
 
     componentDidMount() {
-
+        localStorage.setItem('isFlag', this.state.isFlag);
         /** Get Countrylist */
         API.getCountryList().
             then((findresponse) => {
@@ -117,8 +118,9 @@ class Checkout extends React.Component {
             cityError = "please enter  city";
         }
 
-        if (!this.state.pincode) {
-            pincodeError = "please enter pincode";
+        const pincode = /^[1-9][0-9]{5}$/;
+        if (!pincode.test(this.state.pincode)) {
+            pincodeError = "please enter valid pincode";
         }
 
         if (!this.state.zone) {
@@ -187,11 +189,12 @@ class Checkout extends React.Component {
                 pincode: '',
                 pincodeError: '',
                 country: '',
-                countryError: ''
+                countryError: '',
+                cartCount: 0
             })
         };
 
-        if (this.state.firstName && this.state.lastName && this.state.email && this.state.mobileNumber && this.state.address_1 && this.state.city && this.state.zone && this.state.pincode && this.state.country && !this.state.mobileNumberError) {
+        if (this.state.firstName && this.state.lastName && this.state.email && this.state.mobileNumber && this.state.address_1 && this.state.city && this.state.zone && this.state.pincode && this.state.country && this.state.mobileNumber.length == 10 && this.state.pincode.length == 6 && !this.state.emailError) {
             const obj = {
                 productDetails: this.productDetails,
                 shippingFirstName: this.state.firstName,
@@ -208,6 +211,9 @@ class Checkout extends React.Component {
             API.checkoutListOrder(obj).
                 then((findresponse) => {
                     console.log("checkoutListOrder response===", findresponse);
+                    Swal.fire("Order Placed Successfully!", "", "success");
+                    localStorage.removeItem('productId');
+                    localStorage.setItem('cartCount', this.state.cartCount);
                     window.location.href = '/home';
                     // history.push('/home');
                 }).catch(
@@ -219,6 +225,7 @@ class Checkout extends React.Component {
     render() {
         return (
             <div>
+                <Header />
                 <form className="center">
                     First name:<br />
                     <input type="text" name="firstName" value={this.state.firstName}
@@ -236,7 +243,6 @@ class Checkout extends React.Component {
                     <br />
                     Address_1:<br />
                     <textarea rows="4" cols="50" name="address_1" value={this.state.address_1} onChange={this.handleChangeName}>
-
                     </textarea>
                     <div style={{ fontSize: 12, color: "red" }}>
                         {this.state.address_1Error}
@@ -244,7 +250,6 @@ class Checkout extends React.Component {
                     <br />
                     Address_2:<br />
                     <textarea rows="4" cols="50" name="address_2" value={this.state.address_2} onChange={this.handleChangeName}>
-
                     </textarea>
                     <br />
                     Country:<br />
@@ -290,7 +295,7 @@ class Checkout extends React.Component {
                     </div>
                     <br />
                     PinCode:<br />
-                    <input type="text" name="pincode" value={this.state.pincode}
+                    <input type="number" name="pincode" value={this.state.pincode}
                         onChange={this.handleChangeName} />
                     <div style={{ fontSize: 12, color: "red" }}>
                         {this.state.pincodeError}
