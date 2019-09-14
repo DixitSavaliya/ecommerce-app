@@ -4,7 +4,6 @@ import { config } from '../../config';
 import { MDBBtn, MDBCard, MDBCardBody, MDBRow, MDBCardTitle, MDBCardText, MDBCol } from 'mdbreact';
 import Swal from 'sweetalert2';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import Header from '../home/header/header';
 const _ = require('lodash');
 let finalArr = [];
 let priceArr = [];
@@ -22,6 +21,7 @@ class Cart extends React.Component {
         }
     }
 
+    /** Intially Call  */
     componentDidMount() {
         console.log("id===", localStorage.getItem('productId'), localStorage.getItem('isFlag'))
         if (localStorage.getItem('productId')) {
@@ -36,6 +36,7 @@ class Cart extends React.Component {
             localStorage.setItem('cartCount', finalArrLength.toString());
             finalArr.map((id) => {
                 console.log('id-=-=', id);
+                /** Get Productdetail */
                 API.productDetail(id)
                     .then((response) => {
                         console.log('respone from cart-=-=', response.data.data);
@@ -70,6 +71,7 @@ class Cart extends React.Component {
 
     /** 
    * @param {string} id
+   * @param {string} price
    * Delete wishlist
    */
     deleteWishList(id, price) {
@@ -138,7 +140,6 @@ class Cart extends React.Component {
 
     render() {
         let displayData;
-        console.log("finalarray==", this.state.finalArry);
         if (this.state.cartItem) displayData = this.state.cartItem.map((data, index) => (
             <div>
                 <MDBRow>
@@ -170,7 +171,6 @@ class Cart extends React.Component {
 
         return (
             <div>
-                <Header />
                 <MDBCol>
                     <MDBCard>
                         <MDBCardBody>
@@ -202,7 +202,6 @@ class Cart extends React.Component {
                                         </div>
                                     </div>) : ('')
                                 }
-
                             </MDBCardText>
                         </MDBCardBody>
                     </MDBCard>

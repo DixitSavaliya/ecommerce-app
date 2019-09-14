@@ -3,24 +3,24 @@ import API from '../../service/homeservice';
 import { config } from '../../config';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import renderHTML from 'react-render-html';
-import Header from '../home/header/header';
 import Swal from 'sweetalert2';
 import './subcategories.css';
 const _ = require('lodash');
-
 
 class SubCategories extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             SubCategoryList: [],
-            isFlag:false
+            isFlag: false
         }
     }
 
+    /** Intially call */
     componentDidMount() {
         console.log("query=", this.props.location.pathname.split('/')[2]);
         const query = this.props.location.pathname.split('/')[2];
+        /** Get Subcategory details */
         API.SubCategoryList(query).
             then((findresponse) => {
                 console.log("SubCategoryList response===", findresponse);
@@ -36,28 +36,38 @@ class SubCategories extends React.Component {
     }
 
     /** 
-    * @param {string} productId
-    * Add Cart function
-    */
-   addInCart(productId) {
-    console.log("productId==", productId);
-    this.value = localStorage.getItem('productId');
-    const data = []
-    data.push(this.value);
-    data.push(productId);
-    console.log("data",data);
-    const strVal = data.toString();
-    console.log('strVal=====', strVal);
-    const arrVal = strVal.split(',');
-    console.log('arrVal=====', _.uniq(arrVal));
-    const filter = _.filter(_.uniq(arrVal), _.size);
-    console.log('filter=====', filter);
-    localStorage.setItem('productId', filter.toString());
-    localStorage.setItem('cartCount', filter.length.toString());
-    localStorage.setItem('isFlag',this.state.isFlag);
-    Swal.fire("Added Successfully!", "", "success");
-    console.log("data==", data);
-}
+     * @param {string} productId
+     * Add Cart function
+     */
+    addInCart(productId) {
+        this.value = localStorage.getItem('productId');
+        console.log("value===", this.value);
+        const data = []
+        data.push(this.value);
+        data.push(productId);
+        console.log("data", data);
+        const strVal = data.toString();
+        console.log('strVal=====', strVal);
+        const arrVal = strVal.split(',');
+        console.log('arrVal=====', _.uniq(arrVal));
+        const filter = _.filter(_.uniq(arrVal), _.size);
+        console.log('filter=====', filter);
+        if (this.value) {
+            if (this.value.indexOf(productId) == -1) {
+                console.log("new updated", localStorage.getItem('productId'))
+                Swal.fire("Added Successfully!", "", "success");
+            } else {
+                console.log("new added", localStorage.getItem('productId'))
+                Swal.fire("Already Added In cart!", "", "warning");
+            }
+            localStorage.setItem('productId', filter);
+            localStorage.setItem('cartCount', filter.length.toString());
+        } else {
+            localStorage.setItem('productId', filter);
+            localStorage.setItem('cartCount', filter.length.toString());
+            Swal.fire("Added Successfully!", "", "success");
+        }
+    }
 
     /** 
    * @param {string} productId
@@ -68,6 +78,7 @@ class SubCategories extends React.Component {
             productId: productId
         }
         if (localStorage.getItem('token')) {
+            /** Add Wishlist */
             API.addwishlist(obj).
                 then((findresponse) => {
                     console.log("addWishList response===", findresponse);
@@ -83,6 +94,7 @@ class SubCategories extends React.Component {
     render() {
         let displayData;
 
+        /** Display subcategory data */
         if (this.state.SubCategoryList) displayData = this.state.SubCategoryList.map(data =>
             <div className="single_product" data-aos="flip-left" data-aos-duration="1500">
                 <div className="product_content">
@@ -113,7 +125,6 @@ class SubCategories extends React.Component {
         )
         return (
             <div>
-                {/* <Header/> */}
                 <section className="product_section">
                     <div className="container">
                         <div>

@@ -79,9 +79,9 @@ class UpdatePassword extends React.Component {
                     oldPassword: this.state.oldPassword,
                     newPassword: this.state.newPassword,
                 }
+                /** Update Password */
                 API.UpdatePasswordUser(obj).
                     then((findresponse) => {
-                        console.log("response==", findresponse);
                         Swal.fire("Password Updated Successfully!", "", "success");
                         history.push('/home');
                     }).catch({ status: 500, message: 'Internal Server Error' });
@@ -94,12 +94,12 @@ class UpdatePassword extends React.Component {
     render() {
         return (
             <div>
+                {/** Update Password form */}
                 <MDBContainer>
                     <MDBRow>
                         <form>
                             <p className="h4 text-center mb-4">UpdatePassword</p>
                             <label
-
                                 className="grey-text"
                             >
                                 Your old password
@@ -116,7 +116,6 @@ class UpdatePassword extends React.Component {
                                 {this.state.oldPasswordError}
                             </div>
                             <label
-
                                 className="grey-text"
                             >
                                 Your new password
@@ -133,7 +132,6 @@ class UpdatePassword extends React.Component {
                                 {this.state.newPasswordError}
                             </div>
                             <label
-
                                 className="grey-text"
                             >
                                 confirm password

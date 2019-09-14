@@ -1,6 +1,5 @@
 import React from 'react';
 import API from '../../service/homeservice';
-import Header from '../home/header/header';
 import Swal from 'sweetalert2';
 
 class Contact extends React.Component {
@@ -21,6 +20,7 @@ class Contact extends React.Component {
         this.contact = this.contact.bind(this);
     }
 
+    /** Validation */
     validate = () => {
         let nameError = "";
         let messageError = "";
@@ -92,6 +92,7 @@ class Contact extends React.Component {
                 email: this.state.email,
                 message: this.state.message
             }
+            /** Contact Us */
             API.contactUs(obj).
                 then((findresponse) => {
                     console.log("response==", findresponse);
@@ -104,7 +105,7 @@ class Contact extends React.Component {
     render() {
         return (
             <div>
-                <Header/>
+                {/** Contact Us Form */}
                 <section class="mb-4">
                     <h2 class="h1-responsive font-weight-bold text-center my-4">Contact us</h2>
                     <div class="row">

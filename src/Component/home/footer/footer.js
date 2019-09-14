@@ -11,10 +11,11 @@ class Footer extends React.Component {
         }
     }
 
+    /** Get CategoryList */
     componentDidMount() {
+        /** Get category list */
         API.CategoryList().
             then((findresponse) => {
-                console.log("BannerList response===", findresponse);
                 this.setState({ categoryList: findresponse.data.data })
                 console.log("data==", this.state.categoryList);
             }).catch(
@@ -23,8 +24,40 @@ class Footer extends React.Component {
     }
 
     render() {
+        let displayData;
+        /** Display Categorylist data */
+        if (this.state.categoryList) displayData = this.state.categoryList.map(data =>
+            <li>
+                {
+                    data.children ? (<a className="dropdown-toggle" href={{ javascript: void (0) }} data-toggle="dropdown">{data.name}<i className="fa fa-caret-right" aria-hidden="true"></i></a>) : (<Link to={`/subcategories/${data.categoryId}`}><a>{data.name}></a></Link>)
+                }
+                <div>
+                    {
+                        data.children ? (
+                            data.children.map(list =>
+                                <div className="dropdown-menu">
+                                    <Link to={`/subcategories/${list.categoryId}`}><a className="dropdown-item">{list.name}</a></Link>
+                                    <div>
+                                        {
+                                            list.children ? (
+                                                list.children.map(sublist =>
+                                                    <div >
+                                                        <Link to={`/subcategories/${sublist.categoryId}`}>{sublist.name}</Link>
+                                                    </div>
+                                                )
+                                            ) : (null)
+                                        }
+                                    </div>
+                                </div>
+                            )
+                        ) : (null)
+                    }
+                </div>
+            </li>
+        )
         return (
             <div>
+                {/** Footer */}
                 <footer>
                     <div className="news_letter_section" data-aos="fade-up" data-aos-duration="1500">
                         <div className="container">
@@ -46,36 +79,7 @@ class Footer extends React.Component {
                                     <div className="footer_menu">
                                         <h4>categories</h4>
                                         <ul>
-                                            {
-                                                this.state.categoryList.map(data =>
-                                                    <li className="nav-item">
-
-                                                        <a className="dropdown-toggle" href={{ javascript: void (0) }} data-toggle="dropdown">{data.name}</a>
-                                                        <div>
-                                                            {
-                                                                data.children ? (
-                                                                    data.children.map(list =>
-                                                                        <div className="dropdown-menu">
-                                                                            <a className="dropdown-item" href="#">{list.name}</a>
-                                                                            <div>
-                                                                                {
-                                                                                    list.children ? (
-                                                                                        list.children.map(sublist =>
-                                                                                            <div >
-                                                                                                <Link to={`/subcategories/${sublist.name}`}>{sublist.name}</Link>
-                                                                                            </div>
-                                                                                        )
-                                                                                    ) : (null)
-                                                                                }
-                                                                            </div>
-                                                                        </div>
-                                                                    )
-                                                                ) : (null)
-                                                            }
-                                                        </div>
-                                                    </li>
-                                                )
-                                            }
+                                            {displayData}
                                         </ul>
                                     </div>
                                 </div>
@@ -86,8 +90,8 @@ class Footer extends React.Component {
                                             <li><a href="#">terms of use</a></li>
                                             <li><a href="#">privacy policy</a></li>
                                             <li><a href="#">f.a.q</a></li>
-                                            <li><a href="#">contact info</a></li>
-                                            <li><a href="#">create account</a></li>
+                                            <li><Link to="/contact">contact us</Link></li>
+                                            <li><Link to="/register">create account</Link></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -95,11 +99,11 @@ class Footer extends React.Component {
                                     <div className="footer_menu">
                                         <h4>my account</h4>
                                         <ul>
-                                            <li><a href="#">my account</a></li>
-                                            <li><a href="#">view cart</a></li>
-                                            <li><a href="#">my wishlist</a></li>
-                                            <li><a href="#">order status</a></li>
-                                            <li><a href="#">track my order</a></li>
+                                            <li><Link to='/profile'>my account</Link></li>
+                                            <li><Link to='/cart'>view cart</Link></li>
+                                            <li><Link to='/wishlist'>my wishlist</Link></li>
+                                            <li><Link to='/orderhistory'>order status</Link></li>
+                                            <li><Link>track my order</Link></li>
                                         </ul>
                                     </div>
                                 </div>

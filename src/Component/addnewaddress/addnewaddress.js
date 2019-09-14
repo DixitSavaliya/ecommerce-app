@@ -2,9 +2,6 @@ import React from 'react';
 import API from '../../service/homeservice';
 import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
 import history from '../../history';
-import Header from '../home/header/header';
-
-// import './addnewaddress.css';
 
 class Address extends React.Component {
     constructor(props) {
@@ -28,7 +25,9 @@ class Address extends React.Component {
         this.addAddress = this.addAddress.bind(this);
     }
 
+    /** Intially Call */
     componentDidMount() {
+        /** Get Profile */
         API.getProfile().
             then((findresponse) => {
                 console.log("getProfile response===", findresponse);
@@ -42,6 +41,7 @@ class Address extends React.Component {
             );
     }
 
+    /** Validation */
     validate = () => {
         let address_1Error = "";
         let cityError = "";
@@ -52,7 +52,6 @@ class Address extends React.Component {
         if (!this.state.address_1) {
             address_1Error = "please enter address_1";
         }
-
 
         if (!this.state.address_2) {
             address_2Error = "please enter  address_2";
@@ -118,6 +117,11 @@ class Address extends React.Component {
                 state: this.state.state,
                 postcode: this.state.pincode
             }
+
+            /** 
+            * @param {JSON} obj
+            * Add Address 
+            */
             API.addAddress(obj).
                 then((findresponse) => {
                     console.log("addAddress response===", findresponse);
@@ -131,7 +135,6 @@ class Address extends React.Component {
     render() {
         return (
             <div>
-                <Header />
                 <MDBContainer>
                     <MDBRow>
                         <MDBCol md="6">
@@ -182,7 +185,6 @@ class Address extends React.Component {
                                 <br />
                             </form>
                         </MDBCol>
-
                         <MDBCol md="6">
                             <form>
                                 <label className="grey-text">

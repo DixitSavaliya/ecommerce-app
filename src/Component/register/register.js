@@ -25,6 +25,7 @@ class SignUp extends React.Component {
         this.handleChangeEvent = this.handleChangeEvent.bind(this);
     }
 
+    /** Validation  */
     validate = () => {
         let nameError = "";
         let passwordError = "";
@@ -47,6 +48,8 @@ class SignUp extends React.Component {
 
         if (!this.state.confirmPassword) {
             confirmPasswordError = "please enter confirm password";
+        } else if (this.state.confirmPassword !== this.state.password || this.state.confirmPassword.length !== this.state.password.length) {
+            confirmPasswordError = "does not match password or confirm paswword";
         }
 
         const phone = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
@@ -80,7 +83,7 @@ class SignUp extends React.Component {
             })
         };
 
-        if (this.state.name && this.state.password && this.state.emailId && this.state.confirmPassword && this.state.phoneNumber && !this.state.phoneNumberError && !this.state.emailIdError) {
+        if (this.state.name && this.state.password && this.state.emailId && this.state.confirmPassword && this.state.phoneNumber && this.state.phoneNumber.length == 10 && !this.state.emailIdError && this.state.password.length == this.state.confirmPassword.length && this.state.confirmPassword == this.state.password) {
             const obj = {
                 name: this.state.name,
                 password: this.state.password,
@@ -88,9 +91,9 @@ class SignUp extends React.Component {
                 emailId: this.state.emailId,
                 phoneNumber: this.state.phoneNumber
             }
+            /** User Sign-up */
             API.Signup(obj).
                 then((findresponse) => {
-                    console.log("response==", findresponse);
                     window.location.href = '/login';
                     // history.push('/login');
                 }).catch({ status: 500, message: 'Internal Server Error' });
@@ -111,6 +114,7 @@ class SignUp extends React.Component {
     render() {
         return (
             <div>
+                {/** User Signup form */}
                 <MDBContainer>
                     <MDBRow>
                         <form>

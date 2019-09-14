@@ -14,19 +14,18 @@ class Product extends React.Component {
         }
     }
 
+    /** Intailly call */
     componentDidMount() {
+        /** Get bannerlist */
         API.BannerList().
             then((findresponse) => {
                 this.state.isFetching = false;
-                // console.log("BannerList response===", findresponse);
                 this.setState({ bannerList: findresponse.data.data });
-                // console.log("BannerList response===", this.state.bannerList);
                 this.state.bannerList.map(data => {
                     this.setState({
                         images: [...this.state.images, config.baseMediaUrl + data.imagePath + data.image]
                     })
-                }
-                )
+                })
             }).catch(
                 { status: 500, message: 'Internal Server Error' }
             );
@@ -35,6 +34,7 @@ class Product extends React.Component {
     render() {
         return (
             <div>
+                {/** Carousel */}
                 <Carousel>
                     {
                         this.state.images.map(data =>

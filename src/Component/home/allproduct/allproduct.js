@@ -4,6 +4,7 @@ import { config } from '../../../config';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Swal from 'sweetalert2';
 import { EventEmitter } from '../../../event';
+import history from '../../../history';
 const _ = require('lodash');
 
 class AllProduct extends React.Component {
@@ -13,26 +14,45 @@ class AllProduct extends React.Component {
         this.state = {
             productlist: [],
             images: [],
-            wishList: []
+            wishList: [],
+            cartmatch: false
         }
     }
 
+    /** Intially call */
     componentDidMount() {
+        /** Get All Featured-Porduct */
         API.ProductList().
             then((findresponse) => {
-                console.log("ProductList response===", findresponse);
                 this.setState({ productlist: findresponse.data.data });
                 console.log("all products=====", this.state.productlist);
             }).catch(
                 { status: 500, message: 'Internal Server Error' }
             );
 
+        /** Get Wishlist */
         API.getWishList().
             then((findresponse) => {
-                console.log("getWishList response===", findresponse);
                 this.setState({ wishList: findresponse.data.data })
                 console.log("data==", this.state.wishList);
                 console.log("data==", this.state.wishList.length);
+                localStorage.setItem('wishlistLength', this.state.wishList.length);
+                EventEmitter.dispatch('length', this.state.wishList.length);
+            }).catch(
+                { status: 500, message: 'Internal Server Error' }
+            );
+
+    }
+
+    /** Get Wishlist */
+    getwishList() {
+        /** Get Wishlist */
+        API.getWishList().
+            then((findresponse) => {
+                this.setState({ wishList: findresponse.data.data })
+                console.log("data==", this.state.wishList);
+                console.log("data==", this.state.wishList.length);
+                localStorage.setItem('wishlistLength', this.state.wishList.length);
                 EventEmitter.dispatch('length', this.state.wishList.length);
             }).catch(
                 { status: 500, message: 'Internal Server Error' }
@@ -45,6 +65,7 @@ class AllProduct extends React.Component {
     */
     addInCart(productId) {
         this.value = localStorage.getItem('productId');
+        console.log("value===", this.value);
         const data = []
         data.push(this.value);
         data.push(productId);
@@ -55,11 +76,22 @@ class AllProduct extends React.Component {
         console.log('arrVal=====', _.uniq(arrVal));
         const filter = _.filter(_.uniq(arrVal), _.size);
         console.log('filter=====', filter);
-        localStorage.setItem('productId', filter.toString());
-        localStorage.setItem('cartCount', filter.length.toString());
-        Swal.fire("Added Successfully!", "", "success");
+        if (this.value) {
+            if (this.value.indexOf(productId) == -1) {
+                console.log("new updated", localStorage.getItem('productId'))
+                Swal.fire("Added Successfully!", "", "success");
+            } else {
+                console.log("new added", localStorage.getItem('productId'))
+                Swal.fire("Already Added In cart!", "", "warning");
+            }
+            localStorage.setItem('productId', filter);
+            localStorage.setItem('cartCount', filter.length.toString());
+        } else {
+            localStorage.setItem('productId', filter);
+            localStorage.setItem('cartCount', filter.length.toString());
+            Swal.fire("Added Successfully!", "", "success");
+        }
     }
-
 
     /** 
    * @param {string} productId
@@ -75,7 +107,7 @@ class AllProduct extends React.Component {
                 then((findresponse, err) => {
                     console.log("addWishList response===", findresponse);
                     Swal.fire("Added Successfully!", "", "success");
-                    this.componentDidMount();
+                    this.getwishList();
                 }).catch((err) => {
                     Swal.fire("Already Added In Wishlist!", "", "warning");
                 });
@@ -87,6 +119,7 @@ class AllProduct extends React.Component {
     render() {
         let displayData;
 
+        /** Display Productlist data */
         if (this.state.productlist) displayData = this.state.productlist.map(data =>
             <div className="single_product" data-aos="flip-left" data-aos-duration="1500">
                 <div className="product_content">
@@ -120,8 +153,8 @@ class AllProduct extends React.Component {
                 </div>
             </div>
         )
-        return (
 
+        return (
             <div>
                 <section className="product_section">
                     <div className="container">

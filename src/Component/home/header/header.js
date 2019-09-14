@@ -6,7 +6,6 @@ import './header.css';
 import { EventEmitter } from '../../../event';
 
 class Header extends React.Component {
-    count;
     constructor(props) {
         super(props);
         this.state = {
@@ -19,14 +18,13 @@ class Header extends React.Component {
         this.name = localStorage.getItem('name');
         this.logout = this.logout.bind(this);
         this.handleLoginKeyUp = this.keyUpHandler.bind(this);
-
+        this.onClick = this.onClick.bind(this);
         EventEmitter.subscribe('length', (event) => {
             console.log("wishlist=", event);
             this.count = event;
             console.log("count=>", this.count);
             this.setState({ count: this.count })
-        }
-        );
+        });
     }
 
     /** User Logout */
@@ -35,14 +33,15 @@ class Header extends React.Component {
         localStorage.removeItem('name');
         localStorage.removeItem('productId');
         localStorage.removeItem('cartCount');
+        localStorage.removeItem('wishlistLength');
         history.push('/home');
     }
 
+    /** Intailly call */
     componentDidMount() {
-
+        /** Get Categorylist */
         API.CategoryList().
             then((findresponse) => {
-                console.log("BannerList response===", findresponse);
                 this.setState({ categoryList: findresponse.data.data })
                 console.log("data==", this.state.categoryList);
             }).catch(
@@ -58,6 +57,7 @@ class Header extends React.Component {
         console.log("e", e.target.value);
         this.setState({ value: e.target.value })
         console.log("event====", this.state.value);
+        /** SearchList */
         API.searchList(this.state.value).
             then((findresponse) => {
                 window.location.href = '/searchproduct/' + this.state.value;
@@ -69,18 +69,21 @@ class Header extends React.Component {
             );
     }
 
+    onClick() {
+        window.location.href = '/home';
+    }
+
     render() {
-        const { showing } = this.state;
         return (
             <div>
                 <header>
+                    {/** Top Header */}
                     <div className="header_top">
                         <div className="container">
                             <div className="contact_number float-left">
                                 {
                                     localStorage.getItem('token') ? (<h6 className="user_name">Welcome  <i className="far fa-user"></i> {this.name}</h6>) : ('')
                                 }
-
                             </div>
                             <div className="header_top_links float-right">
                                 <ul>
@@ -104,7 +107,6 @@ class Header extends React.Component {
                                                     </div>
                                                 </div>) : ('')
                                         }
-
                                     </li>
                                     <li className="font_color">
                                         {
@@ -117,10 +119,11 @@ class Header extends React.Component {
                         </div>
                     </div>
 
+                    {/** Bottom Header */}
                     <div className="header_bottom">
                         <div className="container">
                             <div className="logo float-left">
-                                <a>cmerce</a>
+                                <Link><span onClick={this.onClick}>cmerce</span></Link>
                             </div>
                             <div className="menu_with_cart float-right">
                                 <div className="header_menu">
@@ -182,19 +185,15 @@ class Header extends React.Component {
                                                 {
                                                     this.state.count ? (<span class="cart_count">{this.state.count}</span>) : ('')
                                                 }
-
                                             </Link>
                                         </li>
-
                                         <li className="desktop_only">
                                             <Link to="/cart"><i class="fas fa-shopping-cart"></i>
-                                            {
-                                                    localStorage.getItem('cartCount') ? ( <span class="cart_count">{localStorage.getItem('cartCount')}</span>) : ('')
+                                                {
+                                                    localStorage.getItem('cartCount') ? (<span class="cart_count">{localStorage.getItem('cartCount')}</span>) : ('')
                                                 }
-                                               
                                             </Link>
                                         </li>
-
                                     </ul>
                                 </div>
                             </div>

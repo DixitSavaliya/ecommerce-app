@@ -3,27 +3,26 @@ import API from '../../service/homeservice';
 import { MDBContainer, MDBRow, MDBBtn, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText, MDBCol } from 'mdbreact';
 import * as jsPDF from 'jspdf';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import Header from '../home/header/header';
 import * as html2canvas from 'html2canvas';
 import './orderdetail.css';
 
 class OrderDetail extends React.Component {
     constructor(props) {
-        console.log("props",props);
+        console.log("props", props);
         super(props);
         this.state = {
             orderDetailsList: [],
             numPages: null
         }
         this.handlePdf = this.handlePdf.bind(this);
-           this.orderId = props.location.state.name
-     
+        this.orderId = props.location.state.name;
     }
 
-
+    /** Intailly Call */
     componentDidMount() {
         console.log("query=", this.props.location.pathname.split('/')[2]);
         const orderId = this.props.location.pathname.split('/')[2];
+        /** Get Orderdetails */
         API.getOrderDetails(orderId).
             then((findresponse) => {
                 console.log("getOrderHistory response===", findresponse);
@@ -32,7 +31,6 @@ class OrderDetail extends React.Component {
             }).catch(
                 { status: 500, message: 'Internal Server Error' }
             );
-
     }
 
     /** Order pdf generate */
@@ -53,7 +51,9 @@ class OrderDetail extends React.Component {
         let displayData;
         let displayProduct;
         let totalamount;
-    
+
+        /** Display Orderdetaillist Data */
+
         if (this.state.orderDetailsList) displayData = this.state.orderDetailsList.map(data =>
             <MDBCardText>
                 <span>{data.shippingAddress1} {data.shippingAddress2}</span>
@@ -79,9 +79,8 @@ class OrderDetail extends React.Component {
 
         return (
             <div>
-                {/* <Header/> */}
                 <MDBContainer id="page">
-                        <h3><strong>OrderId:</strong> { this.orderId}</h3>
+                    <h3><strong>OrderId:</strong> {this.orderId}</h3>
                     <MDBRow>
                         <MDBCol md="6">
                             <MDBCard style={{ width: "22rem" }}>
@@ -126,7 +125,7 @@ class OrderDetail extends React.Component {
                         </MDBCol>
                         <MDBCol md="4">
                             <MDBCardTitle>
-                              {totalamount}
+                                {totalamount}
                             </MDBCardTitle>
                         </MDBCol>
                     </MDBRow>

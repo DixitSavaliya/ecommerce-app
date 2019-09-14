@@ -7,7 +7,6 @@ import { MDBContainer, MDBRow, MDBCol } from "mdbreact";
 import './singleproduct.css';
 import renderHTML from 'react-render-html';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import Header from '../home/header/header';
 import Swal from 'sweetalert2';
 const _ = require('lodash');
 
@@ -24,12 +23,13 @@ class SingleProduct extends React.Component {
         this.relatedProduct = this.relatedProduct.bind(this);
     }
 
+    /** Intially call */
     componentDidMount() {
         const query = this.props.location.pathname.split('/')[2];
+        /** Product details */
         API.productDetail(query).
             then((findresponse) => {
                 this.state.isFetching = false;
-                console.log("productDetail response===", findresponse);
                 this.setState({ productDetailList: findresponse.data.data });
                 console.log("productDetailList", this.state.productDetailList);
                 this.state.productDetailList.map(data =>
@@ -49,28 +49,39 @@ class SingleProduct extends React.Component {
         this.relatedProduct(query);
     }
 
-  
-   /** 
-    * @param {string} productId
-    * Add Cart function
-    */
-   addInCart(productId) {
-    this.value = localStorage.getItem('productId');
-    const data = []
-    data.push(this.value);
-    data.push(productId);
-    console.log("data",data);
-    const strVal = data.toString();
-    console.log('strVal=====', strVal);
-    const arrVal = strVal.split(',');
-    console.log('arrVal=====', _.uniq(arrVal));
-    const filter = _.filter(_.uniq(arrVal), _.size);
-    console.log('filter=====', filter);
-    localStorage.setItem('productId', filter.toString());
-    localStorage.setItem('cartCount', filter.length.toString());
-    Swal.fire("Successfully Added!", "", "success");
-    console.log("data==", data);
-}
+    /** 
+     * @param {string} productId
+     * Add Cart function
+     */
+    addInCart(productId) {
+        this.value = localStorage.getItem('productId');
+        console.log("value===", this.value);
+        const data = []
+        data.push(this.value);
+        data.push(productId);
+        console.log("data", data);
+        const strVal = data.toString();
+        console.log('strVal=====', strVal);
+        const arrVal = strVal.split(',');
+        console.log('arrVal=====', _.uniq(arrVal));
+        const filter = _.filter(_.uniq(arrVal), _.size);
+        console.log('filter=====', filter);
+        if (this.value) {
+            if (this.value.indexOf(productId) == -1) {
+                console.log("new updated", localStorage.getItem('productId'))
+                Swal.fire("Added Successfully!", "", "success");
+            } else {
+                console.log("new added", localStorage.getItem('productId'))
+                Swal.fire("Already Added In cart!", "", "warning");
+            }
+            localStorage.setItem('productId', filter);
+            localStorage.setItem('cartCount', filter.length.toString());
+        } else {
+            localStorage.setItem('productId', filter);
+            localStorage.setItem('cartCount', filter.length.toString());
+            Swal.fire("Added Successfully!", "", "success");
+        }
+    }
 
     /**
    * @param {string} productId
@@ -81,6 +92,7 @@ class SingleProduct extends React.Component {
             productId: productId
         }
         if (localStorage.getItem('token')) {
+            /** Add wishlist */
             API.addwishlist(obj).
                 then((findresponse) => {
                     console.log("addWishList response===", findresponse);
@@ -99,6 +111,7 @@ class SingleProduct extends React.Component {
    */
     relatedProduct(productId) {
         console.log("productId======", productId);
+        /** Releated Product */
         API.relatedProduct(productId).
             then((findresponse) => {
                 console.log("relatedProduct response===", findresponse);
@@ -114,6 +127,7 @@ class SingleProduct extends React.Component {
         let displayDisc;
         let displayRelatedData;
 
+        /** Display Single Product details */
         if (this.state.productDetailList) displayData = this.state.productDetailList.map(data =>
             <div className="single_product" data-aos="flip-left" data-aos-duration="1500">
                 <div className="product_content">
@@ -145,12 +159,14 @@ class SingleProduct extends React.Component {
             </div>
         )
 
+        /** Discription Of Single product */
         if (this.state.productDetailList) displayDisc = this.state.productDetailList.map(data =>
             <MDBCol md="6">
                 <p> {renderHTML(data.description)}</p>
             </MDBCol>
         )
 
+        /** Display Releated Product */
         if (this.state.relatedProductList) displayRelatedData = this.state.relatedProductList.map(data =>
             <div className="single_product" data-aos="flip-left" data-aos-duration="1500">
                 <div className="product_content">
@@ -187,7 +203,6 @@ class SingleProduct extends React.Component {
 
         return (
             <div>
-                {/* <Header/> */}
                 <MDBContainer>
                     <MDBRow>
                         <MDBCol md="4">
@@ -216,7 +231,7 @@ class SingleProduct extends React.Component {
                     </MDBRow>
                     <MDBRow>
                         <div>
-                        <h1>Discription</h1>
+                            <h1>Discription</h1>
                         </div>
                         <div>
                             {displayDisc}

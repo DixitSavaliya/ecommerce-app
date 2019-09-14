@@ -4,7 +4,7 @@ import { config } from '../../config';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Swal from 'sweetalert2';
 import './searchproduct.css';
-import Header from '../home/header/header';
+const _ = require('lodash');
 
 class SearchProduct extends React.Component {
     constructor(props) {
@@ -17,23 +17,41 @@ class SearchProduct extends React.Component {
         this.handleLoginKeyUp = this.keyUpHandler.bind(this);
     }
 
-
     /** 
      * @param {string} productId
      * Add Cart function
      */
     addInCart(productId) {
-        console.log("productId==", productId);
         this.value = localStorage.getItem('productId');
+        console.log("value===", this.value);
         const data = []
         data.push(this.value);
         data.push(productId);
-        localStorage.setItem('productId', data.toString());
-        Swal.fire("Added Successfully!", "", "success");
-        console.log("data==", data);
+        console.log("data", data);
+        const strVal = data.toString();
+        console.log('strVal=====', strVal);
+        const arrVal = strVal.split(',');
+        console.log('arrVal=====', _.uniq(arrVal));
+        const filter = _.filter(_.uniq(arrVal), _.size);
+        console.log('filter=====', filter);
+        if (this.value) {
+            if (this.value.indexOf(productId) == -1) {
+                console.log("new updated", localStorage.getItem('productId'))
+                Swal.fire("Added Successfully!", "", "success");
+            } else {
+                console.log("new added", localStorage.getItem('productId'))
+                Swal.fire("Already Added In cart!", "", "warning");
+            }
+            localStorage.setItem('productId', filter);
+            localStorage.setItem('cartCount', filter.length.toString());
+        } else {
+            localStorage.setItem('productId', filter);
+            localStorage.setItem('cartCount', filter.length.toString());
+            Swal.fire("Added Successfully!", "", "success");
+        }
     }
 
-    /** 
+    /**
    * @param {string} productId
    * Add Wishlist function
    */
@@ -42,13 +60,14 @@ class SearchProduct extends React.Component {
             productId: productId
         }
         if (localStorage.getItem('token')) {
+            /** Add wishlist */
             API.addwishlist(obj).
                 then((findresponse) => {
                     console.log("addWishList response===", findresponse);
-                    Swal.fire("Added Successfully!", "", "success");
-                }).catch(
-                    { status: 500, message: 'Internal Server Error' }
-                );
+                    Swal.fire("Successfully Added!", "", "success");
+                }).catch((err) => {
+                    Swal.fire("Already Added In Wishlist!", "", "warning");
+                });
         } else {
             Swal.fire("Please Login First");
         }
@@ -62,6 +81,7 @@ class SearchProduct extends React.Component {
         console.log("e", e.target.value);
         this.setState({ value: e.target.value })
         console.log("event====", this.state.value);
+        /** Search product */
         API.searchList(this.state.value).
             then((findresponse) => {
                 console.log("searchList response===", findresponse);
@@ -76,6 +96,7 @@ class SearchProduct extends React.Component {
     render() {
         let displayData;
 
+        {/** Display search data */ }
         if (this.state.searchList) displayData = this.state.searchList.map(data =>
             <div className="single_product" data-aos="flip-left" data-aos-duration="1500">
                 <div className="product_content">
@@ -108,15 +129,14 @@ class SearchProduct extends React.Component {
                         <p><i class="fas fa-rupee-sign"></i> <span className="procuct_price">{data.price}</span></p>
                     </div>
                 </div>
-                <hr/>
+                <hr />
             </div>
         )
         return (
             <div>
-                <Header/>
                 <div className="text_center">
                     <span><strong>Search:</strong>
-                 <input type="text" onKeyUp={this.handleLoginKeyUp} />
+                        <input type="text" onKeyUp={this.handleLoginKeyUp} />
                     </span>
                 </div>
                 <div>

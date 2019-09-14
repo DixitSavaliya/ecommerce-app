@@ -70,10 +70,9 @@ class ForgotPassword extends React.Component {
             const obj = {
                 emailId: this.state.emailId
             }
-            console.log("obj==", obj);
+            /** Forgot password */
             API.ForgotPassword(obj).
                 then((findresponse) => {
-                    console.log("response==", findresponse);
                     Swal.fire("Email sent Successfully!", "", "success");
                     this.setState({ modal: false })
                 }).catch({ status: 500, message: 'Internal Server Error' });

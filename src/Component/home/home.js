@@ -1,5 +1,4 @@
 import React from 'react';
-import Header from './header/header';
 import Product from './product/product';
 import AllProduct from './allproduct/allproduct';
 import ThreeBox from './threebox/threebox';
@@ -18,7 +17,7 @@ class Home extends React.Component {
     render() {
         return (
             <div>
-                <Header />
+                {/** Home-Page All Component */}
                 <Product />
                 <AllProduct />
                 <ThreeBox />

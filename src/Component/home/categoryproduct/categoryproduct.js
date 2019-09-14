@@ -10,10 +10,11 @@ class CategoryProduct extends React.Component {
         }
     }
 
+    /** Intailly Call */
     componentDidMount() {
+        /** Get Categorylist */
         API.CategoryList().
             then((findresponse) => {
-                console.log("BannerList response===", findresponse);
                 this.setState({ categoryList: findresponse.data.data })
                 console.log("data==", this.state.categoryList);
             }).catch(
@@ -24,6 +25,7 @@ class CategoryProduct extends React.Component {
     render() {
         let displayData;
 
+        /** Display Categorylist data */
         if (this.state.categoryList) displayData = this.state.categoryList.map(data =>
             <li>
                 {
@@ -67,6 +69,7 @@ class CategoryProduct extends React.Component {
                                     </ul>
                                 </div>
                             </div>
+                            
                             <div className="col-xl-9 col-lg-8">
                                 <div className="section_title">
                                     <h3>best seller</h3>

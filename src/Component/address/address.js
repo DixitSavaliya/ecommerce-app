@@ -3,9 +3,7 @@ import API from '../../service/homeservice';
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText } from 'mdbreact';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Swal from 'sweetalert2';
-import Header from '../home/header/header';
 import './address.css';
-
 
 class Address extends React.Component {
     constructor(props) {
@@ -28,7 +26,9 @@ class Address extends React.Component {
         this.getAddress = this.getAddress.bind(this);
     }
 
+    /** Intially call  */
     componentDidMount() {
+        /** Get Profile */
         API.getProfile().
             then((findresponse) => {
                 console.log("getProfile response===", findresponse);
@@ -50,6 +50,7 @@ class Address extends React.Component {
     */
     getAddress(id) {
         console.log("id===", id);
+        /** Get Address */
         API.getAddress(id).
             then((findresponse) => {
                 console.log("getAddress response===", findresponse);
@@ -70,6 +71,7 @@ class Address extends React.Component {
     deleteaddress(data) {
         const deletedata = data.addressId;
         console.log("delete", deletedata);
+        /** Delete address */
         API.deleteAddress(deletedata).
             then((findresponse) => {
                 console.log("deleteAddress response===", findresponse);
@@ -109,7 +111,6 @@ class Address extends React.Component {
         )
         return (
             <div>
-                {/* <Header/> */}
                 <MDBContainer>
                     <MDBRow>
                         <div>

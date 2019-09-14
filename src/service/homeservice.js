@@ -34,7 +34,7 @@ export default {
             }).catch({ status: 500, message: 'Internal Server Error' });
     },
 
-    /** 
+   /** 
    * @param {string} obj
    * Login
    */
@@ -54,10 +54,10 @@ export default {
             }).catch({ status: 500, message: 'Internal Server Error' });
     },
 
-    /** 
-  * @param {string} data
-  * SubCategoryList
-  */
+   /** 
+   * @param {string} data
+   * SubCategoryList
+   */
     SubCategoryList: (data) => {
         return axios.get(config.baseApiUrl + "api/list/productlist", {
             params: {
@@ -71,9 +71,9 @@ export default {
     },
 
     /** 
-* @param {string} id
-* productDetail
-*/
+    * @param {string} id
+    * productDetail
+    */
     productDetail: (id) => {
         return axios.get(config.baseApiUrl + "api/product-store/productdetail/" + id)
             .then(response => {
@@ -116,10 +116,10 @@ export default {
             }).catch({ status: 500, message: 'Internal Server Error' });
     },
 
-  /** 
-  * @param {string} pid
-  * delete product in wishlist
-  */
+    /** 
+    * @param {string} pid
+    * delete product in wishlist
+    */
     deleteWishList: (pid) => {
         console.log("id=====", pid);
         const headers = {
@@ -135,10 +135,10 @@ export default {
             }).catch({ status: 500, message: 'Internal Server Error' });
     },
 
-/** 
-* @param {string} data
-* search product
-*/
+    /** 
+    * @param {string} data
+    * search product
+    */
     searchList: (data) => {
         console.log("data===", data);
         return axios.get(config.baseApiUrl + 'api/list/productlist', {
@@ -167,10 +167,10 @@ export default {
             }).catch({ status: 500, message: 'Internal Server Error' });
     },
 
- /** 
- * @param {string} obj
- * Update Profile
- */
+    /** 
+    * @param {string} obj
+    * Update Profile
+    */
     updateProfile: (obj) => {
         console.log("object======", obj);
         const headers = {
@@ -216,10 +216,10 @@ export default {
             }).catch({ status: 500, message: 'Internal Server Error' });
     },
 
-/** 
- * @param {string} obj
- * Procced to checkout
- */
+    /** 
+     * @param {string} obj
+     * Procced to checkout
+     */
     checkoutListOrder: (obj) => {
         const headers = {
             'Content-Type': 'application/json',
@@ -234,10 +234,10 @@ export default {
             }).catch({ status: 500, message: 'Internal Server Error' });
     },
 
-/** 
-* @param {string} obj
-* ForgotPassword
-*/
+    /** 
+    * @param {string} obj
+    * ForgotPassword
+    */
     ForgotPassword: (obj) => {
         console.log("object email=====", obj);
         return axios.post(config.baseApiUrl + 'api/customer/forgot-password', obj)
@@ -247,11 +247,10 @@ export default {
             }).catch({ status: 500, message: 'Internal Server Error' });
     },
 
-
-/** 
-* @param {string} obj
-* UpdatePasswordUser
-*/
+    /** 
+    * @param {string} obj
+    * UpdatePasswordUser
+    */
     UpdatePasswordUser: (obj) => {
         const headers = {
             'Content-Type': 'application/json',
@@ -265,10 +264,10 @@ export default {
             }).catch({ status: 500, message: 'Internal Server Error' });
     },
 
-/** 
-* @param {string} obj
-* Add address
-*/
+    /** 
+    * @param {string} obj
+    * Add address
+    */
     addAddress: (obj) => {
         const headers = {
             'Content-Type': 'application/json',
@@ -283,11 +282,10 @@ export default {
             }).catch({ status: 500, message: 'Internal Server Error' });
     },
 
-
-/** 
-* @param {string} id
-* get address
-*/
+    /** 
+    * @param {string} id
+    * get address
+    */
     getAddress: (id) => {
         const headers = {
             'Content-Type': 'application/json',
@@ -303,11 +301,11 @@ export default {
     },
 
 
-/** 
-* @param {string} id
-* @param {string} obj
-* editAddress 
-*/
+    /** 
+    * @param {string} id
+    * @param {string} obj
+    * editAddress 
+    */
     editAddress: (obj, id) => {
         const headers = {
             'Content-Type': 'application/json',
@@ -323,10 +321,10 @@ export default {
     },
 
 
-/** 
-* @param {string} id
-* delete address
-*/
+    /** 
+    * @param {string} id
+    * delete address
+    */
     deleteAddress: (id) => {
         const headers = {
             'Content-Type': 'application/json',
@@ -356,10 +354,10 @@ export default {
             }).catch({ status: 500, message: 'Internal Server Error' });
     },
 
-/** 
-* @param {string} obj
-* get order details
-*/
+    /** 
+    * @param {string} obj
+    * get order details
+    */
     getOrderDetails: (obj) => {
         const headers = {
             'Content-Type': 'application/json',
@@ -374,10 +372,10 @@ export default {
             }).catch({ status: 500, message: 'Internal Server Error' });
     },
 
-/** 
-* @param {string} obj
-* contactUs details
-*/
+    /** 
+    * @param {string} obj
+    * contactUs details
+    */
     contactUs: (obj) => {
         return axios.post(config.baseApiUrl + 'api/list/contact-us', obj)
             .then(response => {
@@ -386,10 +384,10 @@ export default {
             }).catch({ status: 500, message: 'Internal Server Error' });
     },
 
-/** 
-* @param {string} productId
-* relatedProduct details
-*/
+    /** 
+    * @param {string} productId
+    * relatedProduct details
+    */
     relatedProduct: (productId) => {
         return axios.get(config.baseApiUrl + "api/list/related-product-list", {
             params: {
@@ -401,5 +399,4 @@ export default {
                 return response;
             }).catch({ status: 500, message: 'Internal Server Error' });
     }
-
 }

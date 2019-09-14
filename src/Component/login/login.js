@@ -70,9 +70,10 @@ class Login extends React.Component {
                 emailId: this.state.emailId,
                 password: this.state.password
             }
+            /** UserLogin */
             API.Login(obj).
                 then((findresponse) => {
-                    if(findresponse) {
+                    if (findresponse) {
                         this.setState({
                             user: findresponse
                         })
@@ -83,18 +84,19 @@ class Login extends React.Component {
                         console.log("decode=====", decoded);
                         localStorage.setItem('name', decoded.customer.first_name);
                         window.location.href = '/home';
-                    } else  {
+                    } else {
                         Swal.fire("Something went wrong!", "", "warning");
                     }
-                }).catch(
-                    { status: 500, message: 'Internal Server Error' }
-                );
-        } 
+                }).catch((err) => {
+                    Swal.fire("Something went wrong!", "", "warning");
+                });
+        }
     }
 
     render() {
         return (
             <div>
+                {/** Login form */}
                 <MDBContainer>
                     <MDBRow>
                         <form>

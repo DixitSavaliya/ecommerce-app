@@ -22,10 +22,12 @@ import EditAddress from './Component/editaddress/editaddress';
 import OrderHistory from './Component/orderhistory/orderhistory';
 import OrderDetail from './Component/orderdetail/orderdetail';
 import Contact from './Component/contact/contact';
+import Header from './Component/home/header/header';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <Router history={history}>
+    <Header/>
     <Route exact path='/' component={App} />
     <Route exact path="/wishlist" render={() => (
       localStorage.getItem('token') ? (<Route component={WishList} />)
@@ -58,7 +60,7 @@ ReactDOM.render(
       localStorage.getItem('token') ? (<Route component={OrderHistory} />)
         : (<Route component={Login} />)
     )} />
-     <Route exact path="/orderdetail/:id" render={() => (
+    <Route exact path="/orderdetail/:id" render={() => (
       localStorage.getItem('token') ? (<Route component={OrderDetail} />)
         : (<Route component={Login} />)
     )} />

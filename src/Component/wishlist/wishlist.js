@@ -3,7 +3,6 @@ import API from '../../service/homeservice';
 import { config } from '../../config';
 import { MDBBtn, MDBCard, MDBCardBody, MDBRow, MDBCardTitle, MDBCardText, MDBCol } from 'mdbreact';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import Header from '../home/header/header';
 import Swal from 'sweetalert2';
 const _ = require('lodash');
 
@@ -16,12 +15,14 @@ class WishList extends React.Component {
         }
     }
 
+    /** Intailly call */
     componentDidMount() {
+        /** Get Wishlist */
         API.getWishList().
             then((findresponse) => {
-                console.log("getWishList response===", findresponse);
                 this.setState({ wishList: findresponse.data.data })
                 console.log("data==", this.state.wishList);
+                localStorage.setItem('wishlistLength', this.state.wishList.length);
             }).catch(
                 { status: 500, message: 'Internal Server Error' }
             );
@@ -32,15 +33,16 @@ class WishList extends React.Component {
   * delete wishlist
   */
     deleteWishList(id) {
+        /** Delete Wishlist */
         API.deleteWishList(id).
             then((findresponse) => {
-                console.log("deleteWishList response===", findresponse);
-                Swal.fire("Deleted Successfully!", "", "success");
+                Swal.fire("Added Successfully In Cart!", "", "success");
                 this.componentDidMount();
             }).catch(
                 { status: 500, message: 'Internal Server Error' }
             );
     }
+
 
     /** 
      * @param {string} productId
@@ -69,6 +71,7 @@ class WishList extends React.Component {
     render() {
         let displayData;
 
+        /** Display wishlist data */
         if (this.state.wishList) displayData = this.state.wishList.map(data =>
             <div>
                 <MDBRow>
@@ -95,7 +98,6 @@ class WishList extends React.Component {
 
         return (
             <div>
-                <Header />
                 <MDBCol>
                     <MDBCard>
                         <MDBCardBody>

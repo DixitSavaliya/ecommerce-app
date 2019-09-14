@@ -2,7 +2,6 @@ import React from 'react';
 import API from '../../service/homeservice';
 import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import Header from '../home/header/header';
 import history from '../../history';
 
 class EditAddress extends React.Component {
@@ -30,6 +29,7 @@ class EditAddress extends React.Component {
         this.EditAddress = this.EditAddress.bind(this);
     }
 
+    /** Intially call */
     componentDidMount() {
         const data = this.props.location.state.name;
         console.log("editaddress====", data);
@@ -42,6 +42,7 @@ class EditAddress extends React.Component {
             addressId: data.addressId
         })
 
+        /** Get Profile */
         API.getProfile().
             then((findresponse) => {
                 this.setState({ getProfileList: findresponse.data.data })
@@ -54,7 +55,7 @@ class EditAddress extends React.Component {
             );
     }
 
-
+    /** Validation */
     validate = () => {
         let address_1Error = "";
         let cityError = "";
@@ -127,9 +128,9 @@ class EditAddress extends React.Component {
                 state: this.state.state,
                 postcode: this.state.pincode
             }
+            /** Edit Address */
             API.editAddress(obj, this.state.addressId).
                 then((findresponse) => {
-                    console.log("editList======", findresponse);
                     history.push('/address');
                 }).catch(
                     { status: 500, message: 'Internal Server Error' }
@@ -140,7 +141,7 @@ class EditAddress extends React.Component {
     render() {
         return (
             <div>
-                {/* <Header /> */}
+                {/** Edit Address form */}
                 <MDBContainer>
                     <MDBRow>
                         <MDBCol md="6">
@@ -191,7 +192,6 @@ class EditAddress extends React.Component {
                                 <br />
                             </form>
                         </MDBCol>
-
                         <MDBCol md="6">
                             <form>
                                 <label className="grey-text">

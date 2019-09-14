@@ -1,6 +1,5 @@
 import React from 'react';
 import API from '../../service/homeservice';
-import Header from '../home/header/header';
 import Swal from 'sweetalert2';
 import './checkout.css';
 
@@ -34,19 +33,19 @@ class Checkout extends React.Component {
 
         }
         this.productDetails = this.props.location.state.name;
-        console.log("data", this.productDetails);
         this.handleChangeName = this.handleChangeName.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleChangeCountry = this.handleChangeCountry.bind(this);
         this.Checkout = this.Checkout.bind(this);
     }
 
+    /** Intially call */
     componentDidMount() {
         localStorage.setItem('isFlag', this.state.isFlag);
+
         /** Get Countrylist */
         API.getCountryList().
             then((findresponse) => {
-                // console.log("getCountryList response===", findresponse);
                 this.setState({ countryList: findresponse.data.data })
                 console.log("countryList==", this.state.countryList);
 
@@ -57,10 +56,8 @@ class Checkout extends React.Component {
         /** Get Zonelist */
         API.getZoneList().
             then((findresponse) => {
-                console.log("getZoneList response===", findresponse);
                 this.setState({ zoneList: findresponse.data.data })
                 console.log("data==", this.state.zoneList);
-
             }).catch(
                 { status: 500, message: 'Internal Server Error' }
             );
@@ -68,7 +65,6 @@ class Checkout extends React.Component {
         /** Get Profile */
         API.getProfile().
             then((findresponse) => {
-                // console.log("getProfile response===", findresponse);
                 this.setState({ getProfileList: findresponse.data.data })
                 console.log("data==", this.state.getProfileList);
                 this.setState({
@@ -81,6 +77,7 @@ class Checkout extends React.Component {
             );
     }
 
+    /** Validation */
     validate = () => {
         let firstNameError = '';
         let lastNameError = '';
@@ -139,9 +136,9 @@ class Checkout extends React.Component {
     };
 
     /** 
-  * @param {string} event
-  * handleChangeName
-  */
+    * @param {string} event
+    * handleChangeName
+    */
     handleChangeName(event) {
         const { name, value } = event.target;
         this.setState({
@@ -150,9 +147,9 @@ class Checkout extends React.Component {
     }
 
     /** 
- * @param {string} event
- * get zone name
- */
+    * @param {string} event
+    * get zone name
+    */
     handleChange(event) {
         this.setState({ zone: event.target.value })
     }
@@ -208,9 +205,9 @@ class Checkout extends React.Component {
                 shippingPostCode: this.state.pincode,
                 shippingCountry: this.state.country
             }
+            /** Proccess to place order */
             API.checkoutListOrder(obj).
                 then((findresponse) => {
-                    console.log("checkoutListOrder response===", findresponse);
                     Swal.fire("Order Placed Successfully!", "", "success");
                     localStorage.removeItem('productId');
                     localStorage.setItem('cartCount', this.state.cartCount);
@@ -225,7 +222,7 @@ class Checkout extends React.Component {
     render() {
         return (
             <div>
-                <Header />
+                {/** Place Order Form */}
                 <form className="center">
                     First name:<br />
                     <input type="text" name="firstName" value={this.state.firstName}

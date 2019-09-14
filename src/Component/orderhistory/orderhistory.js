@@ -2,7 +2,6 @@ import React from 'react';
 import API from '../../service/homeservice';
 import { MDBBtn, MDBCard, MDBCardBody, MDBRow, MDBCardTitle, MDBCardText, MDBCol } from 'mdbreact';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import Header from '../home/header/header';
 
 class OrderHistory extends React.Component {
     constructor(props) {
@@ -12,7 +11,9 @@ class OrderHistory extends React.Component {
         }
     }
 
+    /** Intailly call */
     componentDidMount() {
+        /** Get Order-history */
         API.getOrderHistory().
             then((findresponse) => {
                 console.log("getOrderHistory response===", findresponse);
@@ -29,6 +30,7 @@ class OrderHistory extends React.Component {
    * get myorder details
    */
     getOrderDetails(data) {
+        /** Get Orderdetails */
         API.getOrderDetail(data.orderId).
             then((findresponse) => {
                 console.log("getOrderHistory response===", findresponse);
@@ -40,6 +42,7 @@ class OrderHistory extends React.Component {
     render() {
         let displayData;
 
+        /** Orderhistory data */
         if (this.state.orderHistoryList) displayData = this.state.orderHistoryList.map(data =>
             <div>
                 <MDBRow>
@@ -48,7 +51,7 @@ class OrderHistory extends React.Component {
                     <MDBCol md="2">{data.createdDate}</MDBCol>
                     <MDBCol md="2"><i class="fas fa-rupee-sign"></i> {data.total}</MDBCol>
                     <MDBCol md="3">
-                        <Link to={{ pathname: `orderdetail/${data.orderId}` , state: {name:data.OrderId} }}><i class="fas fa-eye"></i></Link>
+                        <Link to={{ pathname: `orderdetail/${data.orderId}`, state: { name: data.OrderId } }}><i class="fas fa-eye"></i></Link>
                     </MDBCol>
                 </MDBRow>
                 <br />
@@ -56,7 +59,6 @@ class OrderHistory extends React.Component {
         )
         return (
             <div>
-                <Header/>
                 <MDBCol>
                     <MDBCard>
                         <MDBCardBody>
