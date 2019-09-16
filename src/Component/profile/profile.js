@@ -3,6 +3,8 @@ import API from '../../service/homeservice';
 import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Swal from 'sweetalert2';
+import Header from '../../Component/home/header/header';
+import Footer from '../../Component/home/footer/footer';
 
 class Profile extends React.Component {
     constructor(props) {
@@ -13,7 +15,7 @@ class Profile extends React.Component {
             id: '',
             firstName: '',
             firstNameError: '',
-            email: '',
+            emailId: '',
             emailIdError: '',
             mobileNumber: '',
             mobileNumberError: ''
@@ -32,13 +34,24 @@ class Profile extends React.Component {
                 console.log("data==", this.state.getProfileList);
                 this.setState({
                     firstName: this.state.getProfileList.firstName,
-                    email: this.state.getProfileList.email,
+                    emailId: this.state.getProfileList.email,
                     mobileNumber: this.state.getProfileList.mobileNumber,
                     id: this.state.getProfileList.id
                 });
             }).catch(
                 { status: 500, message: 'Internal Server Error' }
             );
+    }
+
+    /** 
+* @param {JSON} event
+* handleChangeName
+*/
+    handleChangeName(event) {
+        const { name, value } = event.target;
+        this.setState({
+            [name]: value
+        })
     }
 
     /** Validation  */
@@ -52,33 +65,21 @@ class Profile extends React.Component {
         }
 
         const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-        if (!reg.test(this.state.email)) {
+        if (!reg.test(this.state.emailId)) {
             emailIdError = "invalid email";
         }
-
         const phone = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
         if (!phone.test(this.state.mobileNumber)) {
             mobileNumberError = "please enter valid number";
         }
 
-        if (emailIdError || mobileNumberError || firstNameError) {
+        if (mobileNumberError || firstNameError || emailIdError) {
             this.setState({ emailIdError, mobileNumberError, firstNameError });
             return false;
         }
         return true;
     };
 
-
-    /** 
- * @param {JSON} event
- * handleChangeName
- */
-    handleChangeName(event) {
-        const { name, value } = event.target;
-        this.setState({
-            [name]: value
-        })
-    }
 
     /** Edit profile */
     editProfile() {
@@ -92,17 +93,17 @@ class Profile extends React.Component {
             })
         };
 
-        if (this.state.firstName && this.state.email && this.state.mobileNumber && this.state.mobileNumber.length == 10 && !this.state.emailIdError) {
+        if (this.state.firstName && this.state.emailId && this.state.mobileNumber && !this.state.emailIdError && this.state.mobileNumber.length == 10) {
             const obj = {
                 firstName: this.state.firstName,
-                emailId: this.state.email,
+                emailId: this.state.emailId,
                 phoneNumber: this.state.mobileNumber
             }
             /** Update Profile */
             API.updateProfile(obj).
                 then((findresponse) => {
                     console.log("getProfile response===", findresponse);
-                    Swal.fire("Edited Successfully!", "", "success");
+                    // Swal.fire("Edited Successfully!", "", "success");
                 }).catch(
                     { status: 500, message: 'Internal Server Error' }
                 );
@@ -112,6 +113,7 @@ class Profile extends React.Component {
     render() {
         return (
             <div>
+                <Header />
                 {/** Profile && Edit profile form */}
                 <MDBContainer>
                     <MDBRow>
@@ -136,8 +138,8 @@ class Profile extends React.Component {
                                 </label>
                                 <input
                                     type="email"
-                                    name="email"
-                                    value={this.state.email}
+                                    name="emailId"
+                                    value={this.state.emailId}
                                     onChange={this.handleChangeName}
                                     className="form-control"
                                 />
@@ -175,6 +177,7 @@ class Profile extends React.Component {
                         </MDBCol>
                     </MDBRow>
                 </MDBContainer>
+                <Footer />
             </div>
         );
     }

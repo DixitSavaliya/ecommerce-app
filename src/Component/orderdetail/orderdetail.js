@@ -5,6 +5,8 @@ import * as jsPDF from 'jspdf';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import * as html2canvas from 'html2canvas';
 import './orderdetail.css';
+import Header from '../../Component/home/header/header';
+import Footer from '../../Component/home/footer/footer';
 
 class OrderDetail extends React.Component {
     constructor(props) {
@@ -42,7 +44,7 @@ class OrderDetail extends React.Component {
                 const pdf = new jsPDF('p', 'px', 'a4');
                 const width = pdf.internal.pageSize.getWidth();
                 const height = pdf.internal.pageSize.getHeight();
-                pdf.addImage(imgData, 'JPEG', 0, 0, width, height);
+                pdf.addImage(imgData, 'JPEG', 0, 0,height,width);
                 pdf.save("myOrder.pdf");
             });
     };
@@ -79,6 +81,7 @@ class OrderDetail extends React.Component {
 
         return (
             <div>
+                <Header />
                 <MDBContainer id="page">
                     <h3><strong>OrderId:</strong> {this.orderId}</h3>
                     <MDBRow>
@@ -133,6 +136,7 @@ class OrderDetail extends React.Component {
                         <MDBBtn color="unique" onClick={this.handlePdf} >Download Invoice</MDBBtn>
                     </MDBRow>
                 </MDBContainer>
+                <Footer/>
             </div>
         );
     }

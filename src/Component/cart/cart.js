@@ -4,6 +4,8 @@ import { config } from '../../config';
 import { MDBBtn, MDBCard, MDBCardBody, MDBRow, MDBCardTitle, MDBCardText, MDBCol } from 'mdbreact';
 import Swal from 'sweetalert2';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import Header from '../../Component/home/header/header';
+import Footer from '../../Component/home/footer/footer';
 const _ = require('lodash');
 let finalArr = [];
 let priceArr = [];
@@ -85,6 +87,7 @@ class Cart extends React.Component {
         this.setState({ finalArry: finalArr });
         Swal.fire("Deleted Successfully!", "", "success");
         localStorage.setItem('productId', finalArr.toString());
+        localStorage.setItem('cartCount',finalArr.length);
         this.setState({
             cartItem: ''
         })
@@ -171,6 +174,7 @@ class Cart extends React.Component {
 
         return (
             <div>
+                <Header/>
                 <MDBCol>
                     <MDBCard>
                         <MDBCardBody>
@@ -206,6 +210,7 @@ class Cart extends React.Component {
                         </MDBCardBody>
                     </MDBCard>
                 </MDBCol>
+                <Footer/>
             </div>
         );
     }

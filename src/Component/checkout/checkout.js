@@ -1,6 +1,8 @@
 import React from 'react';
 import API from '../../service/homeservice';
 import Swal from 'sweetalert2';
+import Header from '../../Component/home/header/header';
+import Footer from '../../Component/home/footer/footer';
 import './checkout.css';
 
 class Checkout extends React.Component {
@@ -29,7 +31,7 @@ class Checkout extends React.Component {
             pincodeError: '',
             country: '',
             countryError: '',
-            isFlag: false
+            isButtonDisabled: false
 
         }
         this.productDetails = this.props.location.state.name;
@@ -192,6 +194,7 @@ class Checkout extends React.Component {
         };
 
         if (this.state.firstName && this.state.lastName && this.state.email && this.state.mobileNumber && this.state.address_1 && this.state.city && this.state.zone && this.state.pincode && this.state.country && this.state.mobileNumber.length == 10 && this.state.pincode.length == 6 && !this.state.emailError) {
+            this.setState({isButtonDisabled:true})
             const obj = {
                 productDetails: this.productDetails,
                 shippingFirstName: this.state.firstName,
@@ -208,6 +211,7 @@ class Checkout extends React.Component {
             /** Proccess to place order */
             API.checkoutListOrder(obj).
                 then((findresponse) => {
+                    // this.setState({isButtonDisabled: true});
                     Swal.fire("Order Placed Successfully!", "", "success");
                     localStorage.removeItem('productId');
                     localStorage.setItem('cartCount', this.state.cartCount);
@@ -222,6 +226,7 @@ class Checkout extends React.Component {
     render() {
         return (
             <div>
+                <Header/>
                 {/** Place Order Form */}
                 <form className="center">
                     First name:<br />
@@ -298,8 +303,9 @@ class Checkout extends React.Component {
                         {this.state.pincodeError}
                     </div>
                     <br />
-                    <button type="button" onClick={this.Checkout} >Submit</button>
+                    <button type="button" onClick={this.Checkout} disabled={this.state.isButtonDisabled} >Submit</button>
                 </form>
+                <Footer/>
             </div>
         );
     }

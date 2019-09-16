@@ -3,6 +3,7 @@ import API from '../../service/homeservice';
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText } from 'mdbreact';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Swal from 'sweetalert2';
+import Header from '../../Component/home/header/header';
 import './address.css';
 
 class Address extends React.Component {
@@ -111,6 +112,7 @@ class Address extends React.Component {
         )
         return (
             <div>
+                <Header/>
                 <MDBContainer>
                     <MDBRow>
                         <div>

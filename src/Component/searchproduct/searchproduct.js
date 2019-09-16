@@ -2,6 +2,8 @@ import React from 'react';
 import API from '../../service/homeservice';
 import { config } from '../../config';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import Header from '../../Component/home/header/header';
+import Footer from '../../Component/home/footer/footer';
 import Swal from 'sweetalert2';
 import './searchproduct.css';
 const _ = require('lodash');
@@ -134,6 +136,7 @@ class SearchProduct extends React.Component {
         )
         return (
             <div>
+                <Header/>
                 <div className="text_center">
                     <span><strong>Search:</strong>
                         <input type="text" onKeyUp={this.handleLoginKeyUp} />
@@ -142,6 +145,7 @@ class SearchProduct extends React.Component {
                 <div>
                     {displayData}
                 </div>
+                <Footer/>
             </div>
         );
     }

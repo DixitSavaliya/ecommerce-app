@@ -7,6 +7,8 @@ import { MDBContainer, MDBRow, MDBCol } from "mdbreact";
 import './singleproduct.css';
 import renderHTML from 'react-render-html';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import Header from '../../Component/home/header/header';
+import Footer from '../../Component/home/footer/footer';
 import Swal from 'sweetalert2';
 const _ = require('lodash');
 
@@ -203,6 +205,7 @@ class SingleProduct extends React.Component {
 
         return (
             <div>
+                <Header/>
                 <MDBContainer>
                     <MDBRow>
                         <MDBCol md="4">
@@ -251,6 +254,7 @@ class SingleProduct extends React.Component {
                         </section>
                     </MDBRow>
                 </MDBContainer>
+                <Footer/>
             </div>
         );
     }

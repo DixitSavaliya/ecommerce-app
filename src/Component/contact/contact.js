@@ -1,5 +1,7 @@
 import React from 'react';
 import API from '../../service/homeservice';
+import Header from '../../Component/home/header/header';
+import Footer from '../../Component/home/footer/footer';
 import Swal from 'sweetalert2';
 
 class Contact extends React.Component {
@@ -81,11 +83,13 @@ class Contact extends React.Component {
                 email: '',
                 emailError: '',
                 message: '',
-                messageError: ''
+                messageError: '',
+                isButtonDisabled: false
             })
         };
 
         if (this.state.name && this.state.email && this.state.phoneNumber && this.state.message && this.state.phoneNumber.length == 10 && !this.state.emailError && !this.state.messageError && !this.state.nameError) {
+            this.setState({isButtonDisabled:true})
             const obj = {
                 name: this.state.name,
                 phoneNumber: this.state.phoneNumber,
@@ -96,6 +100,7 @@ class Contact extends React.Component {
             API.contactUs(obj).
                 then((findresponse) => {
                     console.log("response==", findresponse);
+              
                     Swal.fire("Mail sent successfully", "", "success");
                 }).catch({ status: 500, message: 'Internal Server Error' });
         }
@@ -105,6 +110,7 @@ class Contact extends React.Component {
     render() {
         return (
             <div>
+                <Header/>
                 {/** Contact Us Form */}
                 <section class="mb-4">
                     <h2 class="h1-responsive font-weight-bold text-center my-4">Contact us</h2>
@@ -158,12 +164,13 @@ class Contact extends React.Component {
                                 </div>
                             </form>
                             <div class="text-center text-md-left">
-                                <a class="btn btn-primary" onClick={this.contact}>Send</a>
+                                <a class="btn btn-primary" onClick={this.contact} disabled={this.state.isButtonDisabled}>Send</a>
                             </div>
                             <div class="status"></div>
                         </div>
                     </div>
                 </section>
+                <Footer/>
             </div>
         );
     }

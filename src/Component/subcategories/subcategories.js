@@ -3,6 +3,8 @@ import API from '../../service/homeservice';
 import { config } from '../../config';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import renderHTML from 'react-render-html';
+import Header from '../../Component/home/header/header';
+import Footer from '../../Component/home/footer/footer';
 import Swal from 'sweetalert2';
 import './subcategories.css';
 const _ = require('lodash');
@@ -125,6 +127,7 @@ class SubCategories extends React.Component {
         )
         return (
             <div>
+                <Header/>
                 <section className="product_section">
                     <div className="container">
                         <div>
@@ -132,6 +135,7 @@ class SubCategories extends React.Component {
                         </div>
                     </div>
                 </section>
+                <Footer/>
             </div>
         );
     }

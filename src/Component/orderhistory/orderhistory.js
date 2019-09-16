@@ -2,6 +2,8 @@ import React from 'react';
 import API from '../../service/homeservice';
 import { MDBBtn, MDBCard, MDBCardBody, MDBRow, MDBCardTitle, MDBCardText, MDBCol } from 'mdbreact';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import Header from '../../Component/home/header/header';
+import Footer from '../../Component/home/footer/footer';
 
 class OrderHistory extends React.Component {
     constructor(props) {
@@ -59,6 +61,7 @@ class OrderHistory extends React.Component {
         )
         return (
             <div>
+                <Header/>
                 <MDBCol>
                     <MDBCard>
                         <MDBCardBody>
@@ -77,6 +80,7 @@ class OrderHistory extends React.Component {
                         </MDBCardBody>
                     </MDBCard>
                 </MDBCol>
+                <Footer/>
             </div>
         );
     }

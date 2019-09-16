@@ -2,6 +2,8 @@ import React from 'react';
 import API from '../../service/homeservice';
 import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import Header from '../../Component/home/header/header';
+import Footer from '../../Component/home/footer/footer';
 import history from '../../history';
 
 class EditAddress extends React.Component {
@@ -141,6 +143,7 @@ class EditAddress extends React.Component {
     render() {
         return (
             <div>
+                <Header/>
                 {/** Edit Address form */}
                 <MDBContainer>
                     <MDBRow>
@@ -231,6 +234,7 @@ class EditAddress extends React.Component {
                          </MDBBtn>
                     </div>
                 </MDBContainer>
+                <Footer/>
             </div>
         );
     }

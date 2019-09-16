@@ -1,6 +1,7 @@
 import React from 'react';
 import API from '../../service/homeservice';
 import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
+import Header from '../../Component/home/header/header';
 import history from '../../history';
 
 class Address extends React.Component {
@@ -135,6 +136,7 @@ class Address extends React.Component {
     render() {
         return (
             <div>
+                <Header/>
                 <MDBContainer>
                     <MDBRow>
                         <MDBCol md="6">

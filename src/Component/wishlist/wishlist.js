@@ -1,8 +1,10 @@
 import React from 'react';
 import API from '../../service/homeservice';
 import { config } from '../../config';
-import { MDBBtn, MDBCard, MDBCardBody, MDBRow, MDBCardTitle, MDBCardText, MDBCol } from 'mdbreact';
+import { MDBContainer, MDBCard, MDBCardBody, MDBRow, MDBCardTitle, MDBCardText, MDBCol } from 'mdbreact';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import Header from '../../Component/home/header/header';
+import Footer from '../../Component/home/footer/footer';
 import Swal from 'sweetalert2';
 const _ = require('lodash');
 
@@ -98,6 +100,8 @@ class WishList extends React.Component {
 
         return (
             <div>
+                <Header />
+                <MDBContainer>
                 <MDBCol>
                     <MDBCard>
                         <MDBCardBody>
@@ -118,6 +122,8 @@ class WishList extends React.Component {
                         </MDBCardBody>
                     </MDBCard>
                 </MDBCol>
+                </MDBContainer>
+                <Footer />
             </div>
         );
     }

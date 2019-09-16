@@ -23,11 +23,12 @@ import OrderHistory from './Component/orderhistory/orderhistory';
 import OrderDetail from './Component/orderdetail/orderdetail';
 import Contact from './Component/contact/contact';
 import Header from './Component/home/header/header';
+import Footer from './Component/home/footer/footer';
 import * as serviceWorker from './serviceWorker';
+
 
 ReactDOM.render(
   <Router history={history}>
-    <Header/>
     <Route exact path='/' component={App} />
     <Route exact path="/wishlist" render={() => (
       localStorage.getItem('token') ? (<Route component={WishList} />)

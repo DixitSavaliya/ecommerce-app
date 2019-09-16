@@ -5,6 +5,8 @@ import "mdbreact/dist/css/mdb.css";
 import API from '../../service/homeservice';
 import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
 import history from '../../history';
+import Header from '../../Component/home/header/header';
+import Footer from '../../Component/home/footer/footer';
 import Swal from 'sweetalert2';
 
 class UpdatePassword extends React.Component {
@@ -94,6 +96,7 @@ class UpdatePassword extends React.Component {
     render() {
         return (
             <div>
+                <Header />
                 {/** Update Password form */}
                 <MDBContainer>
                     <MDBRow>
@@ -155,6 +158,7 @@ class UpdatePassword extends React.Component {
                         </form>
                     </MDBRow>
                 </MDBContainer>
+                <Footer />
             </div>
         );
     }

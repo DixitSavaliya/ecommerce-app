@@ -5,6 +5,7 @@ import ThreeBox from './threebox/threebox';
 import CategoryProduct from './categoryproduct/categoryproduct';
 import Service from './service/service';
 import Footer from './footer/footer';
+import Header from './header/header';
 
 class Home extends React.Component {
     constructor(props) {
@@ -18,6 +19,7 @@ class Home extends React.Component {
         return (
             <div>
                 {/** Home-Page All Component */}
+                <Header/>
                 <Product />
                 <AllProduct />
                 <ThreeBox />
