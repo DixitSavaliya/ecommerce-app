@@ -98,9 +98,11 @@ class Login extends React.Component {
             <div>
                 {/** Login form */}
                 <MDBContainer>
+                <MDBRow>
+                    <h1 className="h4 text-center mb-4">Sign In</h1>
+                    </MDBRow>
                     <MDBRow>
                         <form>
-                            <p>Sign in</p>
                             <div>
                                 <label className="grey-text">
                                     Email
@@ -135,7 +137,7 @@ class Login extends React.Component {
                                 </div>
                             </div>
                             <div className="text-center mt-4">
-                                <MDBBtn color="indigo" onClick={this.login} disabled={!this.state.emailId && !this.state.password}>Login</MDBBtn>
+                                <MDBBtn color="primary" onClick={this.login} disabled={!this.state.emailId && !this.state.password}>Login</MDBBtn>
                             </div>
                             <div>
                                 <span>

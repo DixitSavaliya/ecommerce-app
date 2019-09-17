@@ -69,7 +69,6 @@ class CategoryProduct extends React.Component {
                                     </ul>
                                 </div>
                             </div>
-                            
                             <div className="col-xl-9 col-lg-8">
                                 <div className="section_title">
                                     <h3>best seller</h3>

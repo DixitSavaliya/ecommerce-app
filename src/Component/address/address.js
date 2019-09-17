@@ -2,6 +2,7 @@ import React from 'react';
 import API from '../../service/homeservice';
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText } from 'mdbreact';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import Grid from '@material-ui/core/Grid';
 import Swal from 'sweetalert2';
 import Header from '../../Component/home/header/header';
 import './address.css';
@@ -76,7 +77,7 @@ class Address extends React.Component {
         API.deleteAddress(deletedata).
             then((findresponse) => {
                 console.log("deleteAddress response===", findresponse);
-                Swal.fire("Address Delete Succesfully!", "", "success");
+                Swal.fire("Address Deleted Succesfully!", "", "success");
                 this.componentDidMount();
             }).catch(
                 { status: 500, message: 'Internal Server Error' }
@@ -85,7 +86,9 @@ class Address extends React.Component {
 
     render() {
         let displayData;
-        if (this.state.addressList) displayData = this.state.addressList.map(data =>
+        let displayAddress;
+
+        if (this.state.addressList) displayData = this.state.addressList.slice(0, Math.floor(this.state.addressList.length / 2)).map(data =>
             <div>
                 <MDBCard>
                     <MDBCardBody>
@@ -93,11 +96,37 @@ class Address extends React.Component {
                         <MDBCardText>
                             <MDBRow>
                                 <MDBCol md="8">
-                                    <p>{data.address1}</p>
-                                    <p>{data.address2}</p>
-                                    <p>{data.city}</p>
-                                    <p>{data.postcode}</p>
-                                    <p>{data.state}</p>
+                                    <p><b>Address_1:</b> {data.address1}</p>
+                                    <p><b>Address_2:</b> {data.address2}</p>
+                                    <p><b>City:</b> {data.city}</p>
+                                    <p><b>Postcode:</b> {data.postcode}</p>
+                                    <p><b>State:</b> {data.state}</p>
+                                </MDBCol>
+                                <MDBCol md="4">
+                                    <Link to={{ pathname: `/editaddress/${data.addressId}`, state: { name: data } }}><i class="fas fa-edit"></i></Link>
+                                    <i class="fas fa-trash" onClick={this.deleteaddress.bind(this, data)}></i>
+                                </MDBCol>
+                            </MDBRow>
+                        </MDBCardText>
+                    </MDBCardBody>
+                </MDBCard>
+                <br />
+            </div>
+        )
+
+        if (this.state.addressList) displayAddress = this.state.addressList.slice(Math.floor(this.state.addressList.length / 2)).map(data =>
+            <div>
+                <MDBCard>
+                    <MDBCardBody>
+                        <MDBCardTitle>Address</MDBCardTitle>
+                        <MDBCardText>
+                            <MDBRow>
+                                <MDBCol md="8">
+                                    <p><b>Address_1:</b> {data.address1}</p>
+                                    <p><b>Address_2:</b> {data.address2}</p>
+                                    <p><b>City:</b> {data.city}</p>
+                                    <p><b>Postcode:</b> {data.postcode}</p>
+                                    <p><b>State:</b> {data.state}</p>
                                 </MDBCol>
                                 <MDBCol md="4">
                                     <Link to={{ pathname: `/editaddress/${data.addressId}`, state: { name: data } }}><i class="fas fa-edit"></i></Link>
@@ -112,15 +141,20 @@ class Address extends React.Component {
         )
         return (
             <div>
-                <Header/>
+                <Header />
                 <MDBContainer>
                     <MDBRow>
-                        <div>
-                            {displayData}
-                        </div>
+                        <Grid container spacing={3}>
+                            <Grid item xs={12} sm={6}>
+                                {displayData}
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                {displayAddress}
+                            </Grid>
+                        </Grid>
                     </MDBRow>
                     <div className="text-center mt-4">
-                        <Link to="/addnewaddress"><MDBBtn color="unique">
+                        <Link to="/addnewaddress"><MDBBtn color="primary">
                             Add New Address
                         </MDBBtn></Link>
                     </div>

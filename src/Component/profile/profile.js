@@ -103,7 +103,7 @@ class Profile extends React.Component {
             API.updateProfile(obj).
                 then((findresponse) => {
                     console.log("getProfile response===", findresponse);
-                    // Swal.fire("Edited Successfully!", "", "success");
+                    // Swal.fire("Edited Profile Successfully!", "", "success");
                 }).catch(
                     { status: 500, message: 'Internal Server Error' }
                 );
@@ -117,7 +117,9 @@ class Profile extends React.Component {
                 {/** Profile && Edit profile form */}
                 <MDBContainer>
                     <MDBRow>
-                        <MDBCol md="6">
+                        <h1 className="h4 text-center mb-4">My Profile</h1>
+                    </MDBRow>
+                    <MDBRow>
                             <form>
                                 <label className="grey-text">
                                     Your name
@@ -164,7 +166,7 @@ class Profile extends React.Component {
                                 </div>
                                 <br />
                                 <div className="text-center mt-4">
-                                    <MDBBtn color="unique" onClick={this.editProfile} >
+                                    <MDBBtn color="primary" onClick={this.editProfile} >
                                         Save
                                  </MDBBtn>
                                     <div>
@@ -174,7 +176,6 @@ class Profile extends React.Component {
                                     </div>
                                 </div>
                             </form>
-                        </MDBCol>
                     </MDBRow>
                 </MDBContainer>
                 <Footer />

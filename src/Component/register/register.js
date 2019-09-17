@@ -117,8 +117,10 @@ class SignUp extends React.Component {
                 {/** User Signup form */}
                 <MDBContainer>
                     <MDBRow>
+                        <h1 className="h4 text-center mb-4">Sign up</h1>
+                    </MDBRow>
+                    <MDBRow>
                         <form>
-                            <p className="h4 text-center mb-4">Sign up</p>
                             <label className="grey-text">
                                 Name
             					</label>
@@ -195,7 +197,7 @@ class SignUp extends React.Component {
                                 {this.state.phoneNumberError}
                             </div>
                             <div className="text-center mt-4">
-                                <MDBBtn color="unique" onClick={this.Signup} disabled={!this.state.name}>
+                                <MDBBtn color="primary" onClick={this.Signup} disabled={!this.state.name}>
                                     SignUp
 								</MDBBtn>
                             </div>

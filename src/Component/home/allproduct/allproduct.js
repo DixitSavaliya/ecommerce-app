@@ -79,7 +79,7 @@ class AllProduct extends React.Component {
         if (this.value) {
             if (this.value.indexOf(productId) == -1) {
                 console.log("new updated", localStorage.getItem('productId'))
-                Swal.fire("Added Successfully!", "", "success");
+                Swal.fire(" Item Added Successfully In Cart!", "", "success");
             } else {
                 console.log("new added", localStorage.getItem('productId'))
                 Swal.fire("Already Added In cart!", "", "warning");
@@ -89,7 +89,7 @@ class AllProduct extends React.Component {
         } else {
             localStorage.setItem('productId', filter);
             localStorage.setItem('cartCount', filter.length.toString());
-            Swal.fire("Added Successfully!", "", "success");
+            Swal.fire(" Item Added Successfully In Cart!", "", "success");
         }
     }
 
@@ -106,7 +106,7 @@ class AllProduct extends React.Component {
             API.addwishlist(obj).
                 then((findresponse, err) => {
                     console.log("addWishList response===", findresponse);
-                    Swal.fire("Added Successfully!", "", "success");
+                    Swal.fire("Item Added Successfully In Wishlist!", "", "success");
                     this.getwishList();
                 }).catch((err) => {
                     Swal.fire("Already Added In Wishlist!", "", "warning");

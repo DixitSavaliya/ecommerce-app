@@ -143,9 +143,12 @@ class EditAddress extends React.Component {
     render() {
         return (
             <div>
-                <Header/>
+                <Header />
                 {/** Edit Address form */}
                 <MDBContainer>
+                    <MDBRow>
+                        <h1 className="h4 text-center mb-4">Edit-Address</h1>
+                    </MDBRow>
                     <MDBRow>
                         <MDBCol md="6">
                             <form>
@@ -229,12 +232,12 @@ class EditAddress extends React.Component {
                         </MDBCol>
                     </MDBRow>
                     <div className="text-center mt-4">
-                        <MDBBtn color="unique" onClick={this.EditAddress} >
+                        <MDBBtn color="primary" onClick={this.EditAddress} >
                             Save
                          </MDBBtn>
                     </div>
                 </MDBContainer>
-                <Footer/>
+                <Footer />
             </div>
         );
     }

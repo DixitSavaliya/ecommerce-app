@@ -1,3 +1,24 @@
 .text-center.p-2.m-auto {
     font-size: 36px;
 }
+.text_center_icon {
+    text-align: -webkit-center;
+    font-size: 33px;
+}
+.text_center_icon i {
+    margin: 10px;
+}
+img.img-fluid {
+    margin: 0px auto;
+    height: 268px;
+    margin-top: 32px;
+}
+p.text_color {
+    color: blue;
+}
+.text_top{
+    margin: 25px;
+}
+.text-left{
+    margin-left: 25px;
+}

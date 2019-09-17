@@ -71,7 +71,7 @@ class SingleProduct extends React.Component {
         if (this.value) {
             if (this.value.indexOf(productId) == -1) {
                 console.log("new updated", localStorage.getItem('productId'))
-                Swal.fire("Added Successfully!", "", "success");
+                Swal.fire("Item Added Successfully In Cart!", "", "success");
             } else {
                 console.log("new added", localStorage.getItem('productId'))
                 Swal.fire("Already Added In cart!", "", "warning");
@@ -81,7 +81,7 @@ class SingleProduct extends React.Component {
         } else {
             localStorage.setItem('productId', filter);
             localStorage.setItem('cartCount', filter.length.toString());
-            Swal.fire("Added Successfully!", "", "success");
+            Swal.fire("Item Added Successfully In Cart!", "", "success");
         }
     }
 
@@ -98,7 +98,7 @@ class SingleProduct extends React.Component {
             API.addwishlist(obj).
                 then((findresponse) => {
                     console.log("addWishList response===", findresponse);
-                    Swal.fire("Successfully Added!", "", "success");
+                    Swal.fire("Item Added Successfully In Wishlist!", "", "success");
                 }).catch((err) => {
                     Swal.fire("Already Added In Wishlist!", "", "warning");
                 });
@@ -205,7 +205,7 @@ class SingleProduct extends React.Component {
 
         return (
             <div>
-                <Header/>
+                <Header />
                 <MDBContainer>
                     <MDBRow>
                         <MDBCol md="4">
@@ -254,7 +254,7 @@ class SingleProduct extends React.Component {
                         </section>
                     </MDBRow>
                 </MDBContainer>
-                <Footer/>
+                <Footer />
             </div>
         );
     }

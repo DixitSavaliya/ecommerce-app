@@ -100,8 +100,10 @@ class UpdatePassword extends React.Component {
                 {/** Update Password form */}
                 <MDBContainer>
                     <MDBRow>
+                        <h1 className="h4 text-center mb-4">UpdatePassword</h1>
+                    </MDBRow>
+                    <MDBRow>
                         <form>
-                            <p className="h4 text-center mb-4">UpdatePassword</p>
                             <label
                                 className="grey-text"
                             >
@@ -151,7 +153,7 @@ class UpdatePassword extends React.Component {
                                 {this.state.confirmPasswordError}
                             </div>
                             <div className="text-center mt-4">
-                                <MDBBtn color="unique" onClick={this.UpdatePassword}>
+                                <MDBBtn color="primary" onClick={this.UpdatePassword}>
                                     Update Password
                                 </MDBBtn>
                             </div>

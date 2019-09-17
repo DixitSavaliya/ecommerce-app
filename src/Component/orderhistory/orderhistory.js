@@ -26,7 +26,6 @@ class OrderHistory extends React.Component {
             );
     }
 
-
     /** 
    * @param {string} data
    * get myorder details
@@ -62,6 +61,9 @@ class OrderHistory extends React.Component {
         return (
             <div>
                 <Header/>
+                <MDBRow>
+                        <h1 className="h4 text-center mb-4">Order-History</h1>
+                    </MDBRow>
                 <MDBCol>
                     <MDBCard>
                         <MDBCardBody>

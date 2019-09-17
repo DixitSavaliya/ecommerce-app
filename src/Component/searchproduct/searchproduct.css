@@ -1,10 +1,10 @@
 .flex{
     display: flex;
 }
-input[type="text"] {
+/* input[type="text"] {
     width: 500px;
     margin: 15px;
-}
+} */
 .text_center{
     text-align: center;
 }

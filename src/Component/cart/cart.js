@@ -19,7 +19,7 @@ class Cart extends React.Component {
             cartItem: '',
             demo: '',
             productDetails: [],
-            finalArry: []
+            finalArry: [],
         }
     }
 
@@ -67,7 +67,7 @@ class Cart extends React.Component {
                     })
             })
         } else {
-            Swal.fire("Please Add Item In Cart");
+            Swal.fire("Cart is a empty");
         }
     }
 
@@ -85,9 +85,9 @@ class Cart extends React.Component {
         }
         console.log('finalArr-=-=', finalArr);
         this.setState({ finalArry: finalArr });
-        Swal.fire("Deleted Successfully!", "", "success");
+        Swal.fire("Item Deleted Successfully!", "", "success");
         localStorage.setItem('productId', finalArr.toString());
-        localStorage.setItem('cartCount',finalArr.length);
+        localStorage.setItem('cartCount', finalArr.length);
         this.setState({
             cartItem: ''
         })
@@ -174,8 +174,11 @@ class Cart extends React.Component {
 
         return (
             <div>
-                <Header/>
+                <Header />
                 <MDBCol>
+                    <MDBRow>
+                        <h1 className="h4 text-center mb-4">Cart</h1>
+                    </MDBRow>
                     <MDBCard>
                         <MDBCardBody>
                             <MDBCardTitle>
@@ -195,14 +198,18 @@ class Cart extends React.Component {
                                     localStorage.getItem('productId') ? (<div className="row">
                                         <div className="col-md-4">
                                             <div className="text-center mt-4">
-                                                <Link to="/home"> <MDBBtn color="indigo">Continue With Shopping</MDBBtn></Link>
+                                                <Link to="/home"> <MDBBtn color="primary">Continue With Shopping</MDBBtn></Link>
                                             </div>
                                         </div>
                                         <div className="col-md-4">
-                                            <span>Total:<h3><i class="fas fa-rupee-sign"></i> {this.totalFunc()}</h3></span>
+                                            <div className="text-center mt-4">
+                                                <span><b>Total:</b> <h3><i class="fas fa-rupee-sign"></i> {this.totalFunc()}</h3></span>
+                                            </div>
                                         </div>
                                         <div className="col-md-4">
-                                            <Link to={{ pathname: '/checkout', state: { name: this.state.productDetails } }}  > <MDBBtn color="indigo">Proceed To Checkout</MDBBtn></Link>
+                                            <div className="text-center mt-4">
+                                                <Link to={{ pathname: '/checkout', state: { name: this.state.productDetails } }}  > <MDBBtn color="primary">Proceed To Checkout</MDBBtn></Link>
+                                            </div>
                                         </div>
                                     </div>) : ('')
                                 }
@@ -210,7 +217,7 @@ class Cart extends React.Component {
                         </MDBCardBody>
                     </MDBCard>
                 </MDBCol>
-                <Footer/>
+                <Footer />
             </div>
         );
     }

@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Header from '../../Component/home/header/header';
 import Footer from '../../Component/home/footer/footer';
 import Swal from 'sweetalert2';
+import { EventEmitter } from '../../event';
 const _ = require('lodash');
 
 class WishList extends React.Component {
@@ -15,6 +16,12 @@ class WishList extends React.Component {
         this.state = {
             wishList: []
         }
+        EventEmitter.subscribe('length', (event) => {
+            console.log("wishlist=", event);
+            this.count = event;
+            console.log("count=>", this.count);
+            // this.setState({ count: this.count })
+        });
     }
 
     /** Intailly call */
@@ -38,7 +45,7 @@ class WishList extends React.Component {
         /** Delete Wishlist */
         API.deleteWishList(id).
             then((findresponse) => {
-                Swal.fire("Added Successfully In Cart!", "", "success");
+                Swal.fire("Item Deleted Successfully!", "", "success");
                 this.componentDidMount();
             }).catch(
                 { status: 500, message: 'Internal Server Error' }
@@ -51,8 +58,8 @@ class WishList extends React.Component {
      * Add Cart function
      */
     addInCart(productId, id) {
-        console.log("productId==", productId);
         this.value = localStorage.getItem('productId');
+        console.log("value===", this.value);
         const data = []
         data.push(this.value);
         data.push(productId);
@@ -63,11 +70,26 @@ class WishList extends React.Component {
         console.log('arrVal=====', _.uniq(arrVal));
         const filter = _.filter(_.uniq(arrVal), _.size);
         console.log('filter=====', filter);
-        localStorage.setItem('productId', filter.toString());
-        localStorage.setItem('cartCount', filter.length.toString());
-        Swal.fire("Added Successfully!", "", "success");
-        this.deleteWishList(id);
-        console.log("data==", data);
+        if (this.value) {
+            if (this.value.indexOf(productId) == -1) {
+                console.log("new updated", localStorage.getItem('productId'))
+                Swal.fire("Item Added Successfully In Cart!", "", "success");
+
+            } else {
+                console.log("new added", localStorage.getItem('productId'))
+                Swal.fire("Already Added In cart!", "", "warning");
+            }
+            localStorage.setItem('productId', filter);
+            localStorage.setItem('cartCount', filter.length.toString());
+        } else {
+            localStorage.setItem('productId', filter);
+            localStorage.setItem('cartCount', filter.length.toString());
+            Swal.fire("Item Added Successfully In Cart!", "", "success");
+        }
+        setTimeout(
+            this.deleteWishList(id),
+            10000
+        );
     }
 
     render() {
@@ -102,26 +124,29 @@ class WishList extends React.Component {
             <div>
                 <Header />
                 <MDBContainer>
-                <MDBCol>
-                    <MDBCard>
-                        <MDBCardBody>
-                            <MDBCardTitle>
-                                <MDBRow>
-                                    <MDBCol md="1"></MDBCol>
-                                    <MDBCol md="2">Product</MDBCol>
-                                    <MDBCol md="2">Name</MDBCol>
-                                    <MDBCol md="2">Price</MDBCol>
-                                    <MDBCol md="2">Available Date</MDBCol>
-                                    <MDBCol md="2">Action</MDBCol>
-                                    <MDBCol md="1"></MDBCol>
-                                </MDBRow>
-                            </MDBCardTitle>
-                            <MDBCardText>
-                                {displayData}
-                            </MDBCardText>
-                        </MDBCardBody>
-                    </MDBCard>
-                </MDBCol>
+                    <MDBRow>
+                        <h1 className="h4 text-center mb-4">WishList</h1>
+                    </MDBRow>
+                    <MDBCol>
+                        <MDBCard>
+                            <MDBCardBody>
+                                <MDBCardTitle>
+                                    <MDBRow>
+                                        <MDBCol md="1"></MDBCol>
+                                        <MDBCol md="2">Product</MDBCol>
+                                        <MDBCol md="2">Name</MDBCol>
+                                        <MDBCol md="2">Price</MDBCol>
+                                        <MDBCol md="2">Available Date</MDBCol>
+                                        <MDBCol md="2">Action</MDBCol>
+                                        <MDBCol md="1"></MDBCol>
+                                    </MDBRow>
+                                </MDBCardTitle>
+                                <MDBCardText>
+                                    {displayData}
+                                </MDBCardText>
+                            </MDBCardBody>
+                        </MDBCard>
+                    </MDBCol>
                 </MDBContainer>
                 <Footer />
             </div>

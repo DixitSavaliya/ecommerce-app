@@ -2,6 +2,7 @@ import React from 'react';
 import API from '../../service/homeservice';
 import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
 import Header from '../../Component/home/header/header';
+import './addnewaddress.css';
 import history from '../../history';
 
 class Address extends React.Component {
@@ -136,13 +137,16 @@ class Address extends React.Component {
     render() {
         return (
             <div>
-                <Header/>
+                <Header />
                 <MDBContainer>
+                <MDBRow>
+                        <h1 className="h4 text-center mb-4">Add-Address</h1>
+                    </MDBRow>
                     <MDBRow>
                         <MDBCol md="6">
                             <form>
                                 <label className="grey-text">
-                                    Address_1
+                                    Address_1:
                                 </label>
                                 <input
                                     type="text"
@@ -156,7 +160,7 @@ class Address extends React.Component {
                                 </div>
                                 <br />
                                 <label className="grey-text">
-                                    City
+                                    City:
                                 </label>
                                 <input
                                     type="text"
@@ -172,7 +176,7 @@ class Address extends React.Component {
                                 <label
                                     className="grey-text"
                                 >
-                                    Pincode
+                                    Pincode:
                                 </label>
                                 <input
                                     type="number"
@@ -190,7 +194,7 @@ class Address extends React.Component {
                         <MDBCol md="6">
                             <form>
                                 <label className="grey-text">
-                                    Address_2
+                                    Address_2:
                                 </label>
                                 <input
                                     type="text"
@@ -204,7 +208,7 @@ class Address extends React.Component {
                                 </div>
                                 <br />
                                 <label className="grey-text">
-                                    State
+                                    State:
                                 </label>
                                 <input
                                     type="text"
@@ -221,7 +225,7 @@ class Address extends React.Component {
                         </MDBCol>
                     </MDBRow>
                     <div className="text-center mt-4">
-                        <MDBBtn color="unique" onClick={this.addAddress} >
+                        <MDBBtn color="primary" onClick={this.addAddress} >
                             Save
                          </MDBBtn>
                     </div>

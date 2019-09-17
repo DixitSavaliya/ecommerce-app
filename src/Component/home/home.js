@@ -19,7 +19,7 @@ class Home extends React.Component {
         return (
             <div>
                 {/** Home-Page All Component */}
-                <Header/>
+                <Header />
                 <Product />
                 <AllProduct />
                 <ThreeBox />
@@ -30,5 +30,6 @@ class Home extends React.Component {
         );
     }
 }
+
 
 export default Home;

@@ -32,10 +32,30 @@ class Product extends React.Component {
     }
 
     render() {
+        let displayData;
+        if (this.state.images) displayData = this.state.images.map(data =>
+            <div class="single_banner_slide">
+                <div class="slider_parts">
+                    <div class="box_one">
+                        <img src={data} />
+                    </div>
+                    <a class="banner_view_all_btn" href="#">
+                        <span>View all Products</span>
+                    </a>
+                </div>
+            </div>
+        )
         return (
             <div>
+                <section class="banner_slider_section">
+                    <div class="container-fluid">
+                        <div class="banner_slider">
+                            {displayData}
+                        </div>
+                    </div>
+                </section>
                 {/** Carousel */}
-                <Carousel>
+                {/* <Carousel>
                     {
                         this.state.images.map(data =>
                             <div>
@@ -43,7 +63,7 @@ class Product extends React.Component {
                             </div>
                         )
                     }
-                </Carousel>
+                </Carousel> */}
             </div>
         );
     }

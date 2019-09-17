@@ -44,7 +44,7 @@ class OrderDetail extends React.Component {
                 const pdf = new jsPDF('p', 'px', 'a4');
                 const width = pdf.internal.pageSize.getWidth();
                 const height = pdf.internal.pageSize.getHeight();
-                pdf.addImage(imgData, 'JPEG', 0, 0,height,width);
+                pdf.addImage(imgData, 'JPEG', 0, 0, height, width);
                 pdf.save("myOrder.pdf");
             });
     };
@@ -53,6 +53,7 @@ class OrderDetail extends React.Component {
         let displayData;
         let displayProduct;
         let totalamount;
+        let displayDate;
 
         /** Display Orderdetaillist Data */
 
@@ -61,6 +62,10 @@ class OrderDetail extends React.Component {
                 <span>{data.shippingAddress1} {data.shippingAddress2}</span>
                 <p>Phone: {data.telephone}</p>
             </MDBCardText>
+        )
+
+        if (this.state.orderDetailsList) displayDate = this.state.orderDetailsList.map(data =>
+            <h3><strong>Date:</strong> {data.createdDate}</h3>
         )
 
         if (this.state.orderDetailsList[0]) displayProduct = this.state.orderDetailsList[0].productList.map(data =>
@@ -83,7 +88,20 @@ class OrderDetail extends React.Component {
             <div>
                 <Header />
                 <MDBContainer id="page">
-                    <h3><strong>OrderId:</strong> {this.orderId}</h3>
+                    <MDBRow>
+                        <h1 className="h4 text-center mb-4">Order-Details</h1>
+                    </MDBRow>
+                    <MDBRow>
+                       
+                    </MDBRow>
+                    <MDBRow>
+                        <MDBCol md="6">
+                            <h3><strong>OrderId:</strong> {this.orderId}</h3>
+                        </MDBCol>
+                        <MDBCol md="6">
+                            {displayDate}
+                        </MDBCol>
+                    </MDBRow>
                     <MDBRow>
                         <MDBCol md="6">
                             <MDBCard style={{ width: "22rem" }}>
@@ -136,7 +154,7 @@ class OrderDetail extends React.Component {
                         <MDBBtn color="unique" onClick={this.handlePdf} >Download Invoice</MDBBtn>
                     </MDBRow>
                 </MDBContainer>
-                <Footer/>
+                <Footer />
             </div>
         );
     }

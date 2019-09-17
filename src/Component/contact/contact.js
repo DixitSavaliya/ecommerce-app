@@ -1,5 +1,6 @@
 import React from 'react';
 import API from '../../service/homeservice';
+import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
 import Header from '../../Component/home/header/header';
 import Footer from '../../Component/home/footer/footer';
 import Swal from 'sweetalert2';
@@ -12,7 +13,7 @@ class Contact extends React.Component {
             nameError: '',
             phoneNumber: '',
             phoneNumberError: '',
-            phoneNumberErrors:'',
+            phoneNumberErrors: '',
             email: '',
             emailError: '',
             message: '',
@@ -61,12 +62,12 @@ class Contact extends React.Component {
      * handleChangeEvent
      */
     handleChangeEvent(event) {
-        console.log("event=",event);
+        console.log("event=", event);
         event.preventDefault();
         const state = this.state
-        console.log("state==",state);
+        console.log("state==", state);
         state[event.target.name] = event.target.value;
-        console.log("state==",state);
+        console.log("state==", state);
         this.setState(state);
     }
 
@@ -89,7 +90,7 @@ class Contact extends React.Component {
         };
 
         if (this.state.name && this.state.email && this.state.phoneNumber && this.state.message && this.state.phoneNumber.length == 10 && !this.state.emailError && !this.state.messageError && !this.state.nameError) {
-            this.setState({isButtonDisabled:true})
+            this.setState({ isButtonDisabled: true })
             const obj = {
                 name: this.state.name,
                 phoneNumber: this.state.phoneNumber,
@@ -100,77 +101,88 @@ class Contact extends React.Component {
             API.contactUs(obj).
                 then((findresponse) => {
                     console.log("response==", findresponse);
-              
                     Swal.fire("Mail sent successfully", "", "success");
                 }).catch({ status: 500, message: 'Internal Server Error' });
         }
     }
 
-
     render() {
         return (
             <div>
-                <Header/>
-                {/** Contact Us Form */}
-                <section class="mb-4">
-                    <h2 class="h1-responsive font-weight-bold text-center my-4">Contact us</h2>
-                    <div class="row">
-                        <div class="col-md-9 mb-md-0 mb-5">
-                            <form id="contact-form" name="contact-form" method="POST">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="md-form mb-0">
-                                            <input type="text" id="name" name="name" value={this.state.name}
-                                                onChange={this.handleChangeEvent} class="form-control" placeholder="Your Name" />
-                                            <div style={{ fontSize: 12, color: "red" }}>
-                                                {this.state.nameError}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="md-form mb-0">
-                                            <input type="email" id="email" name="email" value={this.state.email}
-                                                onChange={this.handleChangeEvent} class="form-control" placeholder="Your email" />
-                                        
-                                            <div style={{ fontSize: 12, color: "red" }}>
-                                                {this.state.emailError}
-                                            </div>
-                                        </div>
-                                    </div>
+                <Header />
+                <MDBContainer>
+                    <MDBRow>
+                        <h1 className="h4 text-center mb-4">Contact-Us</h1>
+                    </MDBRow>
+                    <MDBRow>
+                        <MDBCol md="6">
+                            <form>
+                                <label className="grey-text">
+                                    Your Name:
+                                </label>
+                                <input
+                                    type="text"
+                                    name="address_1"
+                                    value={this.state.name}
+                                    onChange={this.handleChangeEvent}
+                                    className="form-control"
+                                />
+                                <div style={{ fontSize: 12, color: "red" }}>
+                                    {this.state.nameError}
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="md-form mb-0">
-                                            <input type="number" id="phoneNumber" name="phoneNumber" value={this.state.phoneNumber}
-                                                onChange={this.handleChangeEvent}  minlength="10" maxlength="10" class="form-control"  placeholder="Your Phonenumber" />
-                                         
-                                            <div style={{ fontSize: 12, color: "red" }}>
-                                                {this.state.phoneNumberError}
-                                            </div>
-                                        </div>
-                                    </div>
+                                <br />
+                                <label className="grey-text">
+                                    Phonenumber:
+                                </label>
+                                <input
+                                    type="number"
+                                    name="phoneNumber"
+                                    value={this.state.phoneNumber}
+                                    onChange={this.handleChangeEvent}
+                                    minlength="10"
+                                    maxlength="10"
+                                    className="form-control"
+                                />
+                                <div style={{ fontSize: 12, color: "red" }}>
+                                    {this.state.phoneNumberError}
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="md-form">
-                                            <textarea type="text" id="message" name="message" value={this.state.message}
-                                                onChange={this.handleChangeEvent} rows="2" class="form-control md-textarea" placeholder="message"></textarea>
-                                         
-                                            <div style={{ fontSize: 12, color: "red" }}>
-                                                {this.state.messageError}
-                                            </div>
-                                        </div>
-                                    </div>
+                                <br />
+
+                            </form>
+                        </MDBCol>
+                        <MDBCol md="6">
+                            <form>
+                                <label className="grey-text">
+                                    Your Email:
+                                </label>
+                                <input
+                                    type="email"
+                                    name="email"
+                                    value={this.state.email}
+                                    onChange={this.handleChangeEvent}
+                                    className="form-control"
+                                />
+                                <div style={{ fontSize: 12, color: "red" }}>
+                                    {this.state.emailError}
+                                </div>
+                                <br />
+                                <label className="grey-text">
+                                    Message:
+                                </label>
+                                <textarea type="text" id="message" name="message" value={this.state.message}
+                                    onChange={this.handleChangeEvent} rows="2" class="form-control md-textarea"></textarea>
+                                <div style={{ fontSize: 12, color: "red" }}>
+                                    {this.state.messageError}
                                 </div>
                             </form>
-                            <div class="text-center text-md-left">
-                                <a class="btn btn-primary" onClick={this.contact} disabled={this.state.isButtonDisabled}>Send</a>
-                            </div>
-                            <div class="status"></div>
-                        </div>
+                        </MDBCol>
+                    </MDBRow>
+                    <div className="text-center mt-4">
+                        <MDBBtn color="primary" onClick={this.contact} disabled={this.state.isButtonDisabled} >
+                            Submit
+                         </MDBBtn>
                     </div>
-                </section>
-                <Footer/>
+                </MDBContainer>
             </div>
         );
     }

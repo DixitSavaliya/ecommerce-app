@@ -1,7 +1,10 @@
-.card {
+/* .card {
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
     border: 0;
     font-weight: 400;
     margin-top: 45px;
     width: 350px;
+} */
+.text_align{
+    text-align: center !important;
 }
