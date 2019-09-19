@@ -27,21 +27,21 @@ class Footer extends React.Component {
         let displayData;
         /** Display Categorylist data */
         if (this.state.categoryList) displayData = this.state.categoryList.map(data =>
-            <li>
+            <li key={data}>
                 {
-                    data.children ? (<a className="dropdown-toggle" href={{ javascript: void (0) }} data-toggle="dropdown">{data.name}<i className="fa fa-caret-right" aria-hidden="true"></i></a>) : (<Link to={`/subcategories/${data.categoryId}`}><a>{data.name}></a></Link>)
+                    data.children ? (<a className="dropdown-toggle" href={{ javascript: void (0) }} data-toggle="dropdown">{data.name}</a>) : (<Link to={`/subcategories/${data.categoryId}`}>{data.name}</Link>)
                 }
                 <div>
                     {
                         data.children ? (
                             data.children.map(list =>
-                                <div className="dropdown-menu">
-                                    <Link to={`/subcategories/${list.categoryId}`}><a className="dropdown-item">{list.name}</a></Link>
+                                <div className="dropdown-menu" key={list}>
+                                    <Link to={`/subcategories/${list.categoryId}`} className="dropdown-item">{list.name}</Link>
                                     <div>
                                         {
                                             list.children ? (
                                                 list.children.map(sublist =>
-                                                    <div >
+                                                    <div key={sublist}>
                                                         <Link to={`/subcategories/${sublist.categoryId}`}>{sublist.name}</Link>
                                                     </div>
                                                 )
@@ -103,7 +103,7 @@ class Footer extends React.Component {
                                             <li><Link to='/cart'>view cart</Link></li>
                                             <li><Link to='/wishlist'>my wishlist</Link></li>
                                             <li><Link to='/orderhistory'>order status</Link></li>
-                                            <li><Link>track my order</Link></li>
+                                            <li>track my order</li>
                                         </ul>
                                     </div>
                                 </div>
@@ -143,10 +143,10 @@ class Footer extends React.Component {
                             </div>
                             <div className="social_links float-right">
                                 <ul>
-                                    <li><a href=""><i className="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                    <li><a href=""><i className="fa fa-twitter" aria-hidden="true"></i></a></li>
-                                    <li><a href=""><i className="fa fa-google-plus" aria-hidden="true"></i></a></li>
-                                    <li><a href=""><i className="fa fa-youtube" aria-hidden="true"></i></a></li>
+                                    <li><a href=""><i className="fab fa-facebook-f"></i></a></li>
+                                    <li><a href=""><i className="fab fa-twitter"></i></a></li>
+                                    <li><a href=""><i className="fab fa-google-plus-g"></i></a></li>
+                                    <li><a href=""><i className="fab fa-youtube"></i></a></li>
                                 </ul>
                             </div>
                         </div>

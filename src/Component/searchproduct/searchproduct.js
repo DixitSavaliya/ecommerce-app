@@ -99,49 +99,96 @@ class SearchProduct extends React.Component {
 
     render() {
         let displayData;
+        let displayProduct;
 
-        if (this.state.searchList) displayData = this.state.searchList.map(data =>
+        if (this.state.searchList) displayData = this.state.searchList.slice(0, Math.floor(this.state.searchList.length / 2)).map(data =>
             <MDBCard>
-                <Grid container spacing={3}>
-                    <Grid item xs={12} sm={4}>
-                        {(data.Images) ?
-                            (<div>
-                                {data.Images.containerName ? (
-                                    <MDBCardImage className="img-fluid" src={config.baseMediaUrl + data.Images.containerName + data.Images.image} className="img-fluid" alt="product image" />)
-                                    : (
-                                        <MDBCardImage className="img-fluid" src={config.baseMediaUrl + data.Images.image} waves />
-                                    )}
-                            </div>) : ('')}
-                    </Grid>
-                    <Grid item xs={12} sm={4}>
-                        <MDBCardBody>
-                            <MDBCardText>
-                                {/* <div className="text_center_icon">
+                {(data.Images) ?
+                    (<div>
+                        {data.Images.containerName ? (
+                            <MDBCardImage className="img-fluid" src={config.baseMediaUrl + data.Images.containerName + data.Images.image} className="img-fluid" alt="product image" />)
+                            : (
+                                <MDBCardImage className="img-fluid" src={config.baseMediaUrl + data.Images.image} waves />
+                            )}
+                    </div>) : ('')}
+                <MDBCardBody>
+                    <MDBCardText>
+                        {/* <div className="text_center_icon">
                                 <i className="fa fa-shopping-cart" aria-hidden="true" onClick={() => this.addInCart(data.productId)}></i>
                                 <i className="fa fa-heart" aria-hidden="true" onClick={() => this.addWishList(data.productId)}></i>
                             </div> */}
-                            </MDBCardText>
-                            <MDBCardTitle>{data.metaTagTitle}</MDBCardTitle>
-                            <MDBCardText>
-                                <p className="text_color"><Link to={`/singleproduct/${data.productId}`}>{data.name}</Link></p>
-                                {/* <p><b>Price:</b> <i class="fas fa-rupee-sign"></i> <span className="procuct_price">{data.price}</span></p> */}
-                                <p><b>Description:</b></p>
-                                <p>{renderHTML(data.description)}</p>
-                            </MDBCardText>
-                        </MDBCardBody>
-                    </Grid>
-                    <Grid item xs={12} sm={4}>
-                        <MDBCardText>
-                            {/* <p><b>Name:</b> {data.name}</p> */}
-                            <div>
-                                <p className="text_top"><b>Price:</b> <i class="fas fa-rupee-sign"></i> <span className="procuct_price">{data.price}</span></p>
-                                <p className="text-left">No Cost EMI</p>
-                            </div>
-                            {/* <p><b>Description:</b></p>
+                    </MDBCardText>
+                    <MDBCardTitle>{data.metaTagTitle}</MDBCardTitle>
+                    <MDBCardText>
+                        <p className="text_color"><Link to={`/singleproduct/${data.productId}`}>{data.name}</Link></p>
+                        <ul className="ratings">
+                            <li className="fill"><i className="fa fa-star" aria-hidden="true"></i></li>
+                            <li className="fill"><i className="fa fa-star" aria-hidden="true"></i></li>
+                            <li className="fill"><i className="fa fa-star" aria-hidden="true"></i></li>
+                            <li className="fill"><i className="fa fa-star" aria-hidden="true"></i></li>
+                            <li><i className="fa fa-star" aria-hidden="true"></i></li>
+                        </ul>
+                        <p className="txt"><b>Price:</b> <i class="fas fa-rupee-sign"></i> <span className="procuct_price">{data.price}</span></p>
+
+                        {/* <p><b>Price:</b> <i class="fas fa-rupee-sign"></i> <span className="procuct_price">{data.price}</span></p> */}
+                        {/* <p><b>Description:</b></p>
+                        <p>{renderHTML(data.description)}</p> */}
+                    </MDBCardText>
+                </MDBCardBody>
+                <MDBCardText>
+                    {/* <p><b>Name:</b> {data.name}</p> */}
+                    <div>
+                        {/* <p className="text_top"><b>Price:</b> <i class="fas fa-rupee-sign"></i> <span className="procuct_price">{data.price}</span></p>
+                        <p className="text-left">No Cost EMI</p> */}
+                    </div>
+                    {/* <p><b>Description:</b></p>
                             <p>{renderHTML(data.description)}</p> */}
-                        </MDBCardText>
-                    </Grid>
-                </Grid>
+                </MDBCardText>
+            </MDBCard>
+        )
+
+        if (this.state.searchList) displayProduct = this.state.searchList.slice(Math.floor(this.state.searchList.length / 2)).map(data =>
+            <MDBCard>
+                {(data.Images) ?
+                    (<div>
+                        {data.Images.containerName ? (
+                            <MDBCardImage className="img-fluid" src={config.baseMediaUrl + data.Images.containerName + data.Images.image} className="img-fluid" alt="product image" />)
+                            : (
+                                <MDBCardImage className="img-fluid" src={config.baseMediaUrl + data.Images.image} waves />
+                            )}
+                    </div>) : ('')}
+                <MDBCardBody>
+                    <MDBCardText>
+                        {/* <div className="text_center_icon">
+                                <i className="fa fa-shopping-cart" aria-hidden="true" onClick={() => this.addInCart(data.productId)}></i>
+                                <i className="fa fa-heart" aria-hidden="true" onClick={() => this.addWishList(data.productId)}></i>
+                            </div> */}
+                    </MDBCardText>
+                    <MDBCardTitle>{data.metaTagTitle}</MDBCardTitle>
+                    <MDBCardText>
+                        <p className="text_color"><Link to={`/singleproduct/${data.productId}`}>{data.name}</Link></p>
+                        <ul className="ratings">
+                            <li className="fill"><i className="fa fa-star" aria-hidden="true"></i></li>
+                            <li className="fill"><i className="fa fa-star" aria-hidden="true"></i></li>
+                            <li className="fill"><i className="fa fa-star" aria-hidden="true"></i></li>
+                            <li className="fill"><i className="fa fa-star" aria-hidden="true"></i></li>
+                            <li><i className="fa fa-star" aria-hidden="true"></i></li>
+                        </ul>
+                        <p className="txt"><b>Price:</b> <i class="fas fa-rupee-sign"></i> <span className="procuct_price">{data.price}</span></p>
+                        {/* <p><b>Price:</b> <i class="fas fa-rupee-sign"></i> <span className="procuct_price">{data.price}</span></p> */}
+                        {/* <p><b>Description:</b></p>
+                        <p>{renderHTML(data.description)}</p> */}
+                    </MDBCardText>
+                </MDBCardBody>
+                <MDBCardText>
+                    {/* <p><b>Name:</b> {data.name}</p> */}
+                    <div>
+                        {/* <p className="text_top"><b>Price:</b> <i class="fas fa-rupee-sign"></i> <span className="procuct_price">{data.price}</span></p>
+                        <p className="text-left">No Cost EMI</p> */}
+                    </div>
+                    {/* <p><b>Description:</b></p>
+                            <p>{renderHTML(data.description)}</p> */}
+                </MDBCardText>
             </MDBCard>
         )
         {/** Display search data */ }
@@ -203,7 +250,14 @@ class SearchProduct extends React.Component {
                     </MDBRow>
                 </MDBContainer>
                 <div>
-                    {displayData}
+                    <Grid container spacing={3}>
+                        <Grid item xs={12} sm={6}>
+                            {displayData}
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            {displayProduct}
+                        </Grid>
+                    </Grid>
                 </div>
                 <Footer />
             </div>

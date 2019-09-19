@@ -34,12 +34,12 @@ class Product extends React.Component {
     render() {
         let displayData;
         if (this.state.images) displayData = this.state.images.map(data =>
-            <div class="single_banner_slide">
-                <div class="slider_parts">
-                    <div class="box_one">
+            <div className="single_banner_slide" key={data}>
+                <div className="slider_parts">
+                    <div className="box_one">
                         <img src={data} />
                     </div>
-                    <a class="banner_view_all_btn" href="#">
+                    <a className="banner_view_all_btn" href="#">
                         <span>View all Products</span>
                     </a>
                 </div>
@@ -47,9 +47,9 @@ class Product extends React.Component {
         )
         return (
             <div>
-                <section class="banner_slider_section">
-                    <div class="container-fluid">
-                        <div class="banner_slider">
+                <section className="banner_slider_section">
+                    <div className="container-fluid">
+                        <div className="banner_slider">
                             {displayData}
                         </div>
                     </div>

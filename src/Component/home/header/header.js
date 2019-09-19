@@ -20,6 +20,7 @@ class Header extends React.Component {
         this.name = localStorage.getItem('name');
         this.logout = this.logout.bind(this);
         this.handleLoginKeyUp = this.keyUpHandler.bind(this);
+        this.subcategories = this.subcategories.bind(this);
         this.onClick = this.onClick.bind(this);
         EventEmitter.subscribe('length', (event) => {
             console.log("wishlist=", event);
@@ -36,6 +37,7 @@ class Header extends React.Component {
         localStorage.removeItem('productId');
         localStorage.removeItem('cartCount');
         localStorage.removeItem('wishlistLength');
+        localStorage.removeItem('qtyObject');
         history.push('/home');
     }
 
@@ -75,6 +77,10 @@ class Header extends React.Component {
         window.location.href = '/home';
     }
 
+    subcategories() {
+        window.location.reload();
+    }
+
     render() {
         const { isLoaded } = this.state;
         if (!isLoaded) {
@@ -90,17 +96,47 @@ class Header extends React.Component {
                         {/** Top Header */}
                         <div className="header_top">
                             <div className="container">
+                                <div className="top_select float-left">
+                                    <div className="custom_select language">
+                                        <a href={{ javascript: void (0) }}>ENG</a>
+                                        <div className="languages" style={{
+                                            display: "none"
+                                        }}>
+                                            <ul>
+                                                <li><a href="#">ENG</a></li>
+                                                <li><a href="#">FRE</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div className="custom_select currency">
+                                        <a href={{ javascript: void (0) }}>$ USD</a>
+                                        <div className="currencies" style={{
+                                            display: "none"
+                                        }}>
+                                            <ul>
+                                                <li><a href="#">$ USD</a></li>
+                                                <li><a href="#">€ EUR</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div className="contact_number float-left">
+                                    <a href="tel:9876543210">
+                                        <img src={require("../iconSVG/phone-call1.png")} className="telephone" />
+                                        98 765 432 10</a>
+                                </div>
+                                {/* <div className="contact_number float-left">
                                     {
                                         localStorage.getItem('token') ? (<h6 className="user_name">Welcome  <i className="far fa-user"></i> {this.name}</h6>) : ('')
                                     }
-                                </div>
+                                </div> */}
                                 <div className="header_top_links float-right">
                                     <ul>
                                         <li>
+
                                             {
                                                 localStorage.getItem('token') ? (
-                                                    <div>
+                                                    <div className="name">
                                                         <a className="dropdown-toggle" href={{ javascript: void (0) }} data-toggle="dropdown">
                                                             <i className="far fa-user"></i> my account
                                                      </a>
@@ -113,8 +149,11 @@ class Header extends React.Component {
                                                                     <Link to="/cart" className="dropdown-item">Cart</Link>) : ('')
                                                             }
                                                             <Link to="/wishlist" className="dropdown-item">WishList</Link>
-                                                            <Link className="dropdown-item" onClick={this.logout}>Logout</Link>
+                                                            <p className="dropdown-item" onClick={this.logout}>Logout</p>
                                                         </div>
+                                                        <a className="dropdown-toggle" href={{ javascript: void (0) }} data-toggle="dropdown">
+                                                            Welcome  <i className="far fa-user"></i> {this.name}
+                                                        </a>
                                                     </div>) : ('')
                                             }
                                         </li>
@@ -145,24 +184,26 @@ class Header extends React.Component {
                                                 <ul className="navbar-nav">
                                                     {
                                                         this.state.categoryList.map(data =>
-                                                            <li className="nav-item">
-
+                                                            <li className="nav-item" key={data}>
                                                                 {
-                                                                    data.children ? (<a className="dropdown-toggle" href={{ javascript: void (0) }} data-toggle="dropdown">{data.name}<i class="fa fa-angle-down" aria-hidden="true"></i></a>) : (<Link to={`/subcategories/${data.categoryId}`}><a>{data.name}<i class="fa fa-angle-down" aria-hidden="true"></i></a></Link>)
+                                                                    data.children ? (<a className="dropdown-toggle" href={{ javascript: void (0) }} data-toggle="dropdown">{data.name}
+                                                                        {
+                                                                            data.children ? (<i className="fa fa-angle-down" aria-hidden="true"></i>) : ('')
+                                                                        }
+                                                                    </a>) : (<Link to={`/subcategories/${data.categoryId}`} onClick={() => this.componentDidMount()}>{data.name}</Link>)
                                                                 }
 
                                                                 <div>
                                                                     {
                                                                         data.children ? (
                                                                             data.children.map(list =>
-                                                                                <div className="dropdown-menu">
-                                                                                    <Link to={`/subcategories/${list.categoryId}`}><a className="dropdown-item">{list.name}</a></Link>
-
-                                                                                    <div>
+                                                                                <div className="dropdown-menu" key={list}>
+                                                                                    <Link className="dropdown-item" to={`/subcategories/${list.categoryId}`}>{list.name}</Link>
+                                                                                    <div key={list}>
                                                                                         {
                                                                                             list.children ? (
                                                                                                 list.children.map(sublist =>
-                                                                                                    <div >
+                                                                                                    <div key={sublist} >
                                                                                                         <Link to={`/subcategories/${sublist.categoryId}`}>{sublist.name}</Link>
                                                                                                     </div>
                                                                                                 )
@@ -177,41 +218,36 @@ class Header extends React.Component {
                                                             </li>
                                                         )
                                                     }
+                                                    <li className="contact_text">
+                                                        <Link to="/contact" className="contact">Contact</Link>
+                                                    </li>
                                                 </ul>
                                             </div>
                                         </nav>
                                     </div>
                                     <div className="cart">
                                         <ul>
+
                                             <li>
-                                                <Link to="/contact" className="contact">Contact</Link>
+
+                                                <Link className="search_toggle_btn" href={{ javascript: void (0) }} to="/searchproduct"> <img src={require("../iconSVG/magnifying-glass.png")} className="image" /></Link>
+
                                             </li>
                                             <li>
-                                                <a class="search_toggle_btn" href={{ javascript: void (0) }}>
-                                                    <img src={require("../iconSVG/magnifying-glass.png")} className="image" />
-                                                </a>
-                                                <div class="search_box">
-                                                    <input type="text" placeholder="search" />
-                                                </div>
-                                                {/* <a className="search_toggle_btn">
-                                                    <Link to="/searchproduct"><i class="fas fa-search"></i></Link>
-                                                </a> */}
-                                            </li>
-                                            <li>
-                                                <Link to="/wishlist"> <a class="search_toggle_btn" href={{ javascript: void (0) }}>
-                                                    <img src={require("../iconSVG/heart.png")} className="image" />
-                                                </a>
-                                                    {
-                                                       localStorage.getItem('wishlistLength')  ? (<span class="cart_count">{ localStorage.getItem('wishlistLength')}</span>) : ('')
-                                                    }
-                                                </Link>
+                                                <Link to="/wishlist" className="search_toggle_btn" href={{ javascript: void (0) }}>
+                                                    <img src={require("../iconSVG/heart.png")} className="image" /> </Link>
+
+                                                {
+                                                    localStorage.getItem('wishlistLength') ? (<span className="cart_count">{localStorage.getItem('wishlistLength')}</span>) : ('')
+                                                }
+
                                             </li>
                                             <li className="desktop_only">
-                                                <Link to="/cart"><a class="search_toggle_btn" href={{ javascript: void (0) }}>
+                                                <Link to="/cart" className="search_toggle_btn" href={{ javascript: void (0) }}>
                                                     <img src={require("../iconSVG/shopping-cart.png")} className="image" />
-                                                </a>
+
                                                     {
-                                                        localStorage.getItem('cartCount') ? (<span class="cart_count">{localStorage.getItem('cartCount')}</span>) : ('')
+                                                        localStorage.getItem('cartCount') ? (<span className="cart_count">{localStorage.getItem('cartCount')}</span>) : ('')
                                                     }
                                                 </Link>
                                             </li>

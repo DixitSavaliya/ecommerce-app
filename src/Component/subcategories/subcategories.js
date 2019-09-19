@@ -22,6 +22,14 @@ class SubCategories extends React.Component {
 
     /** Intially call */
     componentDidMount() {
+        API.CategoryList().
+        then((findresponse) => {
+            this.setState({ categoryList: findresponse.data.data, isLoaded: true })
+            console.log("data==", this.state.categoryList);
+        }).catch(
+            { status: 500, message: 'Internal Server Error' }
+        );
+
         console.log("query=", this.props.location.pathname.split('/')[2]);
         const query = this.props.location.pathname.split('/')[2];
         /** Get Subcategory details */
@@ -180,7 +188,7 @@ class SubCategories extends React.Component {
                             </MDBCardText>
                             <MDBCardTitle>{data.metaTagTitle}</MDBCardTitle>
                             <MDBCardText>
-                                <p className="text_color"><Link to={`/singleproduct/${data.productId}`}>{data.name}</Link></p>
+                                <Link className="text_color" to={`/singleproduct/${data.productId}`}>{data.name}</Link>
                                 {/* <p><b>Price:</b> <i class="fas fa-rupee-sign"></i> <span className="procuct_price">{data.price}</span></p> */}
                                 <p><b>Description:</b></p>
                                 <p>{renderHTML(data.description)}</p>
@@ -191,7 +199,7 @@ class SubCategories extends React.Component {
                         <MDBCardText>
                             {/* <p><b>Name:</b> {data.name}</p> */}
                             <div>
-                                <p className="text_top"><b>Price:</b> <i class="fas fa-rupee-sign"></i> <span className="procuct_price">{data.price}</span></p>
+                                <p className="text_top"><b>Price:</b> <i className="fas fa-rupee-sign"></i> <span className="procuct_price">{data.price}</span></p>
                                 <p className="text-left">No Cost EMI</p>
                             </div>
                             {/* <p><b>Description:</b></p>

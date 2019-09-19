@@ -121,7 +121,7 @@ class AllProduct extends React.Component {
 
         /** Display Productlist data */
         if (this.state.productlist) displayData = this.state.productlist.map(data =>
-            <div className="single_product" data-aos="flip-left" data-aos-duration="1500">
+            <div className="single_product" data-aos="flip-left" data-aos-duration="1500" key={data}>
                 <div className="product_content">
                     <div className="product_image">
                         {(data.Images) ?
@@ -148,7 +148,7 @@ class AllProduct extends React.Component {
                             <li className="fill"><i className="fa fa-star" aria-hidden="true"></i></li>
                             <li><i className="fa fa-star" aria-hidden="true"></i></li>
                         </ul>
-                        <p><i class="fas fa-rupee-sign"></i> <span className="procuct_price">{data.price}</span></p>
+                        <p><i className="fas fa-rupee-sign"></i> <span className="procuct_price">{data.price}</span></p>
                     </div>
                 </div>
             </div>

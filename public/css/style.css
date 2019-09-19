@@ -1,7 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700');
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
+@font-face {
+    font-family: 'Roboto Condensed', sans-serif;
+    src: url('../ttf/RobotoCondensed-Regular.ttf');
+  }
+  
 body{
-	font-family: 'Roboto Condensed', sans-serif;
+	font-family: 'Roboto Condensed', sans-serif !important;
 }
 h1,h2,h3,h4,h5,h6,p{margin: 0}
 ul{padding: 0 !important; margin: 0 !important;}
@@ -29,7 +34,7 @@ button.btn.btn-blue {
     color: #fff;
 }
 button.btn.btn-blue:hover{
-    color: #000;
+    color: #fff;
 }
 button.btn span{
     position: relative;
@@ -45,7 +50,8 @@ button.btn:before {
     transition: all 0.3s;
 }
 button.btn.btn-blue:before {
-    background-color: #ffc700;
+    /* background-color: #ffc700; */
+    color: #fff;
 }
 button.btn:hover:before {
     top: 0px;
@@ -209,7 +215,8 @@ header {
     box-shadow: none !important;
 }
 nav.navbar {
-    padding: 35px 0px;
+    /* padding: 35px 0px; */
+    padding: 35px 50px;
 }
 .dropdown-toggle:after{
 	display: none;
@@ -503,10 +510,11 @@ nav.navbar .navbar-nav .nav-item a i {
     overflow: hidden;
 }
 .product_content .product_image img {
-    min-width: 100%;
+    /* min-width: 100%;
     max-height: 100%;
     min-height: 100%;
-    object-fit: cover;
+    min-width: 100%;
+    object-fit: cover; */
     position: absolute;
     top: 0;
     bottom: 0;
@@ -661,8 +669,8 @@ nav.navbar .navbar-nav .nav-item a i {
     margin-bottom: 25px;
 }
 .slider_img{
-    /* width: 500px !important;
-    height: 500px !important; */
+    width: 500px !important;
+     height: 500px !important;
     margin: auto;
 }
 .slider_img img{
@@ -854,7 +862,8 @@ nav.navbar .navbar-nav .nav-item a i {
 .category_sidebar li a {
     color: #515151;
     width: 100%;
-    padding: 6.3px 26px;
+    /* padding: 6.3px 26px; */
+    padding: 7.3px 4px;
     letter-spacing: 0.3px;
     position: relative;
 }
@@ -946,6 +955,7 @@ nav.navbar .navbar-nav .nav-item a i {
     font-weight: 700;
     line-height: 40px;
     letter-spacing: 0.5px;
+    margin-left: 145px; 
 }
 .news_letter_form {
     width: 520px;
@@ -953,10 +963,12 @@ nav.navbar .navbar-nav .nav-item a i {
 }
 .news_letter_form button.btn {
     padding: 6.5px 15px;
+    margin: 0px;
+    color: black;
 }
 .news_letter_form input {
     height: 40px;
-    width: calc(100% - 122px);
+    width: calc(100% - 148px);
     margin: 0px 0;
     padding: 10px 14px;
     text-transform: uppercase;
@@ -1021,7 +1033,7 @@ nav.navbar .navbar-nav .nav-item a i {
 .footer_bottom {
     display: table;
     width: 100%;
-    padding: 35px 0px 40px;
+    padding: 49px 0px 30px;
 }
 .footer_bottom .logo {
     padding: 0px;

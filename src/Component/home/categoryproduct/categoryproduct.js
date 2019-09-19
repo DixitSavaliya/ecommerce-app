@@ -27,21 +27,21 @@ class CategoryProduct extends React.Component {
 
         /** Display Categorylist data */
         if (this.state.categoryList) displayData = this.state.categoryList.map(data =>
-            <li>
+            <li key={data}> 
                 {
-                    data.children ? (<a className="dropdown-toggle" href={{ javascript: void (0) }} data-toggle="dropdown">{data.name}<i className="fa fa-caret-right" aria-hidden="true"></i></a>) : (<Link to={`/subcategories/${data.categoryId}`}><a>{data.name}<i className="fa fa-caret-right" aria-hidden="true"></i></a></Link>)
+                    data.children ? (<a className="dropdown-toggle" href={{ javascript: void (0) }} data-toggle="dropdown">{data.name}<i className="fa fa-caret-right" aria-hidden="true"></i></a>) : (<Link to={`/subcategories/${data.categoryId}`}>{data.name}<i className="fa fa-caret-right" aria-hidden="true"></i></Link>)
                 }
                 <div>
                     {
                         data.children ? (
                             data.children.map(list =>
-                                <div className="dropdown-menu">
-                                    <Link to={`/subcategories/${list.categoryId}`}><a className="dropdown-item">{list.name}</a></Link>
+                                <div className="dropdown-menu" key={list}>
+                                    <Link to={`/subcategories/${list.categoryId}`} className="dropdown-item">{list.name}</Link>
                                     <div>
                                         {
                                             list.children ? (
                                                 list.children.map(sublist =>
-                                                    <div >
+                                                    <div key={sublist}>
                                                         <Link to={`/subcategories/${sublist.categoryId}`}>{sublist.name}</Link>
                                                     </div>
                                                 )

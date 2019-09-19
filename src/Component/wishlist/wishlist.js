@@ -14,7 +14,8 @@ class WishList extends React.Component {
         console.log("props Home======", props);
         super(props);
         this.state = {
-            wishList: []
+            wishList: [],
+            isDeleted: false
         }
         EventEmitter.subscribe('length', (event) => {
             console.log("wishlist=", event);
@@ -45,19 +46,25 @@ class WishList extends React.Component {
         /** Delete Wishlist */
         API.deleteWishList(id).
             then((findresponse) => {
-                Swal.fire("Item Deleted Successfully!", "", "success");
-                this.componentDidMount();
+                if (this.state.isDeleted == true) {
+                    Swal.fire("Item Added Successfully In Cart!", "", "success");
+                    this.setState({ isDeleted: false });
+                    this.componentDidMount();
+                } else {
+                    Swal.fire("Item Deleted Successfully!", "", "success");
+                    this.componentDidMount();
+                }
             }).catch(
                 { status: 500, message: 'Internal Server Error' }
             );
     }
-
 
     /** 
      * @param {string} productId
      * Add Cart function
      */
     addInCart(productId, id) {
+        this.setState({ isDeleted: true });
         this.value = localStorage.getItem('productId');
         console.log("value===", this.value);
         const data = []
