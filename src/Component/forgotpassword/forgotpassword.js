@@ -44,7 +44,7 @@ class ForgotPassword extends React.Component {
     validate = () => {
         let emailError = "";
 
-        const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        const reg = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
         if (!reg.test(this.state.emailId)) {
             emailError = "invalid email";
         }
@@ -71,8 +71,8 @@ class ForgotPassword extends React.Component {
                 emailId: this.state.emailId
             }
             /** Forgot password */
-            API.ForgotPassword(obj).
-                then((findresponse) => {
+            API.ForgotPassword(obj)
+                .then((findresponse) => {
                     Swal.fire("Email sent Successfully!", "", "success");
                     this.setState({ modal: false })
                 }).catch({ status: 500, message: 'Internal Server Error' });

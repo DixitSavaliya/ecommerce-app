@@ -22,8 +22,6 @@ import EditAddress from './Component/editaddress/editaddress';
 import OrderHistory from './Component/orderhistory/orderhistory';
 import OrderDetail from './Component/orderdetail/orderdetail';
 import Contact from './Component/contact/contact';
-import Header from './Component/home/header/header';
-import Footer from './Component/home/footer/footer';
 import * as serviceWorker from './serviceWorker';
 
 

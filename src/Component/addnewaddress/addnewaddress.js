@@ -30,8 +30,8 @@ class Address extends React.Component {
     /** Intially Call */
     componentDidMount() {
         /** Get Profile */
-        API.getProfile().
-            then((findresponse) => {
+        API.getProfile()
+            .then((findresponse) => {
                 console.log("getProfile response===", findresponse);
                 this.setState({ getProfileList: findresponse.data.data })
                 console.log("data==", this.state.getProfileList);
@@ -110,7 +110,7 @@ class Address extends React.Component {
             })
         };
 
-        if (this.state.address_1 && this.state.address_2 && this.state.city && this.state.state && this.state.pincode && this.state.pincode.length == 6) {
+        if (this.state.address_1 && this.state.address_2 && this.state.city && this.state.state && this.state.pincode && this.state.pincode.length === 6) {
             const obj = {
                 customerId: this.state.getProfileList.id,
                 address1: this.state.address_1,
@@ -124,8 +124,8 @@ class Address extends React.Component {
             * @param {JSON} obj
             * Add Address 
             */
-            API.addAddress(obj).
-                then((findresponse) => {
+            API.addAddress(obj)
+                .then((findresponse) => {
                     console.log("addAddress response===", findresponse);
                     history.push('/address');
                 }).catch(
@@ -139,7 +139,7 @@ class Address extends React.Component {
             <div>
                 <Header />
                 <MDBContainer>
-                <MDBRow>
+                    <MDBRow>
                         <h1 className="h4 text-center mb-4">Add-Address</h1>
                     </MDBRow>
                     <MDBRow>

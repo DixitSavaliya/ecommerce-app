@@ -18,7 +18,7 @@ class Service extends React.Component {
                             <div className="col-md-4" data-aos="zoom-in" data-aos-duration="1500">
                                 <div className="service_content">
                                     <div className="icon">
-                                    <img src={require("../iconSVG/box1.png")} className="image" />
+                                    <img src={require("../iconSVG/box1.png")} className="image" alt="My Awesome" />
                                     </div>
                                     <div className="text-white">
                                         <h3>Free Worldwide Delivery</h3>
@@ -29,7 +29,7 @@ class Service extends React.Component {
                             <div className="col-md-4" data-aos="zoom-in" data-aos-duration="1500">
                                 <div className="service_content">
                                     <div className="icon">
-                                    <img src={require("../iconSVG/back1.png")} className="image" />
+                                    <img src={require("../iconSVG/back1.png")} className="image" alt="My Awesome" />
                                     </div>
                                     <div className="text-white">
                                         <h3>Money back Guarantee</h3>
@@ -40,7 +40,7 @@ class Service extends React.Component {
                             <div className="col-md-4" data-aos="zoom-in" data-aos-duration="1500">
                                 <div className="service_content">
                                     <div className="icon">
-                                    <img src={require("../iconSVG/call1.png")} className="image" />
+                                    <img src={require("../iconSVG/call1.png")} className="image" alt="My Awesome"/>
                                     </div>
                                     <div className="text-white">
                                         <h3>24/7 Customer Support</h3>

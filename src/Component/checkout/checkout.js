@@ -47,8 +47,8 @@ class Checkout extends React.Component {
     /** Intially call */
     componentDidMount() {
         /** Get Countrylist */
-        API.getCountryList().
-            then((findresponse) => {
+        API.getCountryList()
+            .then((findresponse) => {
                 this.setState({ countryList: findresponse.data.data, isLoaded: true })
                 console.log("countryList==", this.state.countryList);
 
@@ -57,8 +57,8 @@ class Checkout extends React.Component {
             );
 
         /** Get Zonelist */
-        API.getZoneList().
-            then((findresponse) => {
+        API.getZoneList()
+            .then((findresponse) => {
                 this.setState({ zoneList: findresponse.data.data, isLoaded: true })
                 console.log("data==", this.state.zoneList);
             }).catch(
@@ -66,8 +66,8 @@ class Checkout extends React.Component {
             );
 
         /** Get Profile */
-        API.getProfile().
-            then((findresponse) => {
+        API.getProfile()
+            .then((findresponse) => {
                 this.setState({ getProfileList: findresponse.data.data, isLoaded: true })
                 console.log("data==", this.state.getProfileList);
                 this.setState({
@@ -101,7 +101,7 @@ class Checkout extends React.Component {
             lastNameError = "please enter lastNameError name";
         }
 
-        const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        const reg = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
         if (!reg.test(this.state.email)) {
             emailError = "invalid email";
         }
@@ -201,7 +201,7 @@ class Checkout extends React.Component {
             })
         };
 
-        if (this.state.firstName && this.state.lastName && this.state.email && this.state.mobileNumber && this.state.address_1 && this.state.city && this.state.zone && this.state.pincode && this.state.country && this.state.mobileNumber.length == 10 && this.state.pincode.length == 6 && !this.state.emailError) {
+        if (this.state.firstName && this.state.lastName && this.state.email && this.state.mobileNumber && this.state.address_1 && this.state.city && this.state.zone && this.state.pincode && this.state.country && this.state.mobileNumber.length === 10 && this.state.pincode.length === 6 && !this.state.emailError) {
             this.setState({ isButtonDisabled: true, isLoaded: true })
             const obj = {
                 productDetails: this.productDetails,
@@ -217,11 +217,12 @@ class Checkout extends React.Component {
                 shippingCountry: this.state.country
             }
             /** Proccess to place order */
-            API.checkoutListOrder(obj).
-                then((findresponse) => {
+            API.checkoutListOrder(obj)
+                .then((findresponse) => {
                     this.setState({ isLoaded: true });
                     Swal.fire("Order Placed Successfully!", "", "success");
                     localStorage.removeItem('productId');
+                    localStorage.removeItem('qtyObject');
                     localStorage.setItem('cartCount', this.state.cartCount);
                     window.location.href = '/home';
                     // history.push('/home');
@@ -375,85 +376,3 @@ class Checkout extends React.Component {
 }
 
 export default Checkout;
-
-
-
-{/** Place Order Form */ }
-
-{/* <form className="center">
-                    First name:<br />
-                    <input type="text" name="firstName" value={this.state.firstName}
-                        onChange={this.handleChangeName} />
-                    <div style={{ fontSize: 12, color: "red" }}>
-                        {this.state.firstNameError}
-                    </div>
-                    <br />
-                    Last name:<br />
-                    <input type="text" name="lastName" value={this.state.lastName}
-                        onChange={this.handleChangeName} />
-                    <div style={{ fontSize: 12, color: "red" }}>
-                        {this.state.lastNameError}
-                    </div>
-                    <br />
-                    Address_1:<br />
-                    <textarea rows="4" cols="50" name="address_1" value={this.state.address_1} onChange={this.handleChangeName}>
-                    </textarea>
-                    <div style={{ fontSize: 12, color: "red" }}>
-                        {this.state.address_1Error}
-                    </div>
-                    <br />
-                    Address_2:<br />
-                    <textarea rows="4" cols="50" name="address_2" value={this.state.address_2} onChange={this.handleChangeName}>
-                    </textarea>
-                    <br />
-                    Country:<br />
-                    <select name="shippingCountry" onChange={this.handleChangeCountry}>
-                        {this.state.countryList.map((e, key) => {
-                            return <option key={key} value={e.countryId}>{e.name}</option>;
-                        })}
-                    </select>
-                    <div style={{ fontSize: 12, color: "red" }}>
-                        {this.state.countryError}
-                    </div>
-                    <br />
-                    Phone Number:<br />
-                    <input type="text" name="phoneNumber" value={this.state.mobileNumber}
-                        onChange={this.handleChangeName} />
-                    <div style={{ fontSize: 12, color: "red" }}>
-                        {this.state.mobileNumberError}
-                    </div>
-                    <br />
-                    Email:<br />
-                    <input type="text" name="emailId" value={this.state.email}
-                        onChange={this.handleChangeName} />
-                    <div style={{ fontSize: 12, color: "red" }}>
-                        {this.state.emailError}
-                    </div>
-
-                    <br />
-                    City:<br />
-                    <input type="text" name="city" value={this.state.city}
-                        onChange={this.handleChangeName} />
-                    <div style={{ fontSize: 12, color: "red" }}>
-                        {this.state.cityError}
-                    </div>
-                    <br />
-                    Zone:<br />
-                    <select name="shippingZone" onChange={this.handleChange}>
-                        {this.state.zoneList.map((e, key) => {
-                            return <option key={key} value={e.zoneId}>{e.name}</option>;
-                        })}
-                    </select>
-                    <div style={{ fontSize: 12, color: "red" }}>
-                        {this.state.zoneError}
-                    </div>
-                    <br />
-                    PinCode:<br />
-                    <input type="number" name="pincode" value={this.state.pincode}
-                        onChange={this.handleChangeName} />
-                    <div style={{ fontSize: 12, color: "red" }}>
-                        {this.state.pincodeError}
-                    </div>
-                    <br />
-                    <button type="button" onClick={this.Checkout} disabled={this.state.isButtonDisabled} >Submit</button>
-                </form> */}

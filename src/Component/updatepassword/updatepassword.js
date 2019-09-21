@@ -3,7 +3,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
 import API from '../../service/homeservice';
-import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
+import { MDBContainer, MDBRow, MDBBtn } from 'mdbreact';
 import history from '../../history';
 import Header from '../../Component/home/header/header';
 import Footer from '../../Component/home/footer/footer';
@@ -76,14 +76,14 @@ class UpdatePassword extends React.Component {
         };
 
         if (this.state.oldPassword && this.state.newPassword && this.state.confirmPassword) {
-            if (this.state.newPassword == this.state.confirmPassword) {
+            if (this.state.newPassword === this.state.confirmPassword) {
                 const obj = {
                     oldPassword: this.state.oldPassword,
                     newPassword: this.state.newPassword,
                 }
                 /** Update Password */
-                API.UpdatePasswordUser(obj).
-                    then((findresponse) => {
+                API.UpdatePasswordUser(obj)
+                    .then((findresponse) => {
                         Swal.fire("Password Updated Successfully!", "", "success");
                         history.push('/home');
                     }).catch({ status: 500, message: 'Internal Server Error' });

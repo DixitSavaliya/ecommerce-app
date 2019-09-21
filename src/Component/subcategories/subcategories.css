@@ -12,6 +12,8 @@ img.img-fluid {
     margin: 0px auto;
     height: 268px;
     margin-top: 32px;
+    object-fit: scale-down;
+    width: 205px;
 }
 p.text_color {
     color: blue;

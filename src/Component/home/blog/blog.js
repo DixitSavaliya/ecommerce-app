@@ -36,90 +36,90 @@ class Home extends React.Component {
                                     <div className="blog_slider">
                                         <div className="single_blog" data-aos="zoom-in" data-aos-duration="1500">
                                             <div className="blog_image">
-                                                <img src="images/blog_1.jpg" className="img-fluid" alt="blog image" />
+                                                <img src="images/blog_1.jpg" className="img-fluid" alt="blog" />
                                             </div>
                                             <div className="blog_text">
                                                 <h4>new brands arrivals</h4>
                                                 <p>Lorem ipsum dolor sit amet, cons adipiscing elit, sed do eiusmod</p>
                                                 <hr />
-                                                <a href="#">read more</a>
+                                                <a href="1">read more</a>
                                             </div>
                                         </div>
                                         <div className="single_blog" data-aos="zoom-in" data-aos-duration="1500">
                                             <div className="blog_image">
-                                                <img src="images/blog_2.jpg" className="img-fluid" alt="blog image" />
+                                                <img src="images/blog_2.jpg" className="img-fluid" alt="blog" />
                                             </div>
                                             <div className="blog_text">
                                                 <h4>new brands arrivals</h4>
                                                 <p>Lorem ipsum dolor sit amet, cons adipiscing elit, sed do eiusmod</p>
                                                 <hr />
-                                                <a href="#">read more</a>
+                                                <a href="2">read more</a>
                                             </div>
                                         </div>
                                         <div className="single_blog" data-aos="zoom-in" data-aos-duration="1500">
                                             <div className="blog_image">
-                                                <img src="images/blog_1.jpg" className="img-fluid" alt="blog image" />
+                                                <img src="images/blog_1.jpg" className="img-fluid" alt="blog" />
                                             </div>
                                             <div className="blog_text">
                                                 <h4>new brands arrivals</h4>
                                                 <p>Lorem ipsum dolor sit amet, cons adipiscing elit, sed do eiusmod</p>
                                                 <hr />
-                                                <a href="#">read more</a>
+                                                <a href="3">read more</a>
                                             </div>
                                         </div>
                                         <div className="single_blog" data-aos="zoom-in" data-aos-duration="1500">
                                             <div className="blog_image">
-                                                <img src="images/blog_2.jpg" className="img-fluid" alt="blog image" />
+                                                <img src="images/blog_2.jpg" className="img-fluid" alt="blog" />
                                             </div>
                                             <div className="blog_text">
                                                 <h4>new brands arrivals</h4>
                                                 <p>Lorem ipsum dolor sit amet, cons adipiscing elit, sed do eiusmod</p>
                                                 <hr />
-                                                <a href="#">read more</a>
+                                                <a href="4">read more</a>
                                             </div>
                                         </div>
                                         <div className="single_blog" data-aos="zoom-in" data-aos-duration="1500">
                                             <div className="blog_image">
-                                                <img src="images/blog_1.jpg" className="img-fluid" alt="blog image" />
+                                                <img src="images/blog_1.jpg" className="img-fluid" alt="blog" />
                                             </div>
                                             <div className="blog_text">
                                                 <h4>new brands arrivals</h4>
                                                 <p>Lorem ipsum dolor sit amet, cons adipiscing elit, sed do eiusmod</p>
                                                 <hr />
-                                                <a href="#">read more</a>
+                                                <a href="5">read more</a>
                                             </div>
                                         </div>
                                         <div className="single_blog" data-aos="zoom-in" data-aos-duration="1500">
                                             <div className="blog_image">
-                                                <img src="images/blog_2.jpg" className="img-fluid" alt="blog image" />
+                                                <img src="images/blog_2.jpg" className="img-fluid" alt="blog" />
                                             </div>
                                             <div className="blog_text">
                                                 <h4>new brands arrivals</h4>
                                                 <p>Lorem ipsum dolor sit amet, cons adipiscing elit, sed do eiusmod</p>
                                                 <hr />
-                                                <a href="#">read more</a>
+                                                <a href="6">read more</a>
                                             </div>
                                         </div>
                                         <div className="single_blog" data-aos="zoom-in" data-aos-duration="1500">
                                             <div className="blog_image">
-                                                <img src="images/blog_1.jpg" className="img-fluid" alt="blog image" />
+                                                <img src="images/blog_1.jpg" className="img-fluid" alt="blog" />
                                             </div>
                                             <div className="blog_text">
                                                 <h4>new brands arrivals</h4>
                                                 <p>Lorem ipsum dolor sit amet, cons adipiscing elit, sed do eiusmod</p>
                                                 <hr />
-                                                <a href="#">read more</a>
+                                                <a href="7">read more</a>
                                             </div>
                                         </div>
                                         <div className="single_blog" data-aos="zoom-in" data-aos-duration="1500">
                                             <div className="blog_image">
-                                                <img src="images/blog_2.jpg" className="img-fluid" alt="blog image" />
+                                                <img src="images/blog_2.jpg" className="img-fluid" alt="blog" />
                                             </div>
                                             <div className="blog_text">
                                                 <h4>new brands arrivals</h4>
                                                 <p>Lorem ipsum dolor sit amet, cons adipiscing elit, sed do eiusmod</p>
                                                 <hr />
-                                                <a href="#">read more</a>
+                                                <a href="8">read more</a>
                                             </div>
                                         </div>
                                     </div>

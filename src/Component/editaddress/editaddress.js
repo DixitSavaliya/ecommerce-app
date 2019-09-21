@@ -1,7 +1,6 @@
 import React from 'react';
 import API from '../../service/homeservice';
 import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Header from '../../Component/home/header/header';
 import Footer from '../../Component/home/footer/footer';
 import history from '../../history';
@@ -45,8 +44,8 @@ class EditAddress extends React.Component {
         })
 
         /** Get Profile */
-        API.getProfile().
-            then((findresponse) => {
+        API.getProfile()
+            .then((findresponse) => {
                 this.setState({ getProfileList: findresponse.data.data })
                 console.log("getProfileList", this.state.getProfileList);
                 this.setState({
@@ -120,7 +119,7 @@ class EditAddress extends React.Component {
             })
         };
 
-        if (this.state.address_1 && this.state.address_2 && this.state.city && this.state.state && this.state.pincode && this.state.pincode.length == 6) {
+        if (this.state.address_1 && this.state.address_2 && this.state.city && this.state.state && this.state.pincode && this.state.pincode.length === 6) {
             const obj = {
                 addressId: this.state.addressId,
                 customerId: this.state.getProfileList.id,
@@ -131,8 +130,8 @@ class EditAddress extends React.Component {
                 postcode: this.state.pincode
             }
             /** Edit Address */
-            API.editAddress(obj, this.state.addressId).
-                then((findresponse) => {
+            API.editAddress(obj, this.state.addressId)
+                .then((findresponse) => {
                     history.push('/address');
                 }).catch(
                     { status: 500, message: 'Internal Server Error' }

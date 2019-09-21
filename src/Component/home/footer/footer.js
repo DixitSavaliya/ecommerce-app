@@ -1,6 +1,6 @@
 import React from 'react';
 import API from '../../../service/homeservice';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 class Footer extends React.Component {
     constructor(props) {
@@ -14,8 +14,8 @@ class Footer extends React.Component {
     /** Get CategoryList */
     componentDidMount() {
         /** Get category list */
-        API.CategoryList().
-            then((findresponse) => {
+        API.CategoryList()
+            .then((findresponse) => {
                 this.setState({ categoryList: findresponse.data.data })
                 console.log("data==", this.state.categoryList);
             }).catch(
@@ -26,22 +26,22 @@ class Footer extends React.Component {
     render() {
         let displayData;
         /** Display Categorylist data */
-        if (this.state.categoryList) displayData = this.state.categoryList.map(data =>
-            <li key={data}>
+        if (this.state.categoryList) displayData = this.state.categoryList.map((data, index) =>
+            <li key={index}>
                 {
                     data.children ? (<a className="dropdown-toggle" href={{ javascript: void (0) }} data-toggle="dropdown">{data.name}</a>) : (<Link to={`/subcategories/${data.categoryId}`}>{data.name}</Link>)
                 }
                 <div>
                     {
                         data.children ? (
-                            data.children.map(list =>
-                                <div className="dropdown-menu" key={list}>
+                            data.children.map((list, index) =>
+                                <div className="dropdown-menu" key={index}>
                                     <Link to={`/subcategories/${list.categoryId}`} className="dropdown-item">{list.name}</Link>
                                     <div>
                                         {
                                             list.children ? (
-                                                list.children.map(sublist =>
-                                                    <div key={sublist}>
+                                                list.children.map((sublist, index) =>
+                                                    <div key={index}>
                                                         <Link to={`/subcategories/${sublist.categoryId}`}>{sublist.name}</Link>
                                                     </div>
                                                 )
@@ -87,9 +87,9 @@ class Footer extends React.Component {
                                     <div className="footer_menu">
                                         <h4>customer service</h4>
                                         <ul>
-                                            <li><a href="#">terms of use</a></li>
-                                            <li><a href="#">privacy policy</a></li>
-                                            <li><a href="#">f.a.q</a></li>
+                                            <li><Link to="#">terms of use</Link></li>
+                                            <li><Link to="#">privacy policy</Link></li>
+                                            <li><Link to="#">f.a.q</Link></li>
                                             <li><Link to="/contact">contact us</Link></li>
                                             <li><Link to="/register">create account</Link></li>
                                         </ul>
@@ -111,10 +111,10 @@ class Footer extends React.Component {
                                     <div className="footer_menu">
                                         <h4>information</h4>
                                         <ul>
-                                            <li><a href="#">about us</a></li>
-                                            <li><a href="#">our portfolio</a></li>
-                                            <li><a href="#">how to buy</a></li>
-                                            <li><a href="#">arrival sales</a></li>
+                                            <li><Link to="#">about us</Link></li>
+                                            <li><Link to="#">our portfolio</Link></li>
+                                            <li><Link to="#">how to buy</Link></li>
+                                            <li><Link to="#">arrival sales</Link></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -137,16 +137,16 @@ class Footer extends React.Component {
                             <div className="copyright_text float-left">
                                 <ul>
                                     <li><p>Copyright 2019. All Rights Reserved</p></li>
-                                    <li><a href="#">Terms & Condition</a></li>
-                                    <li><a href="#">Primacy Policy</a></li>
+                                    <li><Link to="#">Terms & Condition</Link></li>
+                                    <li><Link to="#">Primacy Policy</Link></li>
                                 </ul>
                             </div>
                             <div className="social_links float-right">
                                 <ul>
-                                    <li><a href=""><i className="fab fa-facebook-f"></i></a></li>
-                                    <li><a href=""><i className="fab fa-twitter"></i></a></li>
-                                    <li><a href=""><i className="fab fa-google-plus-g"></i></a></li>
-                                    <li><a href=""><i className="fab fa-youtube"></i></a></li>
+                                    <li><Link to="#"><i className="fab fa-facebook-f"></i></Link></li>
+                                    <li><Link to="#"><i className="fab fa-twitter"></i></Link></li>
+                                    <li><Link to="#"><i className="fab fa-google-plus-g"></i></Link></li>
+                                    <li><Link to="#"><i className="fab fa-youtube"></i></Link></li>
                                 </ul>
                             </div>
                         </div>

@@ -1,8 +1,7 @@
 import React from 'react';
 import API from '../../service/homeservice';
-import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import Swal from 'sweetalert2';
+import { MDBContainer, MDBRow, MDBBtn } from 'mdbreact';
+import { Link } from "react-router-dom";
 import Header from '../../Component/home/header/header';
 import Footer from '../../Component/home/footer/footer';
 
@@ -27,8 +26,8 @@ class Profile extends React.Component {
     /** Intailly call */
     componentDidMount() {
         /** Get Profile */
-        API.getProfile().
-            then((findresponse) => {
+        API.getProfile()
+            .then((findresponse) => {
                 console.log("getProfile response===", findresponse);
                 this.setState({ getProfileList: findresponse.data.data })
                 console.log("data==", this.state.getProfileList);
@@ -64,7 +63,7 @@ class Profile extends React.Component {
             firstNameError = "please enter  name";
         }
 
-        const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        const reg = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
         if (!reg.test(this.state.emailId)) {
             emailIdError = "invalid email";
         }
@@ -93,15 +92,15 @@ class Profile extends React.Component {
             })
         };
 
-        if (this.state.firstName && this.state.emailId && this.state.mobileNumber && !this.state.emailIdError && this.state.mobileNumber.length == 10) {
+        if (this.state.firstName && this.state.emailId && this.state.mobileNumber && !this.state.emailIdError && this.state.mobileNumber.length === 10) {
             const obj = {
                 firstName: this.state.firstName,
                 emailId: this.state.emailId,
                 phoneNumber: this.state.mobileNumber
             }
             /** Update Profile */
-            API.updateProfile(obj).
-                then((findresponse) => {
+            API.updateProfile(obj)
+                .then((findresponse) => {
                     console.log("getProfile response===", findresponse);
                     // Swal.fire("Edited Profile Successfully!", "", "success");
                 }).catch(

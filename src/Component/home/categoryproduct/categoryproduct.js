@@ -1,6 +1,6 @@
 import React from 'react';
 import API from '../../../service/homeservice';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 class CategoryProduct extends React.Component {
     constructor(props) {
@@ -13,8 +13,8 @@ class CategoryProduct extends React.Component {
     /** Intailly Call */
     componentDidMount() {
         /** Get Categorylist */
-        API.CategoryList().
-            then((findresponse) => {
+        API.CategoryList()
+            .then((findresponse) => {
                 this.setState({ categoryList: findresponse.data.data })
                 console.log("data==", this.state.categoryList);
             }).catch(
@@ -26,22 +26,22 @@ class CategoryProduct extends React.Component {
         let displayData;
 
         /** Display Categorylist data */
-        if (this.state.categoryList) displayData = this.state.categoryList.map(data =>
-            <li key={data}> 
+        if (this.state.categoryList) displayData = this.state.categoryList.map((data,index) =>
+            <li key={index}> 
                 {
                     data.children ? (<a className="dropdown-toggle" href={{ javascript: void (0) }} data-toggle="dropdown">{data.name}<i className="fa fa-caret-right" aria-hidden="true"></i></a>) : (<Link to={`/subcategories/${data.categoryId}`}>{data.name}<i className="fa fa-caret-right" aria-hidden="true"></i></Link>)
                 }
                 <div>
                     {
                         data.children ? (
-                            data.children.map(list =>
-                                <div className="dropdown-menu" key={list}>
+                            data.children.map((list,index) =>
+                                <div className="dropdown-menu" key={index}>
                                     <Link to={`/subcategories/${list.categoryId}`} className="dropdown-item">{list.name}</Link>
                                     <div>
                                         {
                                             list.children ? (
-                                                list.children.map(sublist =>
-                                                    <div key={sublist}>
+                                                list.children.map((sublist,index) =>
+                                                    <div key={index}>
                                                         <Link to={`/subcategories/${sublist.categoryId}`}>{sublist.name}</Link>
                                                     </div>
                                                 )
@@ -77,13 +77,13 @@ class CategoryProduct extends React.Component {
                                     <div className="single_product" data-aos="flip-left" data-aos-duration="1500">
                                         <div className="product_content">
                                             <div className="product_image">
-                                                <img src={require('../images/product_1.jpg')} className="img-fluid" alt="product image" />
+                                                <img src={require('../images/product_1.jpg')} className="img-fluid" alt="product" />
                                                 <div className="on_hover_btns">
                                                     <div className="d-flex flex-wrap align-content-center">
                                                         <div className="text-center p-2 m-auto">
-                                                            <a href="#" title="View more details"><i className="fa fa-eye" aria-hidden="true"></i></a>
-                                                            <a href="#" title="Add to cart"><i className="fa fa-shopping-cart" aria-hidden="true"></i></a>
-                                                            <a href="#" title="Add to wishlist"><i className="fa fa-heart" aria-hidden="true"></i></a>
+                                                            <Link to={{ javascript: void (0) }}><i className="fa fa-eye" aria-hidden="true"></i></Link>
+                                                            <Link to={{ javascript: void (0) }}><i className="fa fa-shopping-cart" aria-hidden="true"></i></Link>
+                                                            <Link to={{ javascript: void (0) }}><i className="fa fa-heart" aria-hidden="true"></i></Link>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -105,13 +105,13 @@ class CategoryProduct extends React.Component {
                                     <div className="single_product" data-aos="flip-left" data-aos-duration="1500">
                                         <div className="product_content">
                                             <div className="product_image">
-                                                <img src={require('../images/product_2.jpg')} className="img-fluid" alt="product image" />
+                                                <img src={require('../images/product_2.jpg')} className="img-fluid" alt="product" />
                                                 <div className="on_hover_btns">
                                                     <div className="d-flex flex-wrap align-content-center">
                                                         <div className="text-center p-2 m-auto">
-                                                            <a href="#" title="View more details"><i className="fa fa-eye" aria-hidden="true"></i></a>
-                                                            <a href="#" title="Add to cart"><i className="fa fa-shopping-cart" aria-hidden="true"></i></a>
-                                                            <a href="#" title="Add to wishlist"><i className="fa fa-heart" aria-hidden="true"></i></a>
+                                                        <Link to={{ javascript: void (0) }}><i className="fa fa-eye" aria-hidden="true"></i></Link>
+                                                        <Link to={{ javascript: void (0) }}><i className="fa fa-shopping-cart" aria-hidden="true"></i></Link>
+                                                        <Link to={{ javascript: void (0) }}><i className="fa fa-heart" aria-hidden="true"></i></Link>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -133,13 +133,13 @@ class CategoryProduct extends React.Component {
                                     <div className="single_product" data-aos="flip-left" data-aos-duration="1500">
                                         <div className="product_content">
                                             <div className="product_image">
-                                                <img src={require('../images/product_3.jpg')} className="img-fluid" alt="product image" />
+                                                <img src={require('../images/product_3.jpg')} className="img-fluid" alt="product" />
                                                 <div className="on_hover_btns">
                                                     <div className="d-flex flex-wrap align-content-center">
                                                         <div className="text-center p-2 m-auto">
-                                                            <a href="#" title="View more details"><i className="fa fa-eye" aria-hidden="true"></i></a>
-                                                            <a href="#" title="Add to cart"><i className="fa fa-shopping-cart" aria-hidden="true"></i></a>
-                                                            <a href="#" title="Add to wishlist"><i className="fa fa-heart" aria-hidden="true"></i></a>
+                                                        <Link to={{ javascript: void (0) }}><i className="fa fa-eye" aria-hidden="true"></i></Link>
+                                                        <Link to={{ javascript: void (0) }}><i className="fa fa-shopping-cart" aria-hidden="true"></i></Link>
+                                                        <Link to={{ javascript: void (0) }}><i className="fa fa-heart" aria-hidden="true"></i></Link>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -161,13 +161,13 @@ class CategoryProduct extends React.Component {
                                     <div className="single_product" data-aos="flip-left" data-aos-duration="1500">
                                         <div className="product_content">
                                             <div className="product_image">
-                                                <img src={require('../images/product_4.jpg')} className="img-fluid" alt="product image" />
+                                                <img src={require('../images/product_4.jpg')} className="img-fluid" alt="product" />
                                                 <div className="on_hover_btns">
                                                     <div className="d-flex flex-wrap align-content-center">
                                                         <div className="text-center p-2 m-auto">
-                                                            <a href="#" title="View more details"><i className="fa fa-eye" aria-hidden="true"></i></a>
-                                                            <a href="#" title="Add to cart"><i className="fa fa-shopping-cart" aria-hidden="true"></i></a>
-                                                            <a href="#" title="Add to wishlist"><i className="fa fa-heart" aria-hidden="true"></i></a>
+                                                        <Link to={{ javascript: void (0) }}><i className="fa fa-eye" aria-hidden="true"></i></Link>
+                                                        <Link to={{ javascript: void (0) }}><i className="fa fa-shopping-cart" aria-hidden="true"></i></Link>
+                                                        <Link to={{ javascript: void (0) }}><i className="fa fa-heart" aria-hidden="true"></i></Link>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -189,13 +189,13 @@ class CategoryProduct extends React.Component {
                                     <div className="single_product" data-aos="flip-left" data-aos-duration="1500">
                                         <div className="product_content">
                                             <div className="product_image">
-                                                <img src={require('../images/product_1.jpg')} className="img-fluid" alt="product image" />
+                                                <img src={require('../images/product_1.jpg')} className="img-fluid" alt="produc" />
                                                 <div className="on_hover_btns">
                                                     <div className="d-flex flex-wrap align-content-center">
                                                         <div className="text-center p-2 m-auto">
-                                                            <a href="#" title="View more details"><i className="fa fa-eye" aria-hidden="true"></i></a>
-                                                            <a href="#" title="Add to cart"><i className="fa fa-shopping-cart" aria-hidden="true"></i></a>
-                                                            <a href="#" title="Add to wishlist"><i className="fa fa-heart" aria-hidden="true"></i></a>
+                                                        <Link to={{ javascript: void (0) }}><i className="fa fa-eye" aria-hidden="true"></i></Link>
+                                                        <Link to={{ javascript: void (0) }}><i className="fa fa-shopping-cart" aria-hidden="true"></i></Link>
+                                                        <Link to={{ javascript: void (0) }}><i className="fa fa-heart" aria-hidden="true"></i></Link>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -217,13 +217,13 @@ class CategoryProduct extends React.Component {
                                     <div className="single_product" data-aos="flip-left" data-aos-duration="1500">
                                         <div className="product_content">
                                             <div className="product_image">
-                                                <img src={require('../images/product_2.jpg')} className="img-fluid" alt="product image" />
+                                                <img src={require('../images/product_2.jpg')} className="img-fluid" alt="product" />
                                                 <div className="on_hover_btns">
                                                     <div className="d-flex flex-wrap align-content-center">
                                                         <div className="text-center p-2 m-auto">
-                                                            <a href="#" title="View more details"><i className="fa fa-eye" aria-hidden="true"></i></a>
-                                                            <a href="#" title="Add to cart"><i className="fa fa-shopping-cart" aria-hidden="true"></i></a>
-                                                            <a href="#" title="Add to wishlist"><i className="fa fa-heart" aria-hidden="true"></i></a>
+                                                        <Link to={{ javascript: void (0) }}><i className="fa fa-eye" aria-hidden="true"></i></Link>
+                                                        <Link to={{ javascript: void (0) }}><i className="fa fa-shopping-cart" aria-hidden="true"></i></Link>
+                                                        <Link to={{ javascript: void (0) }}><i className="fa fa-heart" aria-hidden="true"></i></Link>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -245,13 +245,13 @@ class CategoryProduct extends React.Component {
                                     <div className="single_product" data-aos="flip-left" data-aos-duration="1500">
                                         <div className="product_content">
                                             <div className="product_image">
-                                                <img src={require('../images/product_3.jpg')} className="img-fluid" alt="product image" />
+                                                <img src={require('../images/product_3.jpg')} className="img-fluid" alt="product" />
                                                 <div className="on_hover_btns">
                                                     <div className="d-flex flex-wrap align-content-center">
                                                         <div className="text-center p-2 m-auto">
-                                                            <a href="#" title="View more details"><i className="fa fa-eye" aria-hidden="true"></i></a>
-                                                            <a href="#" title="Add to cart"><i className="fa fa-shopping-cart" aria-hidden="true"></i></a>
-                                                            <a href="#" title="Add to wishlist"><i className="fa fa-heart" aria-hidden="true"></i></a>
+                                                        <Link to={{ javascript: void (0) }}><i className="fa fa-eye" aria-hidden="true"></i></Link>
+                                                        <Link to={{ javascript: void (0) }}><i className="fa fa-shopping-cart" aria-hidden="true"></i></Link>
+                                                        <Link to={{ javascript: void (0) }}><i className="fa fa-heart" aria-hidden="true"></i></Link>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -273,13 +273,13 @@ class CategoryProduct extends React.Component {
                                     <div className="single_product" data-aos="flip-left" data-aos-duration="1500">
                                         <div className="product_content">
                                             <div className="product_image">
-                                                <img src={require('../images/product_4.jpg')} className="img-fluid" alt="product image" />
+                                                <img src={require('../images/product_4.jpg')} className="img-fluid" alt="product" />
                                                 <div className="on_hover_btns">
                                                     <div className="d-flex flex-wrap align-content-center">
                                                         <div className="text-center p-2 m-auto">
-                                                            <a href="#" title="View more details"><i className="fa fa-eye" aria-hidden="true"></i></a>
-                                                            <a href="#" title="Add to cart"><i className="fa fa-shopping-cart" aria-hidden="true"></i></a>
-                                                            <a href="#" title="Add to wishlist"><i className="fa fa-heart" aria-hidden="true"></i></a>
+                                                        <Link to={{ javascript: void (0) }}><i className="fa fa-eye" aria-hidden="true"></i></Link>
+                                                        <Link to={{ javascript: void (0) }}><i className="fa fa-shopping-cart" aria-hidden="true"></i></Link>
+                                                        <Link to={{ javascript: void (0) }}><i className="fa fa-heart" aria-hidden="true"></i></Link>
                                                         </div>
                                                     </div>
                                                 </div>

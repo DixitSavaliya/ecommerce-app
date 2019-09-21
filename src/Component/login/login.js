@@ -1,5 +1,5 @@
 import React from 'react';
-import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
+import { MDBContainer, MDBRow, MDBBtn } from 'mdbreact';
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
@@ -37,7 +37,7 @@ class Login extends React.Component {
         let passwordError = "";
         let emailIdError = "";
 
-        const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        const reg = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
         if (!reg.test(this.state.emailId)) {
             emailIdError = "invalid email";
         }
@@ -71,8 +71,8 @@ class Login extends React.Component {
                 password: this.state.password
             }
             /** UserLogin */
-            API.Login(obj).
-                then((findresponse) => {
+            API.Login(obj)
+                .then((findresponse) => {
                     if (findresponse) {
                         this.setState({
                             user: findresponse

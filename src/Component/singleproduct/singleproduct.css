@@ -8,6 +8,7 @@ ul.ratings i {
 }
 .carousel .slide img {
 
+    object-fit: scale-down;
     height: 100%;
 }
 .inner-slider {
@@ -22,4 +23,31 @@ ul.ratings i {
     position: relative;
     text-align: center;
     background: #fff !important;
+}
+
+.col-md-1.box input {
+    width: 18px;
+    text-align: center;
+    border: none;
+    justify-content: center;
+    height: 100%;
+}
+.col-md-1.button_increment button {
+    background-color: #4285f4;
+    border-radius: 50%;
+    box-shadow: none;
+    outline: none;
+    color: #fff;
+    /* border: none; */
+    -webkit-appearance: button-bevel;
+}
+.col-md-1.button_decrement button {
+    background-color: #4285f4;
+    color: #fff;
+    border-radius: 50%;
+    box-shadow: none;
+    outline: none;
+    -webkit-appearance: button-bevel;
+    width: 24px;
+    height: 29px;
 }

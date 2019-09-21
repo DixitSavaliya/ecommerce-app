@@ -19,7 +19,6 @@ class Home extends React.Component {
     render() {
         return (
             <div>
-                {/** Home-Page All Component */}
                 <Header />
                 <Product />
                 <AllProduct />

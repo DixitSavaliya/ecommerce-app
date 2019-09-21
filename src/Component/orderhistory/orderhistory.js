@@ -1,7 +1,7 @@
 import React from 'react';
 import API from '../../service/homeservice';
-import { MDBBtn, MDBCard, MDBCardBody, MDBRow, MDBCardTitle, MDBCardText, MDBCol } from 'mdbreact';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { MDBCard, MDBCardBody, MDBRow, MDBCardTitle, MDBCol } from 'mdbreact';
+import { Link } from "react-router-dom";
 import Header from '../../Component/home/header/header';
 import Footer from '../../Component/home/footer/footer';
 
@@ -16,8 +16,8 @@ class OrderHistory extends React.Component {
     /** Intailly call */
     componentDidMount() {
         /** Get Order-history */
-        API.getOrderHistory().
-            then((findresponse) => {
+        API.getOrderHistory()
+            .then((findresponse) => {
                 console.log("getOrderHistory response===", findresponse);
                 this.setState({ orderHistoryList: findresponse.data.data })
                 console.log("data==", this.state.orderHistoryList);
@@ -32,8 +32,8 @@ class OrderHistory extends React.Component {
    */
     getOrderDetails(data) {
         /** Get Orderdetails */
-        API.getOrderDetail(data.orderId).
-            then((findresponse) => {
+        API.getOrderDetail(data.orderId)
+            .then((findresponse) => {
                 console.log("getOrderHistory response===", findresponse);
             }).catch(
                 { status: 500, message: 'Internal Server Error' }
@@ -44,15 +44,15 @@ class OrderHistory extends React.Component {
         let displayData;
 
         /** Orderhistory data */
-        if (this.state.orderHistoryList) displayData = this.state.orderHistoryList.map(data =>
-            <div>
+        if (this.state.orderHistoryList) displayData = this.state.orderHistoryList.map((data, index) =>
+            <div key={index}>
                 <MDBRow>
                     <MDBCol md="3">{data.OrderId}</MDBCol>
                     <MDBCol md="2">{data.orderStatus.name}</MDBCol>
                     <MDBCol md="2">{data.createdDate}</MDBCol>
-                    <MDBCol md="2"><i class="fas fa-rupee-sign"></i> {data.total}</MDBCol>
+                    <MDBCol md="2"><i className="fas fa-rupee-sign"></i> {data.total}</MDBCol>
                     <MDBCol md="3">
-                        <Link to={{ pathname: `orderdetail/${data.orderId}`, state: { name: data.OrderId } }}><i class="fas fa-eye"></i></Link>
+                        <Link to={{ pathname: `orderdetail/${data.orderId}`, state: { name: data.OrderId } }}><i className="fas fa-eye"></i></Link>
                     </MDBCol>
                 </MDBRow>
                 <br />
@@ -60,10 +60,10 @@ class OrderHistory extends React.Component {
         )
         return (
             <div>
-                <Header/>
+                <Header />
                 <MDBRow>
-                        <h1 className="h4 text-center mb-4">Order-History</h1>
-                    </MDBRow>
+                    <h1 className="h4 text-center mb-4">Order-History</h1>
+                </MDBRow>
                 <MDBCol>
                     <MDBCard>
                         <MDBCardBody>
@@ -76,13 +76,13 @@ class OrderHistory extends React.Component {
                                     <MDBCol md="3">Action</MDBCol>
                                 </MDBRow>
                             </MDBCardTitle>
-                            <MDBCardText>
+                            <div>
                                 {displayData}
-                            </MDBCardText>
+                            </div>
                         </MDBCardBody>
                     </MDBCard>
                 </MDBCol>
-                <Footer/>
+                <Footer />
             </div>
         );
     }

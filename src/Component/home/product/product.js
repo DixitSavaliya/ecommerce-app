@@ -2,7 +2,7 @@ import React from 'react';
 import API from '../../../service/homeservice';
 import { config } from '../../../config';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { Carousel } from 'react-responsive-carousel';
+import { Link } from "react-router-dom";
 
 class Product extends React.Component {
     constructor(props) {
@@ -17,15 +17,14 @@ class Product extends React.Component {
     /** Intailly call */
     componentDidMount() {
         /** Get bannerlist */
-        API.BannerList().
-            then((findresponse) => {
-                this.state.isFetching = false;
+        API.BannerList()
+            .then((findresponse) => {
                 this.setState({ bannerList: findresponse.data.data });
-                this.state.bannerList.map(data => {
+                this.state.bannerList.map(data => 
                     this.setState({
                         images: [...this.state.images, config.baseMediaUrl + data.imagePath + data.image]
                     })
-                })
+                )
             }).catch(
                 { status: 500, message: 'Internal Server Error' }
             );
@@ -37,11 +36,11 @@ class Product extends React.Component {
             <div className="single_banner_slide" key={data}>
                 <div className="slider_parts">
                     <div className="box_one">
-                        <img src={data} />
+                        <img src={data} alt="data" />
                     </div>
-                    <a className="banner_view_all_btn" href="#">
-                        <span>View all Products</span>
-                    </a>
+                    <Link className="banner_view_all_btn" to={{ javascript: void (0) }}>
+                    <span>View all Products</span>
+                    </Link>
                 </div>
             </div>
         )

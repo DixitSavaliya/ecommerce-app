@@ -4,3 +4,15 @@
     font-weight: 400;
     margin-top: 45px;
 }
+.padding{
+    padding-left: 18px;
+}
+.paddimg_top{
+    padding-top: 19px;
+}
+.paddimg_bottom{
+    padding-top: 28px;
+} 
+.paddimg_bottom .float_right{
+    float: right;
+}

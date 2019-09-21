@@ -65,7 +65,7 @@ export default {
             }
         })
             .then(response => {
-                console.log("response===", response);
+                // console.log("response===", response);
                 return response;
             }).catch({ status: 500, message: 'Internal Server Error' });
     },

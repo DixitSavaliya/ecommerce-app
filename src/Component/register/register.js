@@ -2,7 +2,7 @@ import React from 'react';
 import { MDBContainer, MDBRow, MDBBtn } from 'mdbreact';
 import API from '../../service/homeservice';
 import '../login/login.css'
-import history from '../../history';
+import Swal from 'sweetalert2';
 
 class SignUp extends React.Component {
     /** constructor call */
@@ -37,7 +37,7 @@ class SignUp extends React.Component {
             nameError = "please enter  name";
         }
 
-        const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        const reg = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
         if (!reg.test(this.state.emailId)) {
             emailIdError = "invalid email";
         }
@@ -83,7 +83,7 @@ class SignUp extends React.Component {
             })
         };
 
-        if (this.state.name && this.state.password && this.state.emailId && this.state.confirmPassword && this.state.phoneNumber && this.state.phoneNumber.length == 10 && !this.state.emailIdError && this.state.password.length == this.state.confirmPassword.length && this.state.confirmPassword == this.state.password) {
+        if (this.state.name && this.state.password && this.state.emailId && this.state.confirmPassword && this.state.phoneNumber && this.state.phoneNumber.length === 10 && !this.state.emailIdError && this.state.password.length === this.state.confirmPassword.length && this.state.confirmPassword === this.state.password) {
             const obj = {
                 name: this.state.name,
                 password: this.state.password,
@@ -92,11 +92,11 @@ class SignUp extends React.Component {
                 phoneNumber: this.state.phoneNumber
             }
             /** User Sign-up */
-            API.Signup(obj).
-                then((findresponse) => {
+            API.Signup(obj)
+                .then((findresponse) => {
                     window.location.href = '/login';
                     // history.push('/login');
-                }).catch({ status: 500, message: 'Internal Server Error' });
+                }).catch(Swal.fire("Something went wrong!", "", "warning"));
         }
     }
 
